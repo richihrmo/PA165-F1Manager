@@ -4,13 +4,24 @@ package cz.muni.fi.entities;
  * Class represents car
  * @author Lucie Kureckova, 445264
  */
+
+@Entity
 public class Car {
     
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long id;
+    @OneToOne
     private Person driver;
+    @OneToOne
     private Component engine;
+    @OneToOne
     private Component aerodynamics;
+    @OneToOne
     private Component suspension;
+    @OneToOne
     private Component transmission;
+    @OneToOne
     private Component brakes;
 
     public Car(Person driver, Component engine, Component aerodynamics, Component transmission, Component brakes) {
