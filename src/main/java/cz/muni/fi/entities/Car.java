@@ -1,5 +1,7 @@
 package cz.muni.fi.entities;
 
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,14 +28,20 @@ public class Car {
     @Getter private Component transmission;
     @OneToOne
     @Getter private Component brakes;
+    @OneToMany
+    @Setter @Getter List<Person> developers = new ArrayList<Person>();
 
-    public Car(Person driver, Component engine, Component aerodynamics, Component transmission, Component brakes) {
+    public Car(Person driver, Component engine, Component aerodynamics, Component suspension, Component transmission, Component brakes, List<Person> developers) {
         this.driver = driver;
-        this.engine = engine;
-        this.aerodynamics = aerodynamics;
-        this.transmission = transmission;
-        this.brakes = brakes;
+        setEngine(engine);
+        setAerodynamics(aerodynamics);
+        setSuspension(suspension);
+        setTransmission(transmission);
+        setBrakes(brakes);
+        this.developers = developers;
     }
+    
+    public Car(){}
 
     public void setEngine(Component engine) {
         if(engine.getType() != ComponentType.ENGINE){
