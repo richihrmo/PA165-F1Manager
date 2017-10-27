@@ -65,11 +65,14 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
         </dependency>
+<<<<<<< HEAD
 
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
         </dependency>
+=======
+>>>>>>> 98fbb52... add TeamDao, tests for driver
     </dependencies>
 
 </project>
