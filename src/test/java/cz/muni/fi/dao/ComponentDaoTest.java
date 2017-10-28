@@ -1,4 +1,4 @@
-package cz.muni.fi.DaoTests;
+package cz.muni.fi.dao;
 
 import cz.muni.fi.PersistenceApplicationContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +12,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
-
-import java.util.ArrayList;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Robert Tamas
