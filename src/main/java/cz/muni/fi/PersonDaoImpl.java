@@ -1,13 +1,16 @@
 package cz.muni.fi;
 
+import org.springframework.stereotype.Repository;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
- * Author: Richard Hrmo
+ * @author Richard Hrmo
  */
-public class PersonDaoImpl implements PersonDao {
+@Repository
+public class PersonDaoImpl implements PersonDao{
 
     @PersistenceContext
     private EntityManager em;
@@ -49,6 +52,6 @@ public class PersonDaoImpl implements PersonDao {
     }
 
     public void deletePerson(Person person) {
-        em.remove(person);
+        em.remove(em.merge(person));
     }
 }
