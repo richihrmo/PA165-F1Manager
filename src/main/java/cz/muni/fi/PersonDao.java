@@ -3,26 +3,25 @@ package cz.muni.fi;
 import java.util.List;
 
 /**
- * Author: Richard Hrmo
+ * @author Richard Hrmo
  */
-public interface PersonDao {
-
+public interface DriverDao{
     /**
      * @return list of all drivers
      */
-    public List<Person> listDrivers();
+    public List<Driver> listDrivers();
 
     /**
      * @return list of drivers not listed as main drivers
      */
-    public List<Person> listTestDrivers();
+    public List<Driver> listTestDrivers();
 
     /**
      * find person by ID
      * @param id
      * @return person
      */
-    public Person findPerson(long id);
+    public Driver findDriver(long id);
 
     /**
      * find person-driver based on name
@@ -30,7 +29,7 @@ public interface PersonDao {
      * @param surname
      * @return
      */
-    public Person findDriver(String name, String surname);
+    public Driver findDriver(String name, String surname);
 
     /**
      * find person-test driver based on name
@@ -38,12 +37,12 @@ public interface PersonDao {
      * @param surname
      * @return
      */
-    public Person findTestDriver(String name, String surname);
+    public Driver findTestDriver(String name, String surname);
 
-    public void addPerson(Person person);
+    public void addDriver(Driver driver);
 
-    public void updatePerson(Person person);
+    public void updateDriver(Driver driver);
 
-    public void deletePerson(Person person);
+    public void deleteDriver(Driver driver);
 
 }

@@ -8,21 +8,18 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 
 /**
- * Author: Richard Hrmo
+ * @author Richard Hrmo
  */
-
 @ContextConfiguration(classes = PersistenceApplicationContext.class)
-public class CarDaoTest {
-
-
+public class CarDaoTest{
      @PersistenceContext
      private EntityManager em;
 
      @PersistenceUnit
      private EntityManagerFactory emf;
 
-     @Autowired
-     private CarDaoImpl carDao = new CarDaoImpl();
+//     @Autowired
+//     private CarDaoImpl carDao = new CarDaoImpl();
 
     // mne sa to naozaj nechce robit naslepo
     // pockam kym bude aspon kostra k tomu a potom mozem robit testy,

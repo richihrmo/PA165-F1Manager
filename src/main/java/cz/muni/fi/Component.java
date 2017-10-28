@@ -1,29 +1,29 @@
-
 package cz.muni.fi;
 
-import jdk.nashorn.internal.objects.annotations.Getter;
-import jdk.nashorn.internal.objects.annotations.Setter;
+import lombok.EqualsAndHashCode;
+import lombok.Setter;
+import lombok.Getter;
+import lombok.NonNull;
 
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.EnumSet;
 
 /**
- * Author: Richard Hrmo
+ * @author Richard Hrmo
  */
-public class Component {
-
+@EqualsAndHashCode
+@Entity
+public class Component{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter @Setter private Long id;
+    @Getter @NonNull private Long id;
 
-    @Getter private String name;
+    @Getter @Setter @NonNull private String name;
 
-    @Getter private boolean isAvailable = false;
+    @Getter @Setter private boolean isAvailable = false;
 
     @Enumerated
-    @Getter private ComponentType componentType;
+    @Getter @NonNull private ComponentType componentType;
 
     public Component(){}
 
@@ -33,28 +33,8 @@ public class Component {
         this.componentType = componentType;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public boolean isAvailable() {
-        return isAvailable;
-    }
-
-    public void setAvailable(boolean available) {
-        isAvailable = available;
-    }
-
-    public ComponentType getComponentType() {
-        return componentType;
-    }
-
     public void setComponentType(ComponentType componentType) {
-        if (!componentType.getDeclaringClass().isInstance(ComponentType.class)){
+        if (EnumSet.allOf(ComponentType.class).contains(componentType)){
             throw new IllegalArgumentException("component type not supported");
         }
         this.componentType = componentType;
