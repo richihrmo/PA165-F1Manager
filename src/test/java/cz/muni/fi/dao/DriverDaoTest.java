@@ -1,4 +1,7 @@
 import cz.fi.muni.pa165.PersistenceSampleApplicationContext;
+import cz.muni.fi.entities.Driver;
+import cz.muni.fi.dao.DriverDao;
+import cz.muni.fi.dao.DriverDaoImpl;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -7,10 +10,10 @@ import javax.persistence.PersistenceUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import static org.assertj.core.api.Assertions.*;
-
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 
 /**
  * @author Lucie Kureckova, 445264
@@ -35,8 +38,8 @@ public class DriverDaoTest extends AbstractTestNGSpringContextTests {
     private Driver driver3 = new Driver();
     
     
-    @BeforeClass
-    public void init(){
+    @BeforeMethod
+    public void setUp(){
         mainDriver1.setAsMainDriver();
         mainDriver1.setName("Michael");
         mainDriver1.setSurname("Schumacher");
@@ -45,9 +48,11 @@ public class DriverDaoTest extends AbstractTestNGSpringContextTests {
         testDriver1.setName("Alan");
         testDriver1.setSurname("Rickman");
         
+        em.getTransaction().begin();
         em.persist(mainDriver1);
         em.persist(testDriver1);
         em.persist(testDriver2);
+        em.getTransaction().commit();
         
         driver1.setName("Albus Percival Wulfric Brian");
         driver1.setSurname("Dumbledore");
@@ -102,5 +107,12 @@ public class DriverDaoTest extends AbstractTestNGSpringContextTests {
         em.persist(driver3);
         driverManager.deleteDriver(driver3);
         assertThat(em.find(Driver.class, driver2.getId())).isNull();
+    }
+    
+    @AfterMethod
+    public void tearDown() {
+        em.getTransaction().begin();
+        em.createQuery("delete from Driver").executeUpdate();
+        em.getTransaction().commit();
     }
 }

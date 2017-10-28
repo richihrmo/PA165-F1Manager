@@ -11,6 +11,7 @@ import javax.persistence.OneToOne;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import cz.muni.fi.enums.EComponentType;
 
 /**
  * @author Lucie Kureckova, 445264
@@ -40,18 +41,14 @@ public class Car {
     
     @OneToOne
     @Getter private Component brakes;
-    
-    //@OneToMany 
-    //Setter @Getter List<Driver> developers = new ArrayList<Person>(); ??
 
-    public Car(Driver driver, Component engine, Component aerodynamics, Component suspension, Component transmission, Component brakes, /*List<Driver> developers*/) {
+    public Car(Driver driver, Component engine, Component aerodynamics, Component suspension, Component transmission, Component brakes) {
         this.driver = driver;
         setEngine(engine);
         setAerodynamics(aerodynamics);
         setSuspension(suspension);
         setTransmission(transmission);
         setBrakes(brakes);
-        /*this.developers = developers;*/
     }
     
     public Car(){}
