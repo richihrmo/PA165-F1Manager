@@ -33,9 +33,6 @@ public class DriverDaoTest extends AbstractTestNGSpringContextTests {
     private Driver mainDriver1 = new Driver();
     private Driver testDriver1 = new Driver();
     private Driver testDriver2 = new Driver();
-    private Driver driver1 = new Driver();
-    private Driver driver2 = new Driver();
-    private Driver driver3 = new Driver();
     
     
     @BeforeMethod
@@ -53,20 +50,15 @@ public class DriverDaoTest extends AbstractTestNGSpringContextTests {
         em.persist(testDriver1);
         em.persist(testDriver2);
         em.getTransaction().commit();
-        
-        driver1.setName("Albus Percival Wulfric Brian");
-        driver1.setSurname("Dumbledore");
     }
     
     @Test
     public void listDriversTest(){
-        assertThat(driverManager.listDrivers()).isNotNull();
         assertThat(driverManager.listDrivers()).containsExactlyInAnyOrder(mainDriver1, testDriver1, testDriver2);
     }
     
     @Test
     public void listTestDriversTest(){
-        assertThat(driverManager.listTestDrivers()).isNotNull();
         assertThat(driverManager.listTestDrivers()).containsExactlyInAnyOrder(testDriver1, testDriver2);
     }
     
@@ -89,13 +81,19 @@ public class DriverDaoTest extends AbstractTestNGSpringContextTests {
     
     @Test
     public void addDriverTest(){
+        Driver driver1 = new Driver();
+        driver1.setName("Albus Percival Wulfric Brian");
         driverManager.addDriver(driver1);
         assertThat(em.find(Driver.class, driver1.getId())).isEqualTo(driver1);
     }
     
     @Test
     public void updateDriverTest(){
+        Driver driver2 = new Driver();
+        driver2.setName("James");
+        em.getTransaction().begin();
         em.persist(driver2);
+        em.getTransaction().commit();
         driver2.setName("Harry");
         driver2.setSurname("Potter");
         driverManager.updateDriver(driver2);
@@ -104,9 +102,12 @@ public class DriverDaoTest extends AbstractTestNGSpringContextTests {
     
     @Test
     public void deleteDriverTest(){
+        Driver driver3 = new Driver();
+        em.getTransaction().begin();
         em.persist(driver3);
+        em.getTransaction().commit();
         driverManager.deleteDriver(driver3);
-        assertThat(em.find(Driver.class, driver2.getId())).isNull();
+        assertThat(em.find(Driver.class, driver3.getId())).isNull();
     }
     
     @AfterMethod

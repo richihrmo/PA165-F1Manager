@@ -16,7 +16,6 @@ import cz.muni.fi.enums.EComponentType;
 /**
  * @author Lucie Kureckova, 445264
  */
-
 @EqualsAndHashCode
 @Entity
 public class Car {
