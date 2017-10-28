@@ -64,30 +64,35 @@ public class TeamDaoTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void updateTeamTest() {
-        assertThat(teamManager.findTeam(redTeam.getId())).isEqualTo(redTeam);
+        assertThat(em.find(Team.class, redTeam.getId())).isEqualTo(redTeam);
 
         redTeam.setName("New team name");
         teamManager.updateTeam(redTeam);
 
-        assertThat(teamManager.findTeam(redTeam.getId())).isEqualTo(redTeam);
+        assertThat(em.find(Team.class, redTeam.getId())).isEqualTo(redTeam);
     }
 
     @Test
     public void addTeamTest() {
         Car yellowCar = new Car();
         Car greenCar = new Car();
+        em.getTransaction().begin();
+        em.persist(yellowCar);
+        em.persist(greenCar);
+        em.getTransaction().commit();
+
         Team newTeam = new Team("New team", yellowCar, greenCar);
 
-        assertThat(teamManager.findTeam(newTeam.getName())).isNull();
+        assertThat(em.find(Team.class, newTeam.getName())).isNull();
         teamManager.addTeam(newTeam);
-        assertThat(teamManager.findTeam(newTeam.getId())).isEqualTo(newTeam);
+        assertThat(em.find(Team.class, newTeam.getId())).isEqualTo(newTeam);
     }
 
     @Test
     public void deleteTeamTest() {
-        assertThat(teamManager.findTeam(redTeam.getId())).isEqualTo(redTeam);
-        teamManager.deleteTeam(newTeam);
-        assertThat(teamManager.findTeam(redTeam.getId())).isNull();
+        assertThat(em.find(Team.class, redTeam.getId())).isEqualTo(redTeam);
+        teamManager.deleteTeam(redTeam);
+        assertThat(em.find(Team.class, redTeam.getId())).isNull();
     }
 
     @AfterMethod
