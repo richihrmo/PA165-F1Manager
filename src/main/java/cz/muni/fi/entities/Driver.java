@@ -2,14 +2,12 @@ package cz.muni.fi.entities;
 
 import com.sun.istack.internal.NotNull;
 import cz.muni.fi.enums.EDrivingSkill;
-
-import java.util.EnumSet;
-import java.util.Set;
-
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.EnumSet;
+import java.util.Set;
 
 /**
  * @author Robert Tamas
