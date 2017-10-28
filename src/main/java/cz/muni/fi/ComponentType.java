@@ -1,8 +1,8 @@
 package cz.muni.fi;
 
 /**
- * Author: Richard Hrmo
+ * @author Richard Hrmo
  */
-public enum ComponentType {
+public enum ComponentType{
     ENGINE, TRANSMISSION, BRAKES, AERO, BODY
 }
