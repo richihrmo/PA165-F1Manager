@@ -7,53 +7,68 @@ import java.util.List;
  */
 public interface DriverDao{
     /**
-     * @return list of all drivers
+     * List all drivers
+     *
+     * @param None
+     * @return List<Driver>
      */
     public List<Driver> listDrivers();
 
     /**
-     * @return list of drivers not listed as main drivers
+     * List of drivers not listed as main drivers
+     *
+     * @param None
+     * @return List<Driver>
      */
     public List<Driver> listTestDrivers();
 
     /**
-     * find person by ID
+     * Find person by ID
+     *
      * @param id
-     * @return person
+     * @return Driver
      */
     public Driver findDriver(long id);
 
     /**
-     * find person-driver based on name
+     * Find person-driver based on name
+     *
      * @param name
      * @param surname
-     * @return
+     * @return Driver
      */
     public Driver findDriver(String name, String surname);
 
     /**
-     * find person-test driver based on name
+     * Find person-test driver based on name
+     *
      * @param name
      * @param surname
-     * @return
+     * @return Driver
      */
     public Driver findTestDriver(String name, String surname);
 
     /**
-     * add driver
+     * Add driver
+     *
      * @param driver
+     * @return nothing
      */
     public void addDriver(Driver driver);
 
     /**
-     * update driver
+     * Update driver
+     *
      * @param driver
+     * @return nothing
      */
     public void updateDriver(Driver driver);
 
     /**
-     * delete driver
+     * Delete driver
+     *
      * @param driver
+     * @return nothing
      */
     public void deleteDriver(Driver driver);
 
