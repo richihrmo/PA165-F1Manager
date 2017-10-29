@@ -1,5 +1,6 @@
 package cz.muni.fi.entities;
 
+import com.sun.istack.internal.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
@@ -24,22 +25,22 @@ public class Car {
     @Getter private Long id;
     
     @OneToOne
-    @Setter @Getter private Driver driver;
+    @Setter @Getter @NotNull private Driver driver;
     
     @OneToOne
-    @Getter private Component engine;
+    @Getter @NotNull private Component engine;
     
     @OneToOne
-    @Getter private Component aerodynamics;
+    @Getter @NotNull private Component aerodynamics;
     
     @OneToOne
-    @Getter private Component suspension;
+    @Getter @NotNull private Component suspension;
     
     @OneToOne
-    @Getter private Component transmission;
+    @Getter @NotNull private Component transmission;
     
     @OneToOne
-    @Getter private Component brakes;
+    @Getter @NotNull private Component brakes;
 
     public Car(Driver driver, Component engine, Component aerodynamics, Component suspension, Component transmission, Component brakes) {
         this.driver = driver;

@@ -2,7 +2,6 @@ import cz.fi.muni.pa165.PersistenceSampleApplicationContext;
 import cz.muni.fi.entities.Driver;
 import cz.muni.fi.dao.DriverDao;
 import cz.muni.fi.dao.DriverDaoImpl;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
@@ -44,6 +43,11 @@ public class DriverDaoTest extends AbstractTestNGSpringContextTests {
         
         testDriver1.setName("Alan");
         testDriver1.setSurname("Rickman");
+        testDriver1.setNationality("english");
+        
+        testDriver2.setName("Anakin");
+        testDriver2.setSurname("Skywalker");
+        testDriver2.setNationality("unknown");
         
         em.getTransaction().begin();
         em.persist(mainDriver1);
@@ -83,6 +87,8 @@ public class DriverDaoTest extends AbstractTestNGSpringContextTests {
     public void addDriverTest(){
         Driver driver1 = new Driver();
         driver1.setName("Albus Percival Wulfric Brian");
+        driver1.setSurname("Dumbledor");
+        driver1.setNationality("english");
         driverManager.addDriver(driver1);
         assertThat(em.find(Driver.class, driver1.getId())).isEqualTo(driver1);
     }
@@ -90,7 +96,9 @@ public class DriverDaoTest extends AbstractTestNGSpringContextTests {
     @Test
     public void updateDriverTest(){
         Driver driver2 = new Driver();
-        driver2.setName("James");
+        driver2.setName("Tom");
+        driver2.setSurname("Riddle");
+        driver2.setNationality("english");
         em.getTransaction().begin();
         em.persist(driver2);
         em.getTransaction().commit();
@@ -103,6 +111,9 @@ public class DriverDaoTest extends AbstractTestNGSpringContextTests {
     @Test
     public void deleteDriverTest(){
         Driver driver3 = new Driver();
+        driver3.setName("Tom");
+        driver3.setSurname("Riddle");
+        driver3.setNationality("english");
         em.getTransaction().begin();
         em.persist(driver3);
         em.getTransaction().commit();
