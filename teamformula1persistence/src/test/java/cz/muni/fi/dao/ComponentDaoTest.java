@@ -25,7 +25,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Robert Tamas
  */
 @Transactional
-@TestExecutionListeners(TransactionalTestExecutionListener.class)
 @ContextConfiguration(classes = PersistenceApplicationContext.class)
 public class ComponentDaoTest extends AbstractTestNGSpringContextTests {
 
@@ -71,7 +70,7 @@ public class ComponentDaoTest extends AbstractTestNGSpringContextTests {
     @Test
     public void listAvailableComponentsTest() {
         List<Component> foundAvailableComponents = componentManager.listAvailableComponents();
-        assertThat(foundAvailableComponents).containsExactlyInAnyOrder(engine, aerodynamic);
+        assertThat(foundAvailableComponents).containsExactlyInAnyOrder(transmission, aerodynamic);
     }
 
     @Test
