@@ -1,6 +1,6 @@
 package cz.muni.fi.entities;
 
-import com.sun.istack.internal.NotNull;
+import javax.validation.constraints.NotNull;
 import cz.muni.fi.enums.ComponentType;
 import lombok.EqualsAndHashCode;
 import lombok.Setter;

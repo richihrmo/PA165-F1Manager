@@ -25,7 +25,7 @@ public interface DriverDao{
     /**
      * Find person by ID
      *
-     * @param id
+     * @param id driver id
      * @return Driver
      */
     public Driver findDriver(long id);
@@ -33,8 +33,8 @@ public interface DriverDao{
     /**
      * Find person-driver based on name
      *
-     * @param name
-     * @param surname
+     * @param name driver's name
+     * @param surname driver's surname
      * @return Driver
      */
     public Driver findDriver(String name, String surname);
@@ -42,8 +42,8 @@ public interface DriverDao{
     /**
      * Find person-test driver based on name
      *
-     * @param name
-     * @param surname
+     * @param name test driver's name
+     * @param surname test driver's surname
      * @return Driver
      */
     public Driver findTestDriver(String name, String surname);
@@ -51,21 +51,21 @@ public interface DriverDao{
     /**
      * Add driver
      *
-     * @param driver
+     * @param driver Driver
      */
     public void addDriver(Driver driver);
 
     /**
      * Update driver
      *
-     * @param driver
+     * @param driver Driver
      */
     public void updateDriver(Driver driver);
 
     /**
      * Delete driver
      *
-     * @param driver
+     * @param driver Driver
      */
     public void deleteDriver(Driver driver);
 

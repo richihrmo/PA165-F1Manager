@@ -1,11 +1,11 @@
 package cz.muni.fi.entities;
 
-import com.sun.istack.internal.NotNull;
 import cz.muni.fi.enums.DrivingSkill;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.EnumSet;
 import java.util.Set;
 
@@ -24,7 +24,7 @@ public class Driver {
     @Getter @Setter @NotNull private String nationality;
     @Getter boolean isMainDriver = false;
 
-    @Enumerated
+    @Enumerated(EnumType.ORDINAL)
     @Getter private Set<DrivingSkill> drivingSkills = EnumSet.allOf(DrivingSkill.class);
 
 
