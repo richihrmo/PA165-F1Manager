@@ -2,7 +2,10 @@ package cz.muni.fi.dao;
 
 import cz.muni.fi.PersistenceApplicationContext;
 import cz.muni.fi.entities.Car;
+import cz.muni.fi.entities.Component;
 import cz.muni.fi.entities.Team;
+import cz.muni.fi.entities.Driver;
+import cz.muni.fi.enums.ComponentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -24,7 +27,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Matus Macko
  */
 @Transactional
-@TestExecutionListeners(TransactionalTestExecutionListener.class)
 @ContextConfiguration(classes = PersistenceApplicationContext.class)
 public class TeamDaoTest extends AbstractTestNGSpringContextTests {
 
@@ -38,35 +40,59 @@ public class TeamDaoTest extends AbstractTestNGSpringContextTests {
     private TeamDao teamManager;
 
     private Team blueTeam;
-    private Team redTeam;
-
-    //TODO: to iste ako cardao
 
     @BeforeMethod
     public void setup() {
-        Car blackCar = new Car();
-        Car silverCar = new Car();
-        Car goldCar = new Car();
-        Car purpleCar = new Car();
+        Driver blackCarDriver = new Driver("John", "Does", "US");
+        Component blackEngine = new Component("Engine", false, ComponentType.ENGINE);
+        Component blackAero = new Component("Aero", false, ComponentType.AERODYNAMICS);
+        Component blackBreaks = new Component("Breaks", false, ComponentType.BRAKES);
+        Component blackSuspension = new Component("Purpl", false, ComponentType.SUSPENSION);
+        Component blackTransmision = new Component("Purpl", false, ComponentType.TRANSMISSION);
+
+        Driver silverCarDriver = new Driver("James", "Bond", "SK");
+        Component silverEngine = new Component("Engine", false, ComponentType.ENGINE);
+        Component silverAero = new Component("Aero", false, ComponentType.AERODYNAMICS);
+        Component silverBreaks = new Component("Breaks", false, ComponentType.BRAKES);
+        Component silverSuspension = new Component("Purpl", false, ComponentType.SUSPENSION);
+        Component silverTransmision = new Component("Purpl", false, ComponentType.TRANSMISSION);
+        Driver goldCarDriver = new Driver("Jiri", "Novak", "CZ");
+        Driver purpleCarDriver = new Driver("Martin", "King", "EN");
+
+        Car blackCar = new Car(blackCarDriver, blackEngine, blackAero, blackSuspension, blackTransmision, blackBreaks);
+        Car silverCar = new Car(silverCarDriver, silverEngine, silverAero, silverSuspension, silverTransmision, silverBreaks);
 
         blueTeam = new Team("Blue team", blackCar, silverCar);
-        redTeam = new Team("Red team", goldCar, purpleCar);
 
         EntityManager entityManager = emf.createEntityManager();
         entityManager.getTransaction().begin();
+
+        entityManager.persist(blackEngine);
+        entityManager.persist(blackAero);
+        entityManager.persist(blackBreaks);
+        entityManager.persist(blackSuspension);
+        entityManager.persist(blackTransmision);
+        entityManager.persist(blackCarDriver);
+
+        entityManager.persist(silverEngine);
+        entityManager.persist(silverAero);
+        entityManager.persist(silverBreaks);
+        entityManager.persist(silverSuspension);
+        entityManager.persist(silverTransmision);
+        entityManager.persist(silverCarDriver);
+
         entityManager.persist(blackCar);
         entityManager.persist(silverCar);
-        entityManager.persist(goldCar);
-        entityManager.persist(purpleCar);
+
         entityManager.persist(blueTeam);
-        entityManager.persist(redTeam);
+
         entityManager.getTransaction().commit();
         entityManager.close();
     }
 
     @Test
     public void listallTeamsTest() {
-        assertThat(teamManager.listTeams()).containsExactlyInAnyOrder(blueTeam, redTeam);
+        assertThat(teamManager.listTeams()).containsExactlyInAnyOrder(blueTeam);
     }
 
     @Test
@@ -76,27 +102,30 @@ public class TeamDaoTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void findTeamByIdTest() {
-        assertThat(teamManager.findTeam(redTeam.getId())).isEqualTo(redTeam);
+        assertThat(teamManager.findTeam(blueTeam.getId())).isEqualTo(blueTeam);
     }
 
     @Test
     public void updateTeamTest() {
-        assertThat(em.find(Team.class, redTeam.getId())).isEqualTo(redTeam);
+        assertThat(em.find(Team.class, blueTeam.getId())).isEqualTo(blueTeam);
 
-        redTeam.setName("New team name");
-        teamManager.updateTeam(redTeam);
+        blueTeam.setName("New team name");
+        teamManager.updateTeam(blueTeam);
 
-        assertThat(em.find(Team.class, redTeam.getId())).isEqualTo(redTeam);
+        assertThat(em.find(Team.class, blueTeam.getId())).isEqualTo(blueTeam);
     }
 
     @Test
     public void addTeamTest() {
         Car yellowCar = new Car();
         Car greenCar = new Car();
-        em.getTransaction().begin();
-        em.persist(yellowCar);
-        em.persist(greenCar);
-        em.getTransaction().commit();
+
+        EntityManager entityManager = emf.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.persist(yellowCar);
+        entityManager.persist(greenCar);
+        entityManager.getTransaction().commit();
+        entityManager.close();
 
         Team newTeam = new Team("New team", yellowCar, greenCar);
 
@@ -107,9 +136,9 @@ public class TeamDaoTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void deleteTeamTest() {
-        assertThat(em.find(Team.class, redTeam.getId())).isEqualTo(redTeam);
-        teamManager.deleteTeam(redTeam);
-        assertThat(em.find(Team.class, redTeam.getId())).isNull();
+        assertThat(em.find(Team.class, blueTeam.getId())).isEqualTo(blueTeam);
+        teamManager.deleteTeam(blueTeam);
+        assertThat(em.find(Team.class, blueTeam.getId())).isNull();
     }
 
     @AfterMethod
