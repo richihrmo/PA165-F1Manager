@@ -1,6 +1,7 @@
 package cz.muni.fi.entities;
 
 import cz.muni.fi.enums.DrivingSkill;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +14,7 @@ import java.util.Set;
  * @author Robert Tamas
  */
 @Entity
+@EqualsAndHashCode
 public class Driver {
 
     @Id
@@ -22,11 +24,12 @@ public class Driver {
     @Getter @Setter @NotNull private String name;
     @Getter @Setter @NotNull private String surname;
     @Getter @Setter @NotNull private String nationality;
-    @Getter boolean isMainDriver = false;
+    @Getter private boolean isMainDriver = false;
 
+    /*
     @ElementCollection
     @Enumerated(EnumType.ORDINAL)
-    @Getter private Set<DrivingSkill> drivingSkills = EnumSet.allOf(DrivingSkill.class);
+    @Getter private Set<DrivingSkill> drivingSkills = EnumSet.allOf(DrivingSkill.class);*/
 
 
     public Driver() {
@@ -38,19 +41,20 @@ public class Driver {
         this.nationality = nationality;
     }
 
+    /*
     public void setDrivingSkills(DrivingSkill drivingSkill, int skillLevel) {
         for (DrivingSkill ds : drivingSkills) {
             if (ds == drivingSkill) {
                 ds.setSkillLevel(skillLevel);
             }
         }
-    }
+    }*/
 
     public void setAsMainDriver() {
-        isMainDriver = true;
+        isMainDriver = Boolean.TRUE;
     }
 
     public void setAsTestDriver() {
-        isMainDriver = false;
+        isMainDriver = Boolean.FALSE;
     }
 }
