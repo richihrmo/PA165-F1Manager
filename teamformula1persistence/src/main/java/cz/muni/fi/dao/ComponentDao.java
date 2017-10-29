@@ -1,5 +1,7 @@
 package cz.muni.fi.dao;
 
+import cz.muni.fi.entities.Component;
+
 import java.util.List;
 
 /**

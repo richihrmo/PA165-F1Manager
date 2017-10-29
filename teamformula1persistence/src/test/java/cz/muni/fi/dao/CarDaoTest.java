@@ -1,3 +1,5 @@
+package cz.muni.fi.dao;
+
 import cz.muni.fi.PersistenceApplicationContext;
 import cz.muni.fi.dao.CarDaoImpl;
 import cz.muni.fi.entities.Driver;

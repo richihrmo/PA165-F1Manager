@@ -5,7 +5,7 @@ import lombok.Getter;
 /**
  * @author Robert Tamas
  */
-public enum EDrivingSkill {
+public enum DrivingSkill {
 
     DRIVING_ON_WET("Driving on wet asphalt"),
     POWER_SLIDING("Power sliding"),
@@ -15,7 +15,7 @@ public enum EDrivingSkill {
     private String skill;
     @Getter private int skillLevel = 0;
 
-    EDrivingSkill(String skill) {
+    DrivingSkill(String skill) {
         this.skill = skill;
     }
 

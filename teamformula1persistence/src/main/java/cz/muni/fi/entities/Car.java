@@ -1,18 +1,16 @@
 package cz.muni.fi.entities;
 
 import com.sun.istack.internal.NotNull;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import cz.muni.fi.enums.ComponentType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import cz.muni.fi.enums.EComponentType;
 
 /**
  * @author Lucie Kureckova, 445264
@@ -54,35 +52,35 @@ public class Car {
     public Car(){}
     
     public void setEngine(Component engine) {
-        if(engine.getType() != EComponentType.ENGINE){
+        if(engine.getComponentType() != ComponentType.ENGINE){
             throw new IllegalArgumentException("type of component is not ENGINE");
         }
         this.engine = engine;
     }
 
     public void setAerodynamics(Component aerodynamics) {
-        if(aerodynamics.getType() != EComponentType.AERODYNAMICS){
+        if(aerodynamics.getComponentType() != ComponentType.AERODYNAMICS){
             throw new IllegalArgumentException("type of component is not AERODYNAMICS");
         }
         this.aerodynamics = aerodynamics;
     }
 
     public void setSuspension(Component suspension) {
-        if(suspension.getType() != EComponentType.SUSPENSION){
+        if(suspension.getComponentType() != ComponentType.SUSPENSION){
             throw new IllegalArgumentException("type of component is not SUSPENSION");
         }
         this.suspension = suspension;
     }
 
     public void setTransmission(Component transmission) {
-        if(transmission.getType() != EComponentType.TRANSMISSION){
+        if(transmission.getComponentType() != ComponentType.TRANSMISSION){
             throw new IllegalArgumentException("type of component is not TRANSMISSION");
         }
         this.transmission = transmission;
     }
 
     public void setBrakes(Component brakes) {
-        if(brakes.getType() != EComponentType.BRAKES){
+        if(brakes.getComponentType() != ComponentType.BRAKES){
             throw new IllegalArgumentException("type of component is not BRAKES");
         }
         this.brakes = brakes;

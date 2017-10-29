@@ -1,7 +1,7 @@
-import cz.fi.muni.pa165.PersistenceSampleApplicationContext;
+package cz.muni.fi.dao;
+
+import cz.muni.fi.PersistenceApplicationContext;
 import cz.muni.fi.entities.Driver;
-import cz.muni.fi.dao.DriverDao;
-import cz.muni.fi.dao.DriverDaoImpl;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
@@ -17,7 +17,7 @@ import org.testng.annotations.BeforeMethod;
 /**
  * @author Lucie Kureckova, 445264
  */
-@ContextConfiguration(classes = PersistenceSampleApplicationContext.class)
+@ContextConfiguration(classes = PersistenceApplicationContext.class)
 public class DriverDaoTest extends AbstractTestNGSpringContextTests {
     
     @PersistenceContext
@@ -68,19 +68,19 @@ public class DriverDaoTest extends AbstractTestNGSpringContextTests {
     
     @Test
     public void findDriverByIdTest(){
-        assertThat(driverManager.findDriverById(testDriver1.getId())).isEqualTo(testDriver1);
+        assertThat(driverManager.findDriver(testDriver1.getId())).isEqualTo(testDriver1);
     }
     
     @Test
     public void findDriverByNameTest(){
-        assertThat(driverManager.findDriverByName(mainDriver1.getName(), mainDriver1.getSurname())).isEqualTo(mainDriver1);
-        assertThat(driverManager.findDriverByName("sasa", "sasula")).isNull();
+        assertThat(driverManager.findDriver(mainDriver1.getName(), mainDriver1.getSurname())).isEqualTo(mainDriver1);
+        assertThat(driverManager.findDriver("sasa", "sasula")).isNull();
     }
     
     @Test
     public void findDeveloperTest(){
-        assertThat(driverManager.findDeveloper(mainDriver1.getName(), mainDriver1.getSurname())).isNull();
-        assertThat(driverManager.findDeveloper(testDriver1.getName(), testDriver1.getSurname())).isEqualTo(testDriver1);
+        assertThat(driverManager.findTestDriver(mainDriver1.getName(), mainDriver1.getSurname())).isNull();
+        assertThat(driverManager.findTestDriver(testDriver1.getName(), testDriver1.getSurname())).isEqualTo(testDriver1);
     }
     
     @Test

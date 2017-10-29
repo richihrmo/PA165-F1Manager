@@ -1,6 +1,8 @@
 package cz.muni.fi.dao;
 
 import cz.muni.fi.PersistenceApplicationContext;
+import cz.muni.fi.entities.Component;
+import cz.muni.fi.enums.ComponentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -39,18 +41,18 @@ public class ComponentDaoTest extends AbstractTestNGSpringContextTests {
     public void setup() {
         transmission = new Component();
         transmission.setName("Transmission");
-        transmission.setType(EComponentType.TRANSMISSION);
-        transmission.setIsAvailable(true);
+        transmission.setComponentType(ComponentType.TRANSMISSION);
+        transmission.setAvailable(true);
 
         engine = new Component();
         engine.setName("Engine");
-        engine.setType(EComponentType.ENGINE);
-        engine.setIsAvailable(false);
+        engine.setComponentType(ComponentType.ENGINE);
+        engine.setAvailable(false);
 
         aerodynamic = new Component();
         aerodynamic.setName("Aerodynamic");
-        aerodynamic.setType(EComponentType.AERODYNAMIC);
-        aerodynamic.setIsAvailable(true);
+        aerodynamic.setComponentType(ComponentType.AERODYNAMICS);
+        aerodynamic.setAvailable(true);
 
         em.getTransaction().begin();
         em.persist(transmission);
@@ -87,18 +89,18 @@ public class ComponentDaoTest extends AbstractTestNGSpringContextTests {
     public void addComponentTest() {
         Component breaks = new Component();
         breaks.setName("Breaks");
-        breaks.setType(EComponentType.BREAKS);
-        breaks.setIsAvailable(true);
+        breaks.setComponentType(ComponentType.BRAKES);
+        breaks.setAvailable(true);
 
         componentManager.addComponent(breaks);
         assertThat(em.find(Component.class, breaks.getId())).isEqualTo(breaks);
     }
 
     public void updateComponent() {
-        assertThat(em.find(Component.class, engine.getId())).isEqualTo(engine)
+        assertThat(em.find(Component.class, engine.getId())).isEqualTo(engine);
 
         engine.setName("Engine with edited name");
-        engine.setIsAvailable(true);
+        engine.setAvailable(true);
         componentManager.updateComponent(engine);
 
         assertThat(em.find(Component.class, engine.getId())).isEqualTo(engine);

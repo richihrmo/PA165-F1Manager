@@ -1,6 +1,7 @@
 package cz.muni.fi.dao;
 
 import cz.muni.fi.PersistenceApplicationContext;
+import cz.muni.fi.entities.Car;
 import cz.muni.fi.entities.Team;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -51,7 +52,7 @@ public class TeamDaoTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void listallTeamsTest() {
-        assertThat(teamManager.listAllTeams()).containsExactlyInAnyOrder(blueTeam, redTeam);
+        assertThat(teamManager.listTeams()).containsExactlyInAnyOrder(blueTeam, redTeam);
     }
 
     @Test

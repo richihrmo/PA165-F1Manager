@@ -1,9 +1,10 @@
-package cz.muni.fi;
+package cz.muni.fi.entities;
 
+import com.sun.istack.internal.NotNull;
+import cz.muni.fi.enums.ComponentType;
 import lombok.EqualsAndHashCode;
 import lombok.Setter;
 import lombok.Getter;
-import lombok.NonNull;
 
 import javax.persistence.*;
 import java.util.EnumSet;
@@ -11,19 +12,19 @@ import java.util.EnumSet;
 /**
  * @author Richard Hrmo
  */
-@EqualsAndHashCode
 @Entity
+@EqualsAndHashCode
 public class Component{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter @NonNull private Long id;
+    @Getter @NotNull private Long id;
 
-    @Getter @Setter @NonNull private String name;
+    @Getter @Setter @NotNull private String name;
 
     @Getter @Setter private boolean isAvailable = false;
 
     @Enumerated
-    @Getter @NonNull private ComponentType componentType;
+    @Getter @NotNull private ComponentType componentType;
 
     public Component(){}
 
