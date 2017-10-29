@@ -81,19 +81,44 @@ public class DriverDaoTest extends AbstractTestNGSpringContextTests {
     
     @Test
     public void findDriverByIdTest(){
-        assertThat(driverManager.findDriver(testDriver1.getId())).isEqualTo(testDriver1);
+        assertThat(driverManager.findDriverById(testDriver1.getId())).isEqualTo(testDriver1);
+    }
+    
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void findDriverByNullIdTest(){
+        driverManager.findDriverById(null);
     }
     
     @Test
     public void findDriverByNameTest(){
-        assertThat(driverManager.findDriver(mainDriver1.getName(), mainDriver1.getSurname())).isEqualTo(mainDriver1);
-        assertThat(driverManager.findDriver("sasa", "sasula")).isNull();
+        assertThat(driverManager.findDriverByName(mainDriver1.getName(), mainDriver1.getSurname())).isEqualTo(mainDriver1);
+        assertThat(driverManager.findDriverByName("sasa", "sasula")).isNull();
+    }
+    
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void findDriverByNullNameTest(){
+        driverManager.findDriverByName(null, "Rich");
+    }
+    
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void findDriverByNullName2Test(){
+        driverManager.findDriverByName("Richard", null);
     }
     
     @Test
     public void findDeveloperTest(){
         assertThat(driverManager.findTestDriver(mainDriver1.getName(), mainDriver1.getSurname())).isNull();
         assertThat(driverManager.findTestDriver(testDriver1.getName(), testDriver1.getSurname())).isEqualTo(testDriver1);
+    }
+    
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void findNullDeveloperTest(){
+        driverManager.findDriverByName("Richard", null);
+    }
+    
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void findNullDeveloper2Test(){
+        driverManager.findDriverByName(null, "Rich");
     }
     
     @Test
@@ -104,6 +129,11 @@ public class DriverDaoTest extends AbstractTestNGSpringContextTests {
         driver1.setNationality("english");
         driverManager.addDriver(driver1);
         assertThat(em.find(Driver.class, driver1.getId())).isEqualTo(driver1);
+    }
+    
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void addNullDriverTest(){
+        driverManager.addDriver(null);
     }
     
     @Test
@@ -125,6 +155,11 @@ public class DriverDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(em.find(Driver.class, driver2.getId())).isEqualTo(driver2);
     }
     
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void updateNullDriverTest(){
+        driverManager.updateDriver(null);
+    }
+    
     @Test
     public void deleteDriverTest(){
         Driver driver3 = new Driver();
@@ -140,6 +175,11 @@ public class DriverDaoTest extends AbstractTestNGSpringContextTests {
 
         driverManager.deleteDriver(driver3);
         assertThat(em.find(Driver.class, driver3.getId())).isNull();
+    }
+    
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void deleteNullDriverTest(){
+        driverManager.deleteDriver(null);
     }
     
     @AfterMethod

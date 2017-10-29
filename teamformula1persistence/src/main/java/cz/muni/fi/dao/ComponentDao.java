@@ -27,35 +27,40 @@ public interface ComponentDao {
      *
      * @param name component name
      * @return found component or null
+     * @throws IllegalArgumentException when argumet is null
      */
-    public Component findComponent(String name);
+    public Component findComponentByName(String name) throws IllegalArgumentException;
 
     /**
      * Find component in DB by id
      *
      * @param id component id
      * @return found component or null
+     * @throws IllegalArgumentException when argumet is null
      */
-    public Component findComponent(Long id);
+    public Component findComponentById(Long id) throws IllegalArgumentException;
 
     /**
      * Add component to DB
      *
      * @param component component to be added
+     * @throws IllegalArgumentException when argumet is null
      */
-    public void addComponent(Component component);
+    public void addComponent(Component component) throws IllegalArgumentException;
 
     /**
      * Update component in DB
      *
      * @param component compondent to be updated
+     * @throws IllegalArgumentException when argumet is null
      */
-    public void updateComponent(Component component);
+    public void updateComponent(Component component) throws IllegalArgumentException;
 
     /**
      * Delete component from DB
      *
      * @param component component to be deleted
+     * @throws IllegalArgumentException when argumet is null
      */
-    public void deleteComponent(Component component);
+    public void deleteComponent(Component component) throws IllegalArgumentException;
 }

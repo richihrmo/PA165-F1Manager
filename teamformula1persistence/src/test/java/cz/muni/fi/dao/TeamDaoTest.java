@@ -130,12 +130,22 @@ public class TeamDaoTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void findTeamByNameTest() {
-        assertThat(teamManager.findTeam(blueTeam.getName())).isEqualTo(blueTeam);
+        assertThat(teamManager.findTeamByName(blueTeam.getName())).isEqualTo(blueTeam);
+    }
+    
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void findTeamByNullNameTest(){
+        teamManager.findTeamByName(null);
     }
 
     @Test
     public void findTeamByIdTest() {
-        assertThat(teamManager.findTeam(blueTeam.getId())).isEqualTo(blueTeam);
+        assertThat(teamManager.findTeamById(blueTeam.getId())).isEqualTo(blueTeam);
+    }
+    
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void findTeamByNullIdTest(){
+        teamManager.findTeamById(null);
     }
 
     @Test
@@ -147,11 +157,21 @@ public class TeamDaoTest extends AbstractTestNGSpringContextTests {
 
         assertThat(em.find(Team.class, blueTeam.getId())).isEqualTo(blueTeam);
     }
+    
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void updateNullTeamTest(){
+        teamManager.updateTeam(null);
+    }
 
     @Test
     public void addTeamTest() {
         teamManager.addTeam(greenTeam);
         assertThat(em.find(Team.class, greenTeam.getId())).isEqualTo(greenTeam);
+    }
+    
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void addNullTeamTest(){
+        teamManager.addTeam(null);
     }
 
     @Test
@@ -159,6 +179,11 @@ public class TeamDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(em.find(Team.class, blueTeam.getId())).isEqualTo(blueTeam);
         teamManager.deleteTeam(blueTeam);
         assertThat(em.find(Team.class, blueTeam.getId())).isNull();
+    }
+    
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void deleteNullTeamTest(){
+        teamManager.deleteTeam(null);
     }
 
     @AfterMethod

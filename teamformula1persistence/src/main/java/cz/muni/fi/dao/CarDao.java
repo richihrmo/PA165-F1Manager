@@ -22,35 +22,40 @@ public interface CarDao {
      *
      * @param driver driver
      * @return car with driver
+     * @throws IllegalArgumentException when argumet is null
      */
-    public Car findCar(Driver driver);
+    public Car findCarByDriver(Driver driver) throws IllegalArgumentException;
 
     /**
      * Find specific car by its id
      *
      * @param id DB id
      * @return car
+     * @throws IllegalArgumentException when argumet is null
      */
-    public Car findCar(Long id);
+    public Car findCarById(Long id) throws IllegalArgumentException;
 
     /**
      * Adds car to DB
      *
      * @param car car to be added
+     * @throws IllegalArgumentException when argumet is null
      */
-    public void addCar(Car car);
+    public void addCar(Car car) throws IllegalArgumentException;
 
     /**
      * Updates car in DB
      *
      * @param car car to be updated
+     * @throws IllegalArgumentException when argumet is null
      */
-    public void updateCar(Car car);
+    public void updateCar(Car car) throws IllegalArgumentException;
 
     /**
      * Deletes car from DB
      *
      * @param car car to be deleted
+     * @throws IllegalArgumentException when argumet is null
      */
-    public void deleteCar(Car car);
+    public void deleteCar(Car car) throws IllegalArgumentException;
 }

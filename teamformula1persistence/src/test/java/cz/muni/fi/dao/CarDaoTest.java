@@ -108,18 +108,33 @@ public class CarDaoTest extends AbstractTestNGSpringContextTests{
 
      @Test
      public void findCarByIdTest(){
-          assertThat(carDao.findCar(ferrari.getId())).isEqualTo(ferrari);
+          assertThat(carDao.findCarById(ferrari.getId())).isEqualTo(ferrari);
+     }
+     
+     @Test(expectedExceptions = IllegalArgumentException.class)
+     public void findCarByNullIdTest(){
+         carDao.findCarById(null);
      }
 
      @Test
      public void findCarByDriverTest(){
-          assertThat(carDao.findCar(ferrariDriver)).isEqualTo(ferrari);
+          assertThat(carDao.findCarByDriver(ferrariDriver)).isEqualTo(ferrari);
+     }
+     
+     @Test(expectedExceptions = IllegalArgumentException.class)
+     public void findCarByNullDriverTest(){
+         carDao.findCarByDriver(null);
      }
 
      @Test
      public void addCarTest(){
           carDao.addCar(skoda);
           assertThat(em.find(Car.class, skoda.getId())).isEqualTo(skoda);
+     }
+     
+     @Test(expectedExceptions = IllegalArgumentException.class)
+     public void addNullCarTest(){
+         carDao.addCar(null);
      }
 
      @Test
@@ -136,12 +151,22 @@ public class CarDaoTest extends AbstractTestNGSpringContextTests{
           carDao.updateCar(bmw);
           assertThat(em.find(Car.class, bmw.getId())).isEqualTo(bmw);
      }
+     
+     @Test(expectedExceptions = IllegalArgumentException.class)
+     public void updateNullCarTest(){
+         carDao.updateCar(null);
+     }
 
      @Test
      public void deleteCarTest(){
           assertThat(em.find(Car.class, ferrari.getId())).isEqualTo(ferrari);
           carDao.deleteCar(ferrari);
           assertThat(em.find(Car.class, ferrari.getId())).isNull();
+     }
+     
+     @Test(expectedExceptions = IllegalArgumentException.class)
+     public void deleteNullCarTest(){
+         carDao.deleteCar(null);
      }
 
      @AfterMethod

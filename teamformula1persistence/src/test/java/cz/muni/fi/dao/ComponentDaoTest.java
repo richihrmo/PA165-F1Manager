@@ -79,14 +79,24 @@ public class ComponentDaoTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void findComponentByNameTest() {
-        Component foundComponent = componentManager.findComponent(engine.getName());
+        Component foundComponent = componentManager.findComponentByName(engine.getName());
         assertThat(foundComponent).isEqualTo(engine);
+    }
+    
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void findComponentByNullNameTest(){
+        componentManager.findComponentByName(null);
     }
 
     @Test
     public void findComponentByIDTest() {
-        Component foundComponent = componentManager.findComponent(aerodynamic.getId());
+        Component foundComponent = componentManager.findComponentById(aerodynamic.getId());
         assertThat(foundComponent).isEqualTo(aerodynamic);
+    }
+    
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void findComponentByNullIdTest(){
+        componentManager.findComponentById(null);
     }
 
     @Test
@@ -99,6 +109,11 @@ public class ComponentDaoTest extends AbstractTestNGSpringContextTests {
         componentManager.addComponent(breaks);
         assertThat(em.find(Component.class, breaks.getId())).isEqualTo(breaks);
     }
+    
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void addNullComponentTest(){
+        componentManager.addComponent(null);
+    }
 
     @Test
     public void updateComponent() {
@@ -110,12 +125,22 @@ public class ComponentDaoTest extends AbstractTestNGSpringContextTests {
 
         assertThat(em.find(Component.class, engine.getId())).isEqualTo(engine);
     }
+    
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void updateNullComponentTest(){
+        componentManager.updateComponent(null);
+    }
 
     @Test
     public void deleteComponentTest() {
         assertThat(em.find(Component.class, engine.getId())).isEqualTo(engine);
         componentManager.deleteComponent(engine);
         assertThat(em.find(Component.class, engine.getId())).isNull();
+    }
+    
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void deleteNullComponentTest(){
+        componentManager.deleteComponent(null);
     }
 
     @AfterMethod
