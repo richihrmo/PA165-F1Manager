@@ -20,7 +20,7 @@ public class DriverDaoImpl implements DriverDao{
     }
 
     public List<Driver> listTestDrivers() {
-        return em.createQuery("select d from Driver d where d.istest = false", Driver.class)
+        return em.createQuery("select d from Driver d where d.ismaindriver = false", Driver.class)
                 .getResultList();
     }
 
@@ -36,7 +36,7 @@ public class DriverDaoImpl implements DriverDao{
     }
 
     public Driver findTestDriver(String name, String surname) {
-        return em.createQuery("select d from Driver d where d.istest = false and name = :name and surname = :surname", Driver.class)
+        return em.createQuery("select d from Driver d where d.ismaindriver = false and name = :name and surname = :surname", Driver.class)
                 .setParameter(":name", name)
                 .setParameter(":surname", surname)
                 .getSingleResult();
