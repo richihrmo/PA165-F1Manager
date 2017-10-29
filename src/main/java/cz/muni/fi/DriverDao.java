@@ -39,10 +39,22 @@ public interface DriverDao{
      */
     public Driver findTestDriver(String name, String surname);
 
+    /**
+     * add driver
+     * @param driver
+     */
     public void addDriver(Driver driver);
 
+    /**
+     * update driver
+     * @param driver
+     */
     public void updateDriver(Driver driver);
 
+    /**
+     * delete driver
+     * @param driver
+     */
     public void deleteDriver(Driver driver);
 
 }
