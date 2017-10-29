@@ -166,8 +166,8 @@ public class TeamDaoTest extends AbstractTestNGSpringContextTests {
         EntityManager entityManager = emf.createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.createQuery("delete from Team").executeUpdate();
-        entityManager.createQuery("delete from Driver").executeUpdate();
         entityManager.createQuery("delete from Car").executeUpdate();
+        entityManager.createQuery("delete from Driver").executeUpdate();
         entityManager.getTransaction().commit();
         entityManager.close();
     }
