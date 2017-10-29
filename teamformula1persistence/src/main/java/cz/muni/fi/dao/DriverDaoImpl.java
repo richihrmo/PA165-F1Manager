@@ -1,4 +1,4 @@
-package cz.muni.fi;
+package cz.muni.fi.dao;
 
 import cz.muni.fi.entities.Driver;
 import org.springframework.stereotype.Repository;

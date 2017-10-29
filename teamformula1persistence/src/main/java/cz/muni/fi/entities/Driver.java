@@ -1,7 +1,7 @@
 package cz.muni.fi.entities;
 
 import com.sun.istack.internal.NotNull;
-import cz.muni.fi.enums.EDrivingSkill;
+import cz.muni.fi.enums.DrivingSkill;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,7 +25,7 @@ public class Driver {
     @Getter boolean isMainDriver = false;
 
     @Enumerated
-    @Getter private Set<EDrivingSkill> drivingSkills = EnumSet.allOf(EDrivingSkill.class);
+    @Getter private Set<DrivingSkill> drivingSkills = EnumSet.allOf(DrivingSkill.class);
 
 
     public Driver() {
@@ -37,8 +37,8 @@ public class Driver {
         this.nationality = nationality;
     }
 
-    public void setDrivingSkills(EDrivingSkill drivingSkill, int skillLevel) {
-        for (EDrivingSkill ds : drivingSkills) {
+    public void setDrivingSkills(DrivingSkill drivingSkill, int skillLevel) {
+        for (DrivingSkill ds : drivingSkills) {
             if (ds == drivingSkill) {
                 ds.setSkillLevel(skillLevel);
             }

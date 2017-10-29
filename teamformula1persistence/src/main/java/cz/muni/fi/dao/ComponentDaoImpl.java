@@ -1,5 +1,6 @@
 package cz.muni.fi.dao;
 
+import cz.muni.fi.entities.Component;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
