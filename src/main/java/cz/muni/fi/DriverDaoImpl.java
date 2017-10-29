@@ -1,5 +1,6 @@
 package cz.muni.fi;
 
+import cz.muni.fi.entities.Driver;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
