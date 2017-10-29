@@ -1,5 +1,7 @@
 package cz.muni.fi;
 
+import cz.muni.fi.entities.Driver;
+
 import java.util.List;
 
 /**
