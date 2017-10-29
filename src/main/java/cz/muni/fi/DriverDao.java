@@ -52,7 +52,6 @@ public interface DriverDao{
      * Add driver
      *
      * @param driver
-     * @return
      */
     public void addDriver(Driver driver);
 
@@ -60,7 +59,6 @@ public interface DriverDao{
      * Update driver
      *
      * @param driver
-     * @return
      */
     public void updateDriver(Driver driver);
 
@@ -68,7 +66,6 @@ public interface DriverDao{
      * Delete driver
      *
      * @param driver
-     * @return
      */
     public void deleteDriver(Driver driver);
 
