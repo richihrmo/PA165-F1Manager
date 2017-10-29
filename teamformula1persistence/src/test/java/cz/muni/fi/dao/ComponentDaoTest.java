@@ -5,7 +5,9 @@ import cz.muni.fi.entities.Component;
 import cz.muni.fi.enums.ComponentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -14,6 +16,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
+import javax.transaction.Transactional;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,6 +24,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author Robert Tamas
  */
+@Transactional
+@TestExecutionListeners(TransactionalTestExecutionListener.class)
 @ContextConfiguration(classes = PersistenceApplicationContext.class)
 public class ComponentDaoTest extends AbstractTestNGSpringContextTests {
 
@@ -31,7 +36,7 @@ public class ComponentDaoTest extends AbstractTestNGSpringContextTests {
     private EntityManagerFactory emf;
 
     @Autowired
-    private ComponentDaoImpl componentManager = new ComponentDaoImpl();
+    private ComponentDao componentManager;
 
     private Component engine;
     private Component aerodynamic;
@@ -54,11 +59,13 @@ public class ComponentDaoTest extends AbstractTestNGSpringContextTests {
         aerodynamic.setComponentType(ComponentType.AERODYNAMICS);
         aerodynamic.setAvailable(true);
 
-        em.getTransaction().begin();
-        em.persist(transmission);
-        em.persist(engine);
-        em.persist(aerodynamic);
-        em.getTransaction().commit();
+        EntityManager entityManager = emf.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.persist(transmission);
+        entityManager.persist(engine);
+        entityManager.persist(aerodynamic);
+        entityManager.getTransaction().commit();
+        entityManager.close();
     }
 
     @Test
@@ -96,6 +103,7 @@ public class ComponentDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(em.find(Component.class, breaks.getId())).isEqualTo(breaks);
     }
 
+    @Test
     public void updateComponent() {
         assertThat(em.find(Component.class, engine.getId())).isEqualTo(engine);
 
@@ -115,8 +123,10 @@ public class ComponentDaoTest extends AbstractTestNGSpringContextTests {
 
     @AfterMethod
     public void tearDown() {
-        em.getTransaction().begin();
-        em.createQuery("delete from Component").executeUpdate();
-        em.getTransaction().commit();
+        EntityManager entityManager = emf.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.createQuery("delete from Component ").executeUpdate();
+        entityManager.getTransaction().commit();
+        entityManager.close();
     }
 }

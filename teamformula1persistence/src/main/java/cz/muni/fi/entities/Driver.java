@@ -24,6 +24,7 @@ public class Driver {
     @Getter @Setter @NotNull private String nationality;
     @Getter boolean isMainDriver = false;
 
+    @ElementCollection
     @Enumerated(EnumType.ORDINAL)
     @Getter private Set<DrivingSkill> drivingSkills = EnumSet.allOf(DrivingSkill.class);
 

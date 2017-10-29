@@ -6,9 +6,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.testng.annotations.Test;
 import static org.assertj.core.api.Assertions.*;
 import org.testng.annotations.AfterMethod;
@@ -17,6 +21,8 @@ import org.testng.annotations.BeforeMethod;
 /**
  * @author Lucie Kureckova, 445264
  */
+@Transactional
+@TestExecutionListeners(TransactionalTestExecutionListener.class)
 @ContextConfiguration(classes = PersistenceApplicationContext.class)
 public class DriverDaoTest extends AbstractTestNGSpringContextTests {
     
@@ -27,7 +33,7 @@ public class DriverDaoTest extends AbstractTestNGSpringContextTests {
     private EntityManagerFactory emf;
     
     @Autowired
-    private DriverDao driverManager = new DriverDaoImpl();
+    private DriverDao driverManager;
     
     private Driver mainDriver1 = new Driver();
     private Driver testDriver1 = new Driver();
@@ -48,12 +54,14 @@ public class DriverDaoTest extends AbstractTestNGSpringContextTests {
         testDriver2.setName("Anakin");
         testDriver2.setSurname("Skywalker");
         testDriver2.setNationality("unknown");
-        
-        em.getTransaction().begin();
-        em.persist(mainDriver1);
-        em.persist(testDriver1);
-        em.persist(testDriver2);
-        em.getTransaction().commit();
+
+        EntityManager entityManager = emf.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.persist(mainDriver1);
+        entityManager.persist(testDriver1);
+        entityManager.persist(testDriver2);
+        entityManager.getTransaction().commit();
+        entityManager.close();
     }
     
     @Test
@@ -123,8 +131,10 @@ public class DriverDaoTest extends AbstractTestNGSpringContextTests {
     
     @AfterMethod
     public void tearDown() {
-        em.getTransaction().begin();
-        em.createQuery("delete from Driver").executeUpdate();
-        em.getTransaction().commit();
+        EntityManager entityManager = emf.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.createQuery("delete from Driver").executeUpdate();
+        entityManager.getTransaction().commit();
+        entityManager.close();
     }
 }

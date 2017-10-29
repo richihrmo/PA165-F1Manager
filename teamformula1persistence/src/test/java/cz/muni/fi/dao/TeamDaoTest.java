@@ -5,29 +5,42 @@ import cz.muni.fi.entities.Car;
 import cz.muni.fi.entities.Team;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
+import javax.transaction.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Matus Macko
  */
+@Transactional
+@TestExecutionListeners(TransactionalTestExecutionListener.class)
 @ContextConfiguration(classes = PersistenceApplicationContext.class)
 public class TeamDaoTest extends AbstractTestNGSpringContextTests {
+
     @PersistenceContext
     private EntityManager em;
 
+    @PersistenceUnit
+    private EntityManagerFactory emf;
+
     @Autowired
-    private TeamDaoImpl teamManager = new TeamDaoImpl();
+    private TeamDao teamManager;
 
     private Team blueTeam;
     private Team redTeam;
+
+    //TODO: to iste ako cardao
 
     @BeforeMethod
     public void setup() {
@@ -39,15 +52,16 @@ public class TeamDaoTest extends AbstractTestNGSpringContextTests {
         blueTeam = new Team("Blue team", blackCar, silverCar);
         redTeam = new Team("Red team", goldCar, purpleCar);
 
-        em.getTransaction().begin();
-        em.persist(blackCar);
-        em.persist(silverCar);
-        em.persist(goldCar);
-        em.persist(purpleCar);
-
-        em.persist(blueTeam);
-        em.persist(redTeam);
-        em.getTransaction().commit();
+        EntityManager entityManager = emf.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.persist(blackCar);
+        entityManager.persist(silverCar);
+        entityManager.persist(goldCar);
+        entityManager.persist(purpleCar);
+        entityManager.persist(blueTeam);
+        entityManager.persist(redTeam);
+        entityManager.getTransaction().commit();
+        entityManager.close();
     }
 
     @Test
@@ -100,8 +114,10 @@ public class TeamDaoTest extends AbstractTestNGSpringContextTests {
 
     @AfterMethod
     public void tearDown() {
-        em.getTransaction().begin();
-        em.createQuery("delete from Team").executeUpdate();
-        em.getTransaction().commit();
+        EntityManager entityManager = emf.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.createQuery("delete from Team").executeUpdate();
+        entityManager.getTransaction().commit();
+        entityManager.close();
     }
 }

@@ -17,7 +17,7 @@ import java.util.EnumSet;
 public class Component{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter @NotNull private Long id;
+    @Getter @Setter private Long id;
 
     @Getter @Setter @NotNull private String name;
 
@@ -35,9 +35,6 @@ public class Component{
     }
 
     public void setComponentType(ComponentType componentType) {
-        if (EnumSet.allOf(ComponentType.class).contains(componentType)){
-            throw new IllegalArgumentException("component type not supported");
-        }
         this.componentType = componentType;
     }
 }

@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 public class Car {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Getter private Long id;
+    @Getter @Setter private Long id;
     
     @OneToOne
     @Setter @Getter @NotNull private Driver driver;

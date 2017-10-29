@@ -2,10 +2,14 @@ package cz.muni.fi.dao;
 
 import cz.muni.fi.PersistenceApplicationContext;
 import cz.muni.fi.entities.Car;
+import cz.muni.fi.entities.Component;
 import cz.muni.fi.entities.Driver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -13,14 +17,18 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
+import javax.transaction.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Richard Hrmo
  */
+@Transactional
+@TestExecutionListeners(TransactionalTestExecutionListener.class)
 @ContextConfiguration(classes = PersistenceApplicationContext.class)
 public class CarDaoTest extends AbstractTestNGSpringContextTests{
+
      @PersistenceContext
      private EntityManager em;
 
@@ -28,7 +36,7 @@ public class CarDaoTest extends AbstractTestNGSpringContextTests{
      private EntityManagerFactory emf;
 
      @Autowired
-     private CarDaoImpl carDao = new CarDaoImpl();
+     private CarDao carDao;
 
      private Car ferrari;
      private Car bmw;
@@ -42,15 +50,23 @@ public class CarDaoTest extends AbstractTestNGSpringContextTests{
           bmw = new Car();
           skoda = new Car();
 
+          //TODO: nenastavuje vsetky atributy pada na anotacii notnull
+
           babyDriver = new Driver();
+          babyDriver.setName("Baby");
+          babyDriver.setSurname("Driver");
+          babyDriver.setNationality("Slovak");
+          babyDriver.setAsMainDriver();
           ferrari.setDriver(babyDriver);
 
-          em.getTransaction().begin();
-          em.persist(ferrari);
-          em.persist(bmw);
-          em.persist(skoda);
-          em.getTransaction().commit();
-          em.close();
+          EntityManager entityManager = emf.createEntityManager();
+          entityManager.getTransaction().begin();
+          entityManager.persist(babyDriver);
+          entityManager.persist(ferrari);
+          entityManager.persist(bmw);
+          entityManager.persist(skoda);
+          entityManager.getTransaction().commit();
+          entityManager.close();
      }
 
      @Test
@@ -98,5 +114,14 @@ public class CarDaoTest extends AbstractTestNGSpringContextTests{
           assertThat(carDao.findCar(skoda.getId())).isEqualTo(skoda);
           carDao.deleteCar(skoda);
           assertThat(carDao.findCar(skoda.getId())).isNull();
+     }
+
+     @AfterMethod
+     public void tearDown() {
+          EntityManager entityManager = emf.createEntityManager();
+          entityManager.getTransaction().begin();
+          entityManager.createQuery("delete from Car").executeUpdate();
+          entityManager.getTransaction().commit();
+          entityManager.close();
      }
 }

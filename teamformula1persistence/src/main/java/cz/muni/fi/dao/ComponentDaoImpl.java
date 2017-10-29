@@ -6,12 +6,14 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
  * @author Matus Macko
  */
 @Repository
+@Transactional
 public class ComponentDaoImpl implements ComponentDao {
     @PersistenceContext
     private EntityManager em;

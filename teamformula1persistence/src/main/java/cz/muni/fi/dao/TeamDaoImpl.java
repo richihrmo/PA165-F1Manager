@@ -5,12 +5,14 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
  * @author Lucie Kureckova, 445264
  */
 @Repository
+@Transactional
 public class TeamDaoImpl implements TeamDao {
 
     @PersistenceContext
