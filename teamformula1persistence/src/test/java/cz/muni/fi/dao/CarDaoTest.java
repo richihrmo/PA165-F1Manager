@@ -41,76 +41,62 @@ public class CarDaoTest extends AbstractTestNGSpringContextTests{
      private Car ferrari;
      private Car bmw;
      private Car skoda;
-     private Driver driver;
+     private Driver ferrariDriver;
 
      @BeforeMethod
      public void setup() {
-          em = emf.createEntityManager();
-          ferrari = new Car();
-          bmw = new Car();
-          skoda = new Car();
+          ferrariDriver = new Driver("Jan", "Sikmy", "France");
+          Component aerodynamicsFerrari = new Component("Aerodynamics Ferrari", true, ComponentType.AERODYNAMICS);
+          Component brakesFerrari = new Component("Brakes Ferrari", true, ComponentType.BRAKES);
+          Component engineFerrari = new Component("Engine Ferrari", true, ComponentType.ENGINE);
+          Component suspensionFerrari = new Component("Suspension Ferrari", true, ComponentType.SUSPENSION);
+          Component transmissionFerrari = new Component("Transmission Ferrari", true, ComponentType.TRANSMISSION);
+          ferrari = new Car(ferrariDriver, engineFerrari, aerodynamicsFerrari, suspensionFerrari, transmissionFerrari, brakesFerrari);
 
-          driver = new Driver("Jan", "Sikmy", "France");
-          ferrari.setDriver(driver);
-          Component aeroA = new Component("Aero A", true, ComponentType.AERODYNAMICS);
-          Component brakesA = new Component("Brakes A", true, ComponentType.BRAKES);
-          Component engineA = new Component("Engine A", true, ComponentType.ENGINE);
-          Component suspeA = new Component("Suspe A", true, ComponentType.SUSPENSION);
-          Component transA = new Component("Trans A", true, ComponentType.TRANSMISSION);
-          ferrari.setAerodynamics(aeroA);
-          ferrari.setBrakes(brakesA);
-          ferrari.setEngine(engineA);
-          ferrari.setSuspension(suspeA);
-          ferrari.setTransmission(transA);
-
-          Driver randomDriverA = new Driver("Peter", "Dan", "Dansko");
-          bmw.setDriver(randomDriverA);
-          Component aeroB = new Component("Aero B", true, ComponentType.AERODYNAMICS);
-          Component brakesB = new Component("Brakes B", true, ComponentType.BRAKES);
-          Component engineB = new Component("Engine B", true, ComponentType.ENGINE);
-          Component suspeB = new Component("Suspe B", true, ComponentType.SUSPENSION);
-          Component transB = new Component("Trans B", true, ComponentType.TRANSMISSION);
-          bmw.setAerodynamics(aeroB);
-          bmw.setBrakes(brakesB);
-          bmw.setEngine(engineB);
-          bmw.setSuspension(suspeB);
-          bmw.setTransmission(transB);
+          Driver bmwDriver = new Driver("Peter", "Dan", "Dansko");
+          Component aerodynamicsBmw = new Component("Aerodynamics Bmw", true, ComponentType.AERODYNAMICS);
+          Component brakesBmw = new Component("Brakes Bmw", true, ComponentType.BRAKES);
+          Component engineBmw = new Component("Engine Bmw", true, ComponentType.ENGINE);
+          Component suspensionBmw = new Component("Suspension Bmw", true, ComponentType.SUSPENSION);
+          Component transmissionBmw = new Component("Transmission Bmw", true, ComponentType.TRANSMISSION);
+          bmw = new Car(bmwDriver, engineBmw, aerodynamicsBmw, suspensionBmw, transmissionBmw, brakesBmw);
 
           Driver randomDriverB = new Driver("Dominika", "Hrozna", "Holandsko");
-          skoda.setDriver(randomDriverB);
-          Component aeroC = new Component("Aero C", true, ComponentType.AERODYNAMICS);
-          Component brakesC = new Component("Brakes C", true, ComponentType.BRAKES);
-          Component engineC = new Component("Engine C", true, ComponentType.ENGINE);
-          Component suspeC = new Component("Suspe C", true, ComponentType.SUSPENSION);
-          Component transC = new Component("Trans C", true, ComponentType.TRANSMISSION);
-          skoda.setAerodynamics(aeroC);
-          skoda.setBrakes(brakesC);
-          skoda.setEngine(engineC);
-          skoda.setSuspension(suspeC);
-          skoda.setTransmission(transC);
+          Component aerodynamicsSkoda = new Component("Aerodynamics Skoda", true, ComponentType.AERODYNAMICS);
+          Component brakesSkoda = new Component("Brakes Skoda", true, ComponentType.BRAKES);
+          Component engineSkoda = new Component("Engine Skoda", true, ComponentType.ENGINE);
+          Component suspensionSkoda = new Component("Suspension Skoda", true, ComponentType.SUSPENSION);
+          Component transSkoda = new Component("Transmission Skoda", true, ComponentType.TRANSMISSION);
+          skoda = new Car(randomDriverB, engineSkoda, aerodynamicsSkoda, suspensionSkoda, transSkoda, brakesSkoda);
 
           EntityManager entityManager = emf.createEntityManager();
           entityManager.getTransaction().begin();
-          entityManager.persist(aeroA);
-          entityManager.persist(brakesA);
-          entityManager.persist(engineA);
-          entityManager.persist(suspeA);
-          entityManager.persist(transA);
-          entityManager.persist(aeroB);
-          entityManager.persist(brakesB);
-          entityManager.persist(engineB);
-          entityManager.persist(suspeB);
-          entityManager.persist(transB);
-          entityManager.persist(aeroC);
-          entityManager.persist(brakesC);
-          entityManager.persist(engineC);
-          entityManager.persist(suspeC);
-          entityManager.persist(transC);
-          entityManager.persist(randomDriverA);
+
+          entityManager.persist(aerodynamicsFerrari);
+          entityManager.persist(brakesFerrari);
+          entityManager.persist(engineFerrari);
+          entityManager.persist(suspensionFerrari);
+          entityManager.persist(transmissionFerrari);
+
+          entityManager.persist(aerodynamicsBmw);
+          entityManager.persist(brakesBmw);
+          entityManager.persist(engineBmw);
+          entityManager.persist(suspensionBmw);
+          entityManager.persist(transmissionBmw);
+
+          entityManager.persist(aerodynamicsSkoda);
+          entityManager.persist(brakesSkoda);
+          entityManager.persist(engineSkoda);
+          entityManager.persist(suspensionSkoda);
+          entityManager.persist(transSkoda);
+
+          entityManager.persist(bmwDriver);
           entityManager.persist(randomDriverB);
-          entityManager.persist(driver);
+          entityManager.persist(ferrariDriver);
+
           entityManager.persist(ferrari);
           entityManager.persist(bmw);
+
           entityManager.getTransaction().commit();
           entityManager.close();
      }
@@ -127,7 +113,7 @@ public class CarDaoTest extends AbstractTestNGSpringContextTests{
 
      @Test
      public void findCarByDriverTest(){
-          assertThat(carDao.findCar(driver)).isEqualTo(ferrari);
+          assertThat(carDao.findCar(ferrariDriver)).isEqualTo(ferrari);
      }
 
      @Test
@@ -163,65 +149,8 @@ public class CarDaoTest extends AbstractTestNGSpringContextTests{
           EntityManager entityManager = emf.createEntityManager();
           entityManager.getTransaction().begin();
           entityManager.createQuery("delete from Car").executeUpdate();
+          entityManager.createQuery("delete from Driver").executeUpdate();
           entityManager.getTransaction().commit();
           entityManager.close();
-     }
-
-     private Driver getNewRandomDriver() {
-          ArrayList<String> names = new ArrayList<String>() {{
-               add("Jan");
-               add("Jozef");
-               add("Milan");
-          }};
-          ArrayList<String> surnames = new ArrayList<String>() {{
-               add("Maly");
-               add("Velky");
-               add("Silny");
-          }};
-          ArrayList<String> nationalities = new ArrayList<String>() {{
-               add("Germany");
-               add("Slovak");
-               add("Italy");
-          }};
-          Driver driver = new Driver();
-          driver.setName(names.get(new Random().nextInt(names.size())));
-          driver.setSurname(surnames.get(new Random().nextInt(names.size())));
-          driver.setNationality(nationalities.get(new Random().nextInt(names.size())));
-          driver.setAsMainDriver();
-
-          EntityManager entityManager = emf.createEntityManager();
-          entityManager.getTransaction().begin();
-          entityManager.persist(driver);
-          entityManager.getTransaction().commit();
-          entityManager.close();
-
-          return driver;
-     }
-
-     private Car getNewCar() {
-          Car car = new Car();
-
-          Component aerodynamics = new Component("Aerodynamics", true, ComponentType.AERODYNAMICS);
-          Component brakes = new Component("Brakes", true, ComponentType.BRAKES);
-          Component engine = new Component("Engine", true, ComponentType.ENGINE);
-          Component suspension = new Component("Suspension", true, ComponentType.SUSPENSION);
-          Component transmission = new Component("Transmission", true, ComponentType.TRANSMISSION);
-          car.setAerodynamics(aerodynamics);
-          car.setBrakes(brakes);
-          car.setEngine(engine);
-          car.setSuspension(suspension);
-          car.setTransmission(transmission);
-          car.setDriver(getNewRandomDriver());
-
-          EntityManager entityManager = emf.createEntityManager();
-          entityManager.getTransaction().begin();
-          entityManager.persist(aerodynamics);
-          entityManager.persist(brakes);
-          entityManager.persist(engine);
-          entityManager.persist(suspension);
-          entityManager.getTransaction().commit();
-          entityManager.close();
-
-          return car;
      }
 }
