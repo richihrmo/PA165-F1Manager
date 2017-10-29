@@ -3,6 +3,7 @@
 .project
 test-output
 .classpath
+teamformula1persistence/target
 ._config.yml
 *.iml
 *~

@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
+import javax.transaction.Transactional;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,6 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author Robert Tamas
  */
+@Transactional
 @ContextConfiguration(classes = PersistenceApplicationContext.class)
 public class ComponentDaoTest extends AbstractTestNGSpringContextTests {
 
@@ -31,7 +33,7 @@ public class ComponentDaoTest extends AbstractTestNGSpringContextTests {
     private EntityManagerFactory emf;
 
     @Autowired
-    private ComponentDaoImpl componentManager = new ComponentDaoImpl();
+    private ComponentDao componentManager;
 
     private Component engine;
     private Component aerodynamic;
@@ -54,17 +56,19 @@ public class ComponentDaoTest extends AbstractTestNGSpringContextTests {
         aerodynamic.setComponentType(ComponentType.AERODYNAMICS);
         aerodynamic.setAvailable(true);
 
-        em.getTransaction().begin();
-        em.persist(transmission);
-        em.persist(engine);
-        em.persist(aerodynamic);
-        em.getTransaction().commit();
+        EntityManager entityManager = emf.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.persist(transmission);
+        entityManager.persist(engine);
+        entityManager.persist(aerodynamic);
+        entityManager.getTransaction().commit();
+        entityManager.close();
     }
 
     @Test
     public void listAvailableComponentsTest() {
         List<Component> foundAvailableComponents = componentManager.listAvailableComponents();
-        assertThat(foundAvailableComponents).containsExactlyInAnyOrder(engine, aerodynamic);
+        assertThat(foundAvailableComponents).containsExactlyInAnyOrder(transmission, aerodynamic);
     }
 
     @Test
@@ -96,6 +100,7 @@ public class ComponentDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(em.find(Component.class, breaks.getId())).isEqualTo(breaks);
     }
 
+    @Test
     public void updateComponent() {
         assertThat(em.find(Component.class, engine.getId())).isEqualTo(engine);
 
@@ -115,8 +120,10 @@ public class ComponentDaoTest extends AbstractTestNGSpringContextTests {
 
     @AfterMethod
     public void tearDown() {
-        em.getTransaction().begin();
-        em.createQuery("delete from Component").executeUpdate();
-        em.getTransaction().commit();
+        EntityManager entityManager = emf.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.createQuery("delete from Component ").executeUpdate();
+        entityManager.getTransaction().commit();
+        entityManager.close();
     }
 }

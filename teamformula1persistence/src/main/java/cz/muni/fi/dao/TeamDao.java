@@ -1,7 +1,7 @@
 package cz.muni.fi.dao;
 
-import cz.muni.fi.entities.Car;
 import cz.muni.fi.entities.Team;
+
 import java.util.List;
 
 /**

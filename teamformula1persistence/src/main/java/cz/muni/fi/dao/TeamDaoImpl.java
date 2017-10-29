@@ -1,16 +1,18 @@
 package cz.muni.fi.dao;
 
-import cz.muni.fi.entities.Car;
 import cz.muni.fi.entities.Team;
-import java.util.List;
+import org.springframework.stereotype.Repository;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import org.springframework.stereotype.Repository;
+import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * @author Lucie Kureckova, 445264
  */
 @Repository
+@Transactional
 public class TeamDaoImpl implements TeamDao {
 
     @PersistenceContext

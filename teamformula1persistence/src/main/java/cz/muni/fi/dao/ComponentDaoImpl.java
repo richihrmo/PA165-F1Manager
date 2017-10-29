@@ -6,18 +6,20 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
  * @author Matus Macko
  */
 @Repository
+@Transactional
 public class ComponentDaoImpl implements ComponentDao {
     @PersistenceContext
     private EntityManager em;
 
     public List<Component> listAvailableComponents() {
-        return em.createQuery("select c from Component c where c.isAvailable = true", Component.class).getResultList();
+        return em.createQuery("select c from Component c where c.isAvailable = :bool", Component.class).setParameter("bool", true).getResultList();
     }
 
     public List<Component> listAllComponents() {

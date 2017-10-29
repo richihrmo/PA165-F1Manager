@@ -1,16 +1,12 @@
 package cz.muni.fi.entities;
 
-import com.sun.istack.internal.NotNull;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-
 import cz.muni.fi.enums.ComponentType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author Lucie Kureckova, 445264
@@ -20,7 +16,7 @@ import lombok.Setter;
 public class Car {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Getter private Long id;
+    @Getter @Setter private Long id;
     
     @OneToOne
     @Setter @Getter @NotNull private Driver driver;

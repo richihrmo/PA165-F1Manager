@@ -2,21 +2,26 @@ package cz.muni.fi.dao;
 
 import cz.muni.fi.PersistenceApplicationContext;
 import cz.muni.fi.entities.Driver;
+import cz.muni.fi.enums.DrivingSkill;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.testng.annotations.Test;
-import static org.assertj.core.api.Assertions.*;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import javax.transaction.Transactional;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Lucie Kureckova, 445264
  */
+@Transactional
 @ContextConfiguration(classes = PersistenceApplicationContext.class)
 public class DriverDaoTest extends AbstractTestNGSpringContextTests {
     
@@ -27,33 +32,41 @@ public class DriverDaoTest extends AbstractTestNGSpringContextTests {
     private EntityManagerFactory emf;
     
     @Autowired
-    private DriverDao driverManager = new DriverDaoImpl();
+    private DriverDao driverManager;
     
-    private Driver mainDriver1 = new Driver();
-    private Driver testDriver1 = new Driver();
-    private Driver testDriver2 = new Driver();
+    private Driver mainDriver1;
+    private Driver testDriver1;
+    private Driver testDriver2;
     
     
     @BeforeMethod
     public void setUp(){
+        mainDriver1 = new Driver();
         mainDriver1.setAsMainDriver();
         mainDriver1.setName("Michael");
         mainDriver1.setSurname("Schumacher");
         mainDriver1.setNationality("germany");
-        
+        mainDriver1.setSpecialSkill(DrivingSkill.DRIVING_ON_WET);
+
+        testDriver1 = new Driver();
         testDriver1.setName("Alan");
         testDriver1.setSurname("Rickman");
         testDriver1.setNationality("english");
-        
+        testDriver1.setSpecialSkill(DrivingSkill.POWER_SLIDING);
+
+        testDriver2 = new Driver();
         testDriver2.setName("Anakin");
         testDriver2.setSurname("Skywalker");
         testDriver2.setNationality("unknown");
-        
-        em.getTransaction().begin();
-        em.persist(mainDriver1);
-        em.persist(testDriver1);
-        em.persist(testDriver2);
-        em.getTransaction().commit();
+        testDriver1.setSpecialSkill(DrivingSkill.EXTREME_REFLEXES);
+
+        EntityManager entityManager = emf.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.persist(mainDriver1);
+        entityManager.persist(testDriver1);
+        entityManager.persist(testDriver2);
+        entityManager.getTransaction().commit();
+        entityManager.close();
     }
     
     @Test
@@ -99,9 +112,13 @@ public class DriverDaoTest extends AbstractTestNGSpringContextTests {
         driver2.setName("Tom");
         driver2.setSurname("Riddle");
         driver2.setNationality("english");
-        em.getTransaction().begin();
-        em.persist(driver2);
-        em.getTransaction().commit();
+
+        EntityManager entityManager = emf.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.persist(driver2);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+
         driver2.setName("Harry");
         driver2.setSurname("Potter");
         driverManager.updateDriver(driver2);
@@ -114,17 +131,23 @@ public class DriverDaoTest extends AbstractTestNGSpringContextTests {
         driver3.setName("Tom");
         driver3.setSurname("Riddle");
         driver3.setNationality("english");
-        em.getTransaction().begin();
-        em.persist(driver3);
-        em.getTransaction().commit();
+
+        EntityManager entityManager = emf.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.persist(driver3);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+
         driverManager.deleteDriver(driver3);
         assertThat(em.find(Driver.class, driver3.getId())).isNull();
     }
     
     @AfterMethod
     public void tearDown() {
-        em.getTransaction().begin();
-        em.createQuery("delete from Driver").executeUpdate();
-        em.getTransaction().commit();
+        EntityManager entityManager = emf.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.createQuery("delete from Driver").executeUpdate();
+        entityManager.getTransaction().commit();
+        entityManager.close();
     }
 }

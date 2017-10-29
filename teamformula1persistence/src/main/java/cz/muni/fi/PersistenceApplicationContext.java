@@ -1,11 +1,11 @@
 package cz.muni.fi;
 
-import javax.sql.DataSource;
-
+import cz.muni.fi.dao.CarDao;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver;
 import org.springframework.instrument.classloading.LoadTimeWeaver;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
@@ -16,10 +16,12 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
+import javax.sql.DataSource;
+
 @Configuration
 @EnableTransactionManagement
-//TODO: add one dao class
-@ComponentScan(basePackageClasses={}, basePackages = "cz.muni.fi")
+@EnableJpaRepositories
+@ComponentScan(basePackageClasses={CarDao.class}, basePackages = "cz.muni.fi")
 public class PersistenceApplicationContext {
 
     @Bean
@@ -27,10 +29,6 @@ public class PersistenceApplicationContext {
         return  new JpaTransactionManager(entityManagerFactory().getObject());
     }
 
-    /**
-     * Starts up a container that emulates behavior prescribed in JPA spec for container-managed EntityManager
-     * @return
-     */
     @Bean
     public LocalContainerEntityManagerFactoryBean  entityManagerFactory(){
         LocalContainerEntityManagerFactoryBean jpaFactoryBean = new LocalContainerEntityManagerFactoryBean ();
