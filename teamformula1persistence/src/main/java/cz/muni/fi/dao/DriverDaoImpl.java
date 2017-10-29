@@ -30,11 +30,7 @@ public class DriverDaoImpl implements DriverDao{
     }
 
     public Driver findDriver(long id) {
-        try {
-            return em.find(Driver.class, id);
-        } catch (NoResultException nrf) {
-            return null;
-        }
+        return em.find(Driver.class, id);
     }
 
     public Driver findDriver(String name, String surname) {
@@ -49,11 +45,15 @@ public class DriverDaoImpl implements DriverDao{
     }
 
     public Driver findTestDriver(String name, String surname) {
-        return em.createQuery("select d from Driver d where ismaindriver = :ismaindriver and name = :name and surname = :surname", Driver.class)
-                .setParameter("name", name)
-                .setParameter("surname", surname)
-                .setParameter("ismaindriver", false)
-                .getSingleResult();
+        try {
+            return em.createQuery("select d from Driver d where ismaindriver = :ismaindriver and name = :name and surname = :surname", Driver.class)
+                    .setParameter("name", name)
+                    .setParameter("surname", surname)
+                    .setParameter("ismaindriver", false)
+                    .getSingleResult();
+        } catch (NoResultException nrf) {
+            return null;
+        }
     }
 
     public void addDriver(Driver driver) {

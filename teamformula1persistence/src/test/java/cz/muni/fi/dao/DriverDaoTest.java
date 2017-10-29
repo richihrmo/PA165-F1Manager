@@ -2,6 +2,7 @@ package cz.muni.fi.dao;
 
 import cz.muni.fi.PersistenceApplicationContext;
 import cz.muni.fi.entities.Driver;
+import cz.muni.fi.enums.DrivingSkill;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -45,16 +46,19 @@ public class DriverDaoTest extends AbstractTestNGSpringContextTests {
         mainDriver1.setName("Michael");
         mainDriver1.setSurname("Schumacher");
         mainDriver1.setNationality("germany");
+        mainDriver1.setSpecialSkill(DrivingSkill.DRIVING_ON_WET);
 
         testDriver1 = new Driver();
         testDriver1.setName("Alan");
         testDriver1.setSurname("Rickman");
         testDriver1.setNationality("english");
+        testDriver1.setSpecialSkill(DrivingSkill.POWER_SLIDING);
 
         testDriver2 = new Driver();
         testDriver2.setName("Anakin");
         testDriver2.setSurname("Skywalker");
         testDriver2.setNationality("unknown");
+        testDriver1.setSpecialSkill(DrivingSkill.EXTREME_REFLEXES);
 
         EntityManager entityManager = emf.createEntityManager();
         entityManager.getTransaction().begin();
@@ -89,7 +93,7 @@ public class DriverDaoTest extends AbstractTestNGSpringContextTests {
     @Test
     public void findDeveloperTest(){
         assertThat(driverManager.findTestDriver(mainDriver1.getName(), mainDriver1.getSurname())).isNull();
-        //assertThat(driverManager.findTestDriver(testDriver1.getName(), testDriver1.getSurname())).isEqualTo(testDriver1);
+        assertThat(driverManager.findTestDriver(testDriver1.getName(), testDriver1.getSurname())).isEqualTo(testDriver1);
     }
     
     @Test
