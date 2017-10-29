@@ -11,7 +11,6 @@ public interface DriverDao{
     /**
      * List all drivers
      *
-     * @param None
      * @return List<Driver>
      */
     public List<Driver> listDrivers();
@@ -19,7 +18,6 @@ public interface DriverDao{
     /**
      * List of drivers not listed as main drivers
      *
-     * @param None
      * @return List<Driver>
      */
     public List<Driver> listTestDrivers();
@@ -54,7 +52,7 @@ public interface DriverDao{
      * Add driver
      *
      * @param driver
-     * @return nothing
+     * @return
      */
     public void addDriver(Driver driver);
 
@@ -62,7 +60,7 @@ public interface DriverDao{
      * Update driver
      *
      * @param driver
-     * @return nothing
+     * @return
      */
     public void updateDriver(Driver driver);
 
@@ -70,7 +68,7 @@ public interface DriverDao{
      * Delete driver
      *
      * @param driver
-     * @return nothing
+     * @return
      */
     public void deleteDriver(Driver driver);
 
