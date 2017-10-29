@@ -40,29 +40,46 @@ public class TeamDaoTest extends AbstractTestNGSpringContextTests {
     private TeamDao teamManager;
 
     private Team blueTeam;
+    private Team greenTeam;
 
     @BeforeMethod
     public void setup() {
         Driver blackCarDriver = new Driver("John", "Does", "US");
-        Component blackEngine = new Component("Engine", false, ComponentType.ENGINE);
-        Component blackAero = new Component("Aero", false, ComponentType.AERODYNAMICS);
-        Component blackBreaks = new Component("Breaks", false, ComponentType.BRAKES);
-        Component blackSuspension = new Component("Purpl", false, ComponentType.SUSPENSION);
-        Component blackTransmision = new Component("Purpl", false, ComponentType.TRANSMISSION);
+        Component blackEngine = new Component("Engine Black", false, ComponentType.ENGINE);
+        Component blackAero = new Component("Aero Black", false, ComponentType.AERODYNAMICS);
+        Component blackBreaks = new Component("Breaks Black", false, ComponentType.BRAKES);
+        Component blackSuspension = new Component("Susp Black", false, ComponentType.SUSPENSION);
+        Component blackTransmission = new Component("Transmission Black", false, ComponentType.TRANSMISSION);
 
         Driver silverCarDriver = new Driver("James", "Bond", "SK");
-        Component silverEngine = new Component("Engine", false, ComponentType.ENGINE);
-        Component silverAero = new Component("Aero", false, ComponentType.AERODYNAMICS);
-        Component silverBreaks = new Component("Breaks", false, ComponentType.BRAKES);
-        Component silverSuspension = new Component("Purpl", false, ComponentType.SUSPENSION);
-        Component silverTransmision = new Component("Purpl", false, ComponentType.TRANSMISSION);
-        Driver goldCarDriver = new Driver("Jiri", "Novak", "CZ");
-        Driver purpleCarDriver = new Driver("Martin", "King", "EN");
+        Component silverEngine = new Component("Engine Silver", false, ComponentType.ENGINE);
+        Component silverAero = new Component("Aero Silver", false, ComponentType.AERODYNAMICS);
+        Component silverBreaks = new Component("Breaks Silver", false, ComponentType.BRAKES);
+        Component silverSuspension = new Component("Suspension Silver", false, ComponentType.SUSPENSION);
+        Component silverTransmission = new Component("Transmission Silver", false, ComponentType.TRANSMISSION);
 
-        Car blackCar = new Car(blackCarDriver, blackEngine, blackAero, blackSuspension, blackTransmision, blackBreaks);
-        Car silverCar = new Car(silverCarDriver, silverEngine, silverAero, silverSuspension, silverTransmision, silverBreaks);
+
+        Driver goldCarDriver = new Driver("Jiri", "Novak", "CZ");
+        Component goldEngine = new Component("Engine Gold", false, ComponentType.ENGINE);
+        Component goldAero = new Component("Aero Gold", false, ComponentType.AERODYNAMICS);
+        Component goldBreaks = new Component("Breaks Gold", false, ComponentType.BRAKES);
+        Component goldSuspension = new Component("Suspension Gold", false, ComponentType.SUSPENSION);
+        Component goldTransmission = new Component("Transmission Gold", false, ComponentType.TRANSMISSION);
+
+        Driver purpleCarDriver = new Driver("Martin", "King", "EN");
+        Component purpleEngine = new Component("Engine Purple", false, ComponentType.ENGINE);
+        Component purpleAero = new Component("Aero Purple", false, ComponentType.AERODYNAMICS);
+        Component purpleBreaks = new Component("Breaks Purple", false, ComponentType.BRAKES);
+        Component purpleSuspension = new Component("Suspension Purple", false, ComponentType.SUSPENSION);
+        Component purpleTransmission = new Component("Transmission Purple", false, ComponentType.TRANSMISSION);
+
+        Car blackCar = new Car(blackCarDriver, blackEngine, blackAero, blackSuspension, blackTransmission, blackBreaks);
+        Car silverCar = new Car(silverCarDriver, silverEngine, silverAero, silverSuspension, silverTransmission, silverBreaks);
+        Car goldCar = new Car(goldCarDriver, goldEngine, goldAero, goldSuspension, goldTransmission, goldBreaks);
+        Car purpleCar = new Car(purpleCarDriver, purpleEngine, purpleAero, purpleSuspension, purpleTransmission, purpleBreaks);
 
         blueTeam = new Team("Blue team", blackCar, silverCar);
+        greenTeam = new Team("Green team", goldCar, purpleCar);
 
         EntityManager entityManager = emf.createEntityManager();
         entityManager.getTransaction().begin();
@@ -71,18 +88,34 @@ public class TeamDaoTest extends AbstractTestNGSpringContextTests {
         entityManager.persist(blackAero);
         entityManager.persist(blackBreaks);
         entityManager.persist(blackSuspension);
-        entityManager.persist(blackTransmision);
+        entityManager.persist(blackTransmission);
         entityManager.persist(blackCarDriver);
 
         entityManager.persist(silverEngine);
         entityManager.persist(silverAero);
         entityManager.persist(silverBreaks);
         entityManager.persist(silverSuspension);
-        entityManager.persist(silverTransmision);
+        entityManager.persist(silverTransmission);
         entityManager.persist(silverCarDriver);
+
+        entityManager.persist(goldEngine);
+        entityManager.persist(goldAero);
+        entityManager.persist(goldBreaks);
+        entityManager.persist(goldSuspension);
+        entityManager.persist(goldTransmission);
+        entityManager.persist(goldCarDriver);
+
+        entityManager.persist(purpleEngine);
+        entityManager.persist(purpleAero);
+        entityManager.persist(purpleBreaks);
+        entityManager.persist(purpleSuspension);
+        entityManager.persist(purpleTransmission);
+        entityManager.persist(purpleCarDriver);
 
         entityManager.persist(blackCar);
         entityManager.persist(silverCar);
+        entityManager.persist(goldCar);
+        entityManager.persist(purpleCar);
 
         entityManager.persist(blueTeam);
 
@@ -117,21 +150,8 @@ public class TeamDaoTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void addTeamTest() {
-        Car yellowCar = new Car();
-        Car greenCar = new Car();
-
-        EntityManager entityManager = emf.createEntityManager();
-        entityManager.getTransaction().begin();
-        entityManager.persist(yellowCar);
-        entityManager.persist(greenCar);
-        entityManager.getTransaction().commit();
-        entityManager.close();
-
-        Team newTeam = new Team("New team", yellowCar, greenCar);
-
-        assertThat(em.find(Team.class, newTeam.getName())).isNull();
-        teamManager.addTeam(newTeam);
-        assertThat(em.find(Team.class, newTeam.getId())).isEqualTo(newTeam);
+        teamManager.addTeam(greenTeam);
+        assertThat(em.find(Team.class, greenTeam.getId())).isEqualTo(greenTeam);
     }
 
     @Test
@@ -146,6 +166,8 @@ public class TeamDaoTest extends AbstractTestNGSpringContextTests {
         EntityManager entityManager = emf.createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.createQuery("delete from Team").executeUpdate();
+        entityManager.createQuery("delete from Driver").executeUpdate();
+        entityManager.createQuery("delete from Car").executeUpdate();
         entityManager.getTransaction().commit();
         entityManager.close();
     }
