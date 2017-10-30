@@ -29,11 +29,17 @@ public class DriverDaoImpl implements DriverDao{
                 .getResultList();
     }
 
-    public Driver findDriver(long id) {
+    public Driver findDriverById(Long id) {
+        if(id == null){
+            throw new IllegalArgumentException("argument is null");
+        }
         return em.find(Driver.class, id);
     }
 
-    public Driver findDriver(String name, String surname) {
+    public Driver findDriverByName(String name, String surname) {
+        if(name == null || surname == null){
+            throw new IllegalArgumentException("argument is null");
+        }
         try {
             return em.createQuery("select d from Driver d where name = :name and surname = :surname", Driver.class)
                     .setParameter("name", name)
@@ -45,6 +51,9 @@ public class DriverDaoImpl implements DriverDao{
     }
 
     public Driver findTestDriver(String name, String surname) {
+        if(name == null || surname == null){
+            throw new IllegalArgumentException("argument is null");
+        }
         try {
             return em.createQuery("select d from Driver d where ismaindriver = :ismaindriver and name = :name and surname = :surname", Driver.class)
                     .setParameter("name", name)
@@ -57,14 +66,23 @@ public class DriverDaoImpl implements DriverDao{
     }
 
     public void addDriver(Driver driver) {
+        if(driver == null){
+            throw new IllegalArgumentException("argument is null");
+        }
         em.persist(driver);
     }
 
     public void updateDriver(Driver driver) {
+        if(driver == null){
+            throw new IllegalArgumentException("argument is null");
+        }
         em.merge(driver);
     }
 
     public void deleteDriver(Driver driver) {
+        if(driver == null){
+            throw new IllegalArgumentException("argument is null");
+        }
         em.remove(em.merge(driver));
     }
 }

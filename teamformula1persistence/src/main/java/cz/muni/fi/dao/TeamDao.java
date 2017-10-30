@@ -13,22 +13,25 @@ public interface TeamDao {
      * Add team to DB
      * 
      * @param team to be added
+     * @throws IllegalArgumentException when argumet is null
      */
-    public void addTeam(Team team);
+    public void addTeam(Team team) throws IllegalArgumentException;
     
     /**
      * Update team in DB
      * 
      * @param team to be updated
+     * @throws IllegalArgumentException when argumet is null
      */
-    public void updateTeam(Team team);
+    public void updateTeam(Team team) throws IllegalArgumentException;
     
     /**
      * Delete team in DB
      * 
      * @param team to be deleted
+     * @throws IllegalArgumentException when argumet is null
      */
-    public void deleteTeam(Team team);
+    public void deleteTeam(Team team) throws IllegalArgumentException;
     
     /**
      * List all teams in DB
@@ -42,14 +45,16 @@ public interface TeamDao {
      * 
      * @param name of team
      * @return found Team
+     * @throws IllegalArgumentException when argumet is null
      */
-    public Team findTeam(String name);
+    public Team findTeamByName(String name) throws IllegalArgumentException;
     
     /**
      * Find team by id
      * 
      * @param id of team
      * @return found Team
+     * @throws IllegalArgumentException when argumet is null
      */
-    public Team findTeam(Long id);
+    public Team findTeamById(Long id) throws IllegalArgumentException;
 }

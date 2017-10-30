@@ -25,7 +25,10 @@ public class CarDaoImpl implements CarDao{
         return em.createQuery("select c from Car c", Car.class).getResultList();
     }
 
-    public Car findCar(Driver driver) {
+    public Car findCarByDriver(Driver driver) {
+        if(driver == null){
+            throw new IllegalArgumentException("argument is null");
+        }
         try {
             return em.createQuery("select c from Car c where c.driver = :driver", Car.class)
                     .setParameter("driver", driver).getSingleResult();
@@ -34,19 +37,31 @@ public class CarDaoImpl implements CarDao{
         }
     }
 
-    public Car findCar(Long id) {
+    public Car findCarById(Long id) {
+        if(id == null){
+            throw new IllegalArgumentException("argument is null");
+        }
         return em.find(Car.class, id);
     }
 
     public void addCar(Car car) {
+        if(car == null){
+            throw new IllegalArgumentException("argument is null");
+        }
         em.persist(car);
     }
 
     public void updateCar(Car car) {
+        if(car == null){
+            throw new IllegalArgumentException("argument is null");
+        }
         em.merge(car);
     }
 
     public void deleteCar(Car car) {
+        if(car == null){
+            throw new IllegalArgumentException("argument is null");
+        }
         em.remove(em.merge(car));
     }
 }

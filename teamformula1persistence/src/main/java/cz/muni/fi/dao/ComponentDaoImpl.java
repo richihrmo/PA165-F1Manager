@@ -26,7 +26,10 @@ public class ComponentDaoImpl implements ComponentDao {
         return em.createQuery("select c from Component c", Component.class).getResultList();
     }
 
-    public Component findComponent(String name) {
+    public Component findComponentByName(String name) {
+        if(name == null){
+            throw new IllegalArgumentException("argument is null");
+        }
         try {
             return em
                     .createQuery("select c from Component c where c.name = :name",
@@ -37,19 +40,31 @@ public class ComponentDaoImpl implements ComponentDao {
         }
     }
 
-    public Component findComponent(Long id) {
+    public Component findComponentById(Long id) {
+        if(id == null){
+            throw new IllegalArgumentException("argument is null");
+        }
         return em.find(Component.class, id);
     }
 
     public void addComponent(Component component) {
+        if(component == null){
+            throw new IllegalArgumentException("argument is null");
+        }
         em.persist(component);
     }
 
     public void updateComponent(Component component) {
+        if(component == null){
+            throw new IllegalArgumentException("argument is null");
+        }
         em.merge(component);
     }
 
     public void deleteComponent(Component component) {
+        if(component == null){
+            throw new IllegalArgumentException("argument is null");
+        }
         em.remove(em.merge(component));
     }
 }

@@ -27,8 +27,9 @@ public interface DriverDao{
      *
      * @param id driver id
      * @return Driver
+     * @throws IllegalArgumentException when argumet is null
      */
-    public Driver findDriver(long id);
+    public Driver findDriverById(Long id) throws IllegalArgumentException;
 
     /**
      * Find person-driver based on name
@@ -36,8 +37,9 @@ public interface DriverDao{
      * @param name driver's name
      * @param surname driver's surname
      * @return Driver
+     * @throws IllegalArgumentException when argumet is null
      */
-    public Driver findDriver(String name, String surname);
+    public Driver findDriverByName(String name, String surname) throws IllegalArgumentException;
 
     /**
      * Find person-test driver based on name
@@ -45,28 +47,32 @@ public interface DriverDao{
      * @param name test driver's name
      * @param surname test driver's surname
      * @return Driver
+     * @throws IllegalArgumentException when argumet is null
      */
-    public Driver findTestDriver(String name, String surname);
+    public Driver findTestDriver(String name, String surname) throws IllegalArgumentException;
 
     /**
      * Add driver
      *
      * @param driver Driver
+     * @throws IllegalArgumentException when argumet is null
      */
-    public void addDriver(Driver driver);
+    public void addDriver(Driver driver) throws IllegalArgumentException;
 
     /**
      * Update driver
      *
      * @param driver Driver
+     * @throws IllegalArgumentException when argumet is null
      */
-    public void updateDriver(Driver driver);
+    public void updateDriver(Driver driver) throws IllegalArgumentException;
 
     /**
      * Delete driver
      *
      * @param driver Driver
+     * @throws IllegalArgumentException when argumet is null
      */
-    public void deleteDriver(Driver driver);
+    public void deleteDriver(Driver driver) throws IllegalArgumentException;
 
 }

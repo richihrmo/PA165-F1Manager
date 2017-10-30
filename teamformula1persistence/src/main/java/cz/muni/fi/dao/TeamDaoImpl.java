@@ -19,14 +19,23 @@ public class TeamDaoImpl implements TeamDao {
     private EntityManager em;
 
     public void addTeam(Team team) {
+        if(team == null){
+            throw new IllegalArgumentException("argument is null");
+        }
         em.persist(team);
     }
 
     public void updateTeam(Team team) {
+        if(team == null){
+            throw new IllegalArgumentException("argument is null");
+        }
         em.merge(team);
     }
 
     public void deleteTeam(Team team) {
+        if(team == null){
+            throw new IllegalArgumentException("argument is null");
+        }
         em.remove(em.merge(team));
     }
 
@@ -34,7 +43,10 @@ public class TeamDaoImpl implements TeamDao {
         return em.createQuery("SELECT t FROM Team t", Team.class).getResultList();
     }
 
-    public Team findTeam(String name) {
+    public Team findTeamByName(String name) {
+        if(name == null){
+            throw new IllegalArgumentException("argument is null");
+        }
         List<Team> result = em.createQuery("SELECT t FROM Team t WHERE t.name = :name", Team.class)
                             .setParameter("name", name).getResultList();
         if(result.isEmpty()){
@@ -43,7 +55,10 @@ public class TeamDaoImpl implements TeamDao {
         return result.get(0);
     }
 
-    public Team findTeam(Long id) {
+    public Team findTeamById(Long id) {
+        if(id == null){
+            throw new IllegalArgumentException("argument is null");
+        }
         return em.find(Team.class, id);
     }
 }
