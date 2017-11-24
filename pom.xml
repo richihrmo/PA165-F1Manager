@@ -14,7 +14,9 @@
     </properties>
 
     <modules>
-        <module>teamformula1persistence</module>
+        <module>persistence</module>
+        <module>api</module>
+        <module>service</module>
     </modules>
 
     <dependencyManagement>
