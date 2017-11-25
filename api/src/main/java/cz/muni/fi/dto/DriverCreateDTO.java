@@ -8,8 +8,6 @@ import java.util.Objects;
  */
 public class DriverCreateDTO {
     
-    @Getter @Setter private Long id;
-
     @Getter @Setter private String name;
     
     @Getter @Setter private String surname;
