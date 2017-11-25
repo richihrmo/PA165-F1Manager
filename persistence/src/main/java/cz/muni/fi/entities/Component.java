@@ -1,13 +1,12 @@
 package cz.muni.fi.entities;
 
 import javax.validation.constraints.NotNull;
-import cz.muni.fi.enums.ComponentType;
+import cz.muni.fi.persistanceEnums.ComponentType;
 import lombok.EqualsAndHashCode;
 import lombok.Setter;
 import lombok.Getter;
 
 import javax.persistence.*;
-import java.util.EnumSet;
 
 /**
  * @author Richard Hrmo

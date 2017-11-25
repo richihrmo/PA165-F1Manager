@@ -2,7 +2,7 @@ package cz.muni.fi.dao;
 
 import cz.muni.fi.PersistenceApplicationContext;
 import cz.muni.fi.entities.Component;
-import cz.muni.fi.enums.ComponentType;
+import cz.muni.fi.persistanceEnums.ComponentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;

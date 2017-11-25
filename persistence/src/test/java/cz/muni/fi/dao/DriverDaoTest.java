@@ -2,7 +2,7 @@ package cz.muni.fi.dao;
 
 import cz.muni.fi.PersistenceApplicationContext;
 import cz.muni.fi.entities.Driver;
-import cz.muni.fi.enums.DrivingSkill;
+import cz.muni.fi.persistanceEnums.DrivingSkill;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
