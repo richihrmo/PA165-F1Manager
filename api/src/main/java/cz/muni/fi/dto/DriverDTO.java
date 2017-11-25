@@ -2,8 +2,11 @@ package cz.muni.fi.dto;
 
 import cz.muni.fi.enums.DrivingSkill;
 import java.util.Objects;
+<<<<<<< HEAD
 import lombok.Getter;
 import lombok.Setter;
+=======
+>>>>>>> 4529a2f05a1aa044f1af86f5d47ecfaf548685b8
 
 /**
  * @author Lucie Kureckova, 445264
