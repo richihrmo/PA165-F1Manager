@@ -1,7 +1,11 @@
 package dto;
 
 import java.util.Objects;
+
+import cz.muni.fi.enums.ComponentType;
 import exceptions.WrongComponentException;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Car DTO class for Car entity
@@ -10,45 +14,21 @@ import exceptions.WrongComponentException;
  */
 public class CarDTO {
 
-    private Long id;
+    @Getter @Setter private Long id;
 
-    private DriverDTO driver;
+    @Getter @Setter private DriverDTO driver;
 
-    private ComponentDTO engine;
-    private ComponentDTO aerodynamics;
-    private ComponentDTO suspension;
-    private ComponentDTO transmission;
-    private ComponentDTO brakes;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public DriverDTO getDriver() {
-        return driver;
-    }
-
-    public void setDriver(DriverDTO driverDTO) {
-        this.driver = driver;
-    }
-
-    public ComponentDTO getEngine() {
-        return engine;
-    }
+    @Getter private ComponentDTO engine;
+    @Getter private ComponentDTO aerodynamics;
+    @Getter private ComponentDTO suspension;
+    @Getter private ComponentDTO transmission;
+    @Getter private ComponentDTO brakes;
 
     public void setEngine(ComponentDTO engine) {
         if(engine.getComponentType() != ComponentType.ENGINE){
             throw new WrongComponentException("type of component is not ENGINE");
         }
         this.engine = engine;
-    }
-
-    public ComponentDTO getAerodynamics() {
-        return aerodynamics;
     }
 
     public void setAerodynamics(ComponentDTO aerodynamics) {
@@ -58,10 +38,6 @@ public class CarDTO {
         this.aerodynamics = aerodynamics;
     }
 
-    public ComponentDTO getSuspension() {
-        return suspension;
-    }
-
     public void setSuspension(ComponentDTO suspension) {
         if(suspension.getComponentType() != ComponentType.SUSPENSION){
             throw new WrongComponentException("type of component is not SUSPENSION");
@@ -69,19 +45,11 @@ public class CarDTO {
         this.suspension = suspension;
     }
 
-    public ComponentDTO getTransmission() {
-        return transmission;
-    }
-
     public void setTransmission(ComponentDTO transmission) {
         if(transmission.getComponentType() != ComponentType.TRANSMISSION){
             throw new WrongComponentException("type of component is not TRANSMISSION");
         }
         this.transmission = transmission;
-    }
-
-    public ComponentDTO getBrakes() {
-        return brakes;
     }
 
     public void setBrakes(ComponentDTO brakes) {
@@ -98,13 +66,24 @@ public class CarDTO {
 
         CarDTO carDTO = (CarDTO) o;
 
-        return Objects.equals(getId(), carDTO.id);
+        if (!driver.equals(carDTO.driver)) return false;
+        if (!engine.equals(carDTO.engine)) return false;
+        if (!transmission.equals(carDTO.transmission)) return false;
+        if (!brakes.equals(carDTO.brakes)) return false;
+        if (!suspension.equals(carDTO.suspension)) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
         int result = getId().hashCode();
         result = 31 * result + getDriver().hashCode();
+        result = 31 * result + getEngine().hashCode();
+        result = 31 * result + getAerodynamics().hashCode();
+        result = 31 * result + getSuspension().hashCode();
+        result = 31 * result + getTransmission().hashCode();
+        result = 31 * result + getBrakes().hashCode();
         return result;
     }
 }
