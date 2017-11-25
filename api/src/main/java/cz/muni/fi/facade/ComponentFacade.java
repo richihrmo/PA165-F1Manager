@@ -37,7 +37,7 @@ public interface ComponentFacade {
      *
      * @return List of all Components, empty List if no Component is found
      */
-    List<ComponentDTO> listAllAvailableComponentsWithType();
+    List<ComponentDTO> listAllAvailableComponentsWithType(ComponentType type);
 
     /**
      * Takes unique id of Component and returns a corresponding entity if found
