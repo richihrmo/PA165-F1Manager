@@ -19,10 +19,10 @@ public interface CarFacade {
 
     /**
      * Returns entity based on driver
-     * @param driver
+     * @param driverDTO
      * @return Car entity
      */
-    CarDTO findCarByDriver(Driver driver);
+    CarDTO findCarByDriver(DriverDTO driverDTO);
 
     /**
      * Returns List of all cars
