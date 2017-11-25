@@ -1,16 +1,54 @@
 package cz.muni.fi.facade;
 
+import java.util.List;
+
+import cz.muni.fi.dto.NewTeamDto;
+import cz.muni.fi.dto.TeamDto;
+
 /**
  * @author Matus Macko
  */
 public interface TeamFacade {
-    public List<OrderDTO> getAllOrders();
-    public List<OrderDTO> getAllOrdersLastWeek(OrderState state);
-    public List<OrderDTO> getOrdersByUser(Long userId);
-    public List<OrderDTO> getOrdersByState(OrderState state);
-    public OrderDTO getOrderById(Long id);
-    public void shipOrder(Long id);
-    public void finishOrder(Long id);
-    public void cancelOrder(Long id);
-    public OrderTotalPriceDTO getOrderTotalPrice(long id, Currency currency);
+    /**
+     * Get all teams
+     *
+     * @return list of all teams
+     */
+    List<TeamDto> getAllTeams();
+
+    /**
+     * Get Team by id
+     *
+     * @param teamId team id
+     * @return found Team or Null
+     */
+    TeamDto getTeamById(Long teamId);
+
+    /**
+     * Create new Team
+     *
+     * @param team team to be created
+     */
+    void createTeam(NewTeamDto team);
+
+    /**
+     * Update team
+     *
+     * @param team team to be updated
+     */
+    void updateTeam(TeamDto team);
+
+    /**
+     * Delete team
+     *
+     * @param teamId id of a team to be deleted
+     */
+    void deleteTeam(Long teamId);
+
+    /**
+     * Get all car drivers of team cars
+     *
+     * @return list of car drivers
+     */
+    List<DriverDto> getAllTeamCarDrivers();
 }
