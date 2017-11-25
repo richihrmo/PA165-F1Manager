@@ -2,6 +2,8 @@ package cz.muni.fi.dto;
 
 import cz.muni.fi.enums.DrivingSkill;
 import java.util.Objects;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author Lucie Kureckova, 445264
