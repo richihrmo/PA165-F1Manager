@@ -1,6 +1,7 @@
 package dto;
 
 import java.util.Objects;
+import exceptions.WrongComponentException;
 
 /**
  * Car DTO class for Car entity
@@ -40,6 +41,9 @@ public class CarDTO {
     }
 
     public void setEngine(ComponentDTO engine) {
+        if(engine.getComponentType() != ComponentType.ENGINE){
+            throw new WrongComponentException("type of component is not ENGINE");
+        }
         this.engine = engine;
     }
 
@@ -48,6 +52,9 @@ public class CarDTO {
     }
 
     public void setAerodynamics(ComponentDTO aerodynamics) {
+        if(aerodynamics.getComponentType() != ComponentType.AERODYNAMICS){
+            throw new WrongComponentException("type of component is not AERODYNAMICS");
+        }
         this.aerodynamics = aerodynamics;
     }
 
@@ -56,6 +63,9 @@ public class CarDTO {
     }
 
     public void setSuspension(ComponentDTO suspension) {
+        if(suspension.getComponentType() != ComponentType.SUSPENSION){
+            throw new WrongComponentException("type of component is not SUSPENSION");
+        }
         this.suspension = suspension;
     }
 
@@ -64,6 +74,9 @@ public class CarDTO {
     }
 
     public void setTransmission(ComponentDTO transmission) {
+        if(transmission.getComponentType() != ComponentType.TRANSMISSION){
+            throw new WrongComponentException("type of component is not TRANSMISSION");
+        }
         this.transmission = transmission;
     }
 
@@ -72,6 +85,9 @@ public class CarDTO {
     }
 
     public void setBrakes(ComponentDTO brakes) {
+        if(brakes.getComponentType() != ComponentType.BRAKES){
+            throw new WrongComponentException("type of component is not BRAKES");
+        }
         this.brakes = brakes;
     }
 
