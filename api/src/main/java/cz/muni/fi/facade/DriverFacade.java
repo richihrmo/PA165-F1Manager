@@ -60,5 +60,5 @@ public interface DriverFacade {
      * 
      * @param driver to delete
      */
-    void deteleDriver(DriverDTO driver);
+    void deleteDriver(DriverDTO driver);
 }
