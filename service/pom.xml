@@ -10,6 +10,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
+    <groupId>cz.muni.fi</groupId>
     <artifactId>team-formula-1-service</artifactId>
     <version>1.0-SNAPSHOT</version>
 
