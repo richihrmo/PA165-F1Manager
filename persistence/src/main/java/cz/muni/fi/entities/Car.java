@@ -1,6 +1,6 @@
 package cz.muni.fi.entities;
 
-import cz.muni.fi.enums.ComponentType;
+import cz.muni.fi.persistanceEnums.ComponentType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

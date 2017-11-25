@@ -4,7 +4,7 @@ import cz.muni.fi.PersistenceApplicationContext;
 import cz.muni.fi.entities.Car;
 import cz.muni.fi.entities.Component;
 import cz.muni.fi.entities.Driver;
-import cz.muni.fi.enums.ComponentType;
+import cz.muni.fi.persistanceEnums.ComponentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -17,9 +17,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 import javax.transaction.Transactional;
-
-import java.util.ArrayList;
-import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
