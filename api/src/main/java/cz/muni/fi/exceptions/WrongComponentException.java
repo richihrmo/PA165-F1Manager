@@ -1,4 +1,4 @@
-package exceptions;
+package cz.muni.fi.exceptions;
 
 /**
  * @author Richard Hrmo

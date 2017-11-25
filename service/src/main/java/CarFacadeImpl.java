@@ -1,6 +1,6 @@
 import cz.muni.fi.entities.Driver;
-import dto.CarDTO;
-import facade.CarFacade;
+import cz.muni.fi.dto.CarDTO;
+import cz.muni.fi.facade.CarFacade;
 
 import java.util.List;
 

@@ -1,16 +1,14 @@
-package dto;
+package cz.muni.fi.dto;
 
 import cz.muni.fi.enums.ComponentType;
-import exceptions.WrongComponentException;
+import cz.muni.fi.exceptions.WrongComponentException;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
  * @author Richard Hrmo
  */
-public class CarDTO {
-
-    @Getter @Setter private Long id;
+public class CarCreateDTO {
 
     @Getter @Setter private DriverDTO driver;
 
@@ -19,6 +17,7 @@ public class CarDTO {
     @Getter private ComponentDTO suspension;
     @Getter private ComponentDTO transmission;
     @Getter private ComponentDTO brakes;
+
 
     public void setEngine(ComponentDTO engine) {
         if(engine.getComponentType() != ComponentType.ENGINE){
@@ -60,7 +59,7 @@ public class CarDTO {
         if (this == o) return true;
         if (o == null || !(o instanceof CarDTO)) return false;
 
-        CarDTO carDTO = (CarDTO) o;
+        CarCreateDTO carDTO = (CarCreateDTO) o;
 
         if (!driver.equals(carDTO.driver)) return false;
         if (!engine.equals(carDTO.engine)) return false;
@@ -73,8 +72,7 @@ public class CarDTO {
 
     @Override
     public int hashCode() {
-        int result = getId().hashCode();
-        result = 31 * result + getDriver().hashCode();
+        int result = getDriver().hashCode();
         result = 31 * result + getEngine().hashCode();
         result = 31 * result + getAerodynamics().hashCode();
         result = 31 * result + getSuspension().hashCode();

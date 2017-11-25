@@ -1,9 +1,9 @@
-package facade;
+package cz.muni.fi.facade;
 
 import cz.muni.fi.entities.Component;
 import cz.muni.fi.entities.Driver;
-import dto.CarCreateDTO;
-import dto.CarDTO;
+import cz.muni.fi.dto.CarCreateDTO;
+import cz.muni.fi.dto.CarDTO;
 
 import java.util.List;
 
@@ -57,6 +57,12 @@ public interface CarFacade {
      */
     void deleteCar(CarDTO carDTO);
 
-    List<CarDTO> listCarsByComponentName(ComponentDTO componentDTO);
+    /**
+     * Returns list of cars with component of given name
+     *
+     * @param componentDTO
+     * @return
+     */
+    List<CarDTO> listCarsByComponentName(String componentName);
 
 }
