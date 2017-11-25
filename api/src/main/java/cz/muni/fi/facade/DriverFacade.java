@@ -47,13 +47,18 @@ public interface DriverFacade {
      * Create driver
      * 
      * @param driver to create
-     * @return id of created driver
      */
-    Long createDriver(DriverCreateDTO driver);
+    void createDriver(DriverCreateDTO driver);
+    /**
+     * Update driver
+     * 
+     * @param driver to update
+     */
+    void updateDriver(DriverDTO driver);
     /**
      * Delete driver
      * 
-     * @param id of driver to delete
+     * @param driver to delete
      */
-    void deteleDriver(Long id);
+    void deteleDriver(DriverDTO driver);
 }
