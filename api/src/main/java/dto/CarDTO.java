@@ -1,15 +1,11 @@
 package dto;
 
-import java.util.Objects;
-
 import cz.muni.fi.enums.ComponentType;
 import exceptions.WrongComponentException;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Car DTO class for Car entity
- *
  * @author Richard Hrmo
  */
 public class CarDTO {

@@ -1,7 +1,5 @@
 package dto;
 
-import java.util.Objects;
-
 import cz.muni.fi.enums.ComponentType;
 import exceptions.WrongComponentException;
 import lombok.Getter;

@@ -1,5 +1,6 @@
 package facade;
 
+import cz.muni.fi.entities.Component;
 import cz.muni.fi.entities.Driver;
 import dto.CarCreateDTO;
 import dto.CarDTO;
@@ -13,6 +14,7 @@ public interface CarFacade {
 
     /**
      * Returns entity based on Id
+     *
      * @param id
      * @return Car entity
      */
@@ -20,6 +22,7 @@ public interface CarFacade {
 
     /**
      * Returns entity based on driver
+     *
      * @param driverDTO
      * @return Car entity
      */
@@ -27,6 +30,7 @@ public interface CarFacade {
 
     /**
      * Returns List of all cars
+     *
      * @param carDTO
      * @return List of Car entities
      */
@@ -34,20 +38,25 @@ public interface CarFacade {
 
     /**
      * CRUD operation create
+     *
      * @param carCreateDTO
      */
     void createCar(CarCreateDTO carCreateDTO);
 
     /**
      * CRUD operation update
+     *
      * @param carDTO
      */
     void updateCar(CarDTO carDTO);
 
     /**
      * CRUD operation delete
+     *
      * @param carDTO
      */
     void deleteCar(CarDTO carDTO);
+
+    List<CarDTO> listCarsByComponentName(ComponentDTO componentDTO);
 
 }
