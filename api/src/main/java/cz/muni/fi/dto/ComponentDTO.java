@@ -1,50 +1,23 @@
 package cz.muni.fi.dto;
 
 import cz.muni.fi.enums.ComponentType;
+import lombok.Getter;
+import lombok.Setter;
 
+/**
+ * @author Robert Tamas
+ */
 public class ComponentDTO {
 
-    private Long id;
-    private String name;
-    private ComponentType type;
-    private Boolean isAvailable;
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public ComponentType getType() {
-        return type;
-    }
-
-    public Boolean getAvailable() {
-        return isAvailable;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setType(ComponentType type) {
-        this.type = type;
-    }
-
-    public void setAvailable(Boolean available) {
-        isAvailable = available;
-    }
+    @Getter @Setter private Long id;
+    @Getter @Setter private String name;
+    @Getter @Setter private ComponentType type;
+    @Getter @Setter private Boolean isAvailable;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || !(o instanceof ComponentDTO)) return false;
 
         ComponentDTO that = (ComponentDTO) o;
 
