@@ -50,7 +50,6 @@ public class CarServiceImpl implements CarService {
         carDao.deleteCar(car);
     }
 
-    //TODO
     @Override
     public List<Car> listCarsByComponentName(String componentName) {
         List<Car> cars = listAllCars();

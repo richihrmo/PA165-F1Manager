@@ -33,7 +33,6 @@ public class CarFacadeImpl implements CarFacade {
         CarDTO carDTO = beanMappingService.mapTo(car, CarDTO.class);
         return carDTO;
     }
-    //TODO
     @Override
     public CarDTO findCarByDriver(DriverDTO driverDTO) {
         Car car = carService.findCarByDriver(driverService.findDriverById(driverDTO.getId()));
