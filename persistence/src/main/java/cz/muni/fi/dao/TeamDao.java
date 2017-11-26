@@ -15,7 +15,7 @@ public interface TeamDao {
      * @param team to be added
      * @throws IllegalArgumentException when argumet is null
      */
-    public void addTeam(Team team);
+    void addTeam(Team team) throws IllegalArgumentException;
     
     /**
      * Update team in DB
@@ -23,7 +23,7 @@ public interface TeamDao {
      * @param team to be updated
      * @throws IllegalArgumentException when argumet is null
      */
-    public void updateTeam(Team team);
+    void updateTeam(Team team);
     
     /**
      * Delete team in DB
@@ -31,14 +31,14 @@ public interface TeamDao {
      * @param team to be deleted
      * @throws IllegalArgumentException when argumet is null
      */
-    public void deleteTeam(Team team);
+    void deleteTeam(Team team);
     
     /**
      * List all teams in DB
      * 
      * @return list of teams in DB
      */
-    public List<Team> listTeams();
+    List<Team> listTeams();
     
     /**
      * Find team by name
@@ -47,7 +47,8 @@ public interface TeamDao {
      * @return found Team
      * @throws IllegalArgumentException when argumet is null
      */
-    public Team findTeamByName(String name);
+    Team findTeamByName(String name);
+
     
     /**
      * Find team by id
@@ -56,5 +57,5 @@ public interface TeamDao {
      * @return found Team
      * @throws IllegalArgumentException when argumet is null
      */
-    public Team findTeamById(Long id);
+    Team findTeamById(Long id);
 }
