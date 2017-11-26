@@ -18,25 +18,28 @@ public class TeamDaoImpl implements TeamDao {
     @PersistenceContext
     private EntityManager em;
 
-    public void addTeam(Team team) {
+    public Team addTeam(Team team) {
         if(team == null){
             throw new IllegalArgumentException("argument is null");
         }
         em.persist(team);
+        return team;
     }
 
-    public void updateTeam(Team team) {
+    public Team updateTeam(Team team) {
         if(team == null){
             throw new IllegalArgumentException("argument is null");
         }
         em.merge(team);
+        return team;
     }
 
-    public void deleteTeam(Team team) {
+    public boolean deleteTeam(Team team) {
         if(team == null){
             throw new IllegalArgumentException("argument is null");
         }
         em.remove(em.merge(team));
+        return true;
     }
 
     public List<Team> listTeams() {
