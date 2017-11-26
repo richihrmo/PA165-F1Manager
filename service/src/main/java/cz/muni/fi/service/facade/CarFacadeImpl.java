@@ -33,12 +33,15 @@ public class CarFacadeImpl implements CarFacade {
         CarDTO carDTO = beanMappingService.mapTo(car, CarDTO.class);
         return carDTO;
     }
+
+    //TODO
     @Override
     public CarDTO findCarByDriver(DriverDTO driverDTO) {
-        Car car = carService.findCarByDriver(driverService.findDriverById(driverDTO.getId()));
-        if (car == null) return null;
-        CarDTO carDTO = beanMappingService.mapTo(car, CarDTO.class);
-        return carDTO;
+//        Car car = carService.findCarByDriver(driverService.findDriverById(driverDTO.getId()));
+//        if (car == null) return null;
+//        CarDTO carDTO = beanMappingService.mapTo(car, CarDTO.class);
+//        return carDTO;
+        return null;
     }
 
     @Override
