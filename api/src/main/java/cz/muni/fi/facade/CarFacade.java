@@ -18,7 +18,7 @@ public interface CarFacade {
      * @param id
      * @return Car entity
      */
-    CarDTO findCarById(long id);
+    CarDTO findCarById(Long id);
 
     /**
      * Returns entity based on driver
@@ -31,10 +31,9 @@ public interface CarFacade {
     /**
      * Returns List of all cars
      *
-     * @param carDTO
      * @return List of Car entities
      */
-    List<CarDTO> listAllCars(CarDTO carDTO);
+    List<CarDTO> listAllCars();
 
     /**
      * CRUD operation create
@@ -60,9 +59,9 @@ public interface CarFacade {
     /**
      * Returns list of cars using component of given name
      *
-     * @param componentDTO
+     * @param componentName
      * @return
      */
-    List<CarDTO> listCarsByComponentName(ComponentDTO componentDTO);
+    List<CarDTO> listCarsByComponentName(String componentName);
 
 }
