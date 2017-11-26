@@ -13,14 +13,14 @@ public interface ComponentDao {
      *
      * @return list of all available components
      */
-    public List<Component> listAvailableComponents();
+    List<Component> listAvailableComponents();
 
     /**
      * List all components in DB
      *
      * @return list of all components
      */
-    public List<Component> listAllComponents();
+    List<Component> listAllComponents();
 
     /**
      * Find component in DB by name
@@ -29,7 +29,7 @@ public interface ComponentDao {
      * @return found component or null
      * @throws IllegalArgumentException when argumet is null
      */
-    public Component findComponentByName(String name) throws IllegalArgumentException;
+    Component findComponentByName(String name) throws IllegalArgumentException;
 
     /**
      * Find component in DB by id
@@ -38,7 +38,7 @@ public interface ComponentDao {
      * @return found component or null
      * @throws IllegalArgumentException when argumet is null
      */
-    public Component findComponentById(Long id) throws IllegalArgumentException;
+    Component findComponentById(Long id) throws IllegalArgumentException;
 
     /**
      * Add component to DB
@@ -46,7 +46,7 @@ public interface ComponentDao {
      * @param component component to be added
      * @throws IllegalArgumentException when argumet is null
      */
-    public void addComponent(Component component) throws IllegalArgumentException;
+    Component addComponent(Component component) throws IllegalArgumentException;
 
     /**
      * Update component in DB
@@ -54,7 +54,7 @@ public interface ComponentDao {
      * @param component compondent to be updated
      * @throws IllegalArgumentException when argumet is null
      */
-    public void updateComponent(Component component) throws IllegalArgumentException;
+    Component updateComponent(Component component) throws IllegalArgumentException;
 
     /**
      * Delete component from DB
@@ -62,5 +62,5 @@ public interface ComponentDao {
      * @param component component to be deleted
      * @throws IllegalArgumentException when argumet is null
      */
-    public void deleteComponent(Component component) throws IllegalArgumentException;
+    Component deleteComponent(Component component) throws IllegalArgumentException;
 }
