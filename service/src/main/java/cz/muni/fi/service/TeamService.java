@@ -21,7 +21,6 @@ public interface TeamService {
      * Find all teams
      *
      * @return list of found teams
-     * @throws
      */
     List<Team> findAllTeams();
 

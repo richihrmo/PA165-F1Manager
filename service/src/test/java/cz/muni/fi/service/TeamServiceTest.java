@@ -1,12 +1,9 @@
 package cz.muni.fi.service;
 
-import java.util.List;
+import cz.muni.fi.UtilityClass;
 import cz.muni.fi.dao.TeamDao;
-import cz.muni.fi.entities.Car;
-import cz.muni.fi.entities.Component;
 import cz.muni.fi.entities.Driver;
 import cz.muni.fi.entities.Team;
-import cz.muni.fi.persistanceEnums.ComponentType;
 import cz.muni.fi.service.config.ServiceConfiguration;
 import org.hibernate.service.spi.ServiceException;
 import org.mockito.InjectMocks;
@@ -23,10 +20,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
@@ -45,7 +39,7 @@ public class TeamServiceTest extends AbstractTransactionalTestNGSpringContextTes
     private TeamService teamService;
 
     private Team blueTeam;
-    private Team redTeam = new Team("Red team", createSampleCar("James", "Bond"), createSampleCar("Bruce", "Wayne"));
+    private Team redTeam = new Team("Red team", UtilityClass.createSampleCar("James", "Bond"), UtilityClass.createSampleCar("Bruce", "Wayne"));
     private Map<Long, Team> teams = new HashMap<>();
 
     @BeforeClass
@@ -112,7 +106,7 @@ public class TeamServiceTest extends AbstractTransactionalTestNGSpringContextTes
 
     @BeforeMethod
     public void prepareTestTeam() {
-        blueTeam = new Team("Blue team", createSampleCar("John", "Smith"), createSampleCar("Jane", "Doe"));
+        blueTeam = new Team("Blue team", UtilityClass.createSampleCar("John", "Smith"), UtilityClass.createSampleCar("Jane", "Doe"));
         blueTeam.setId(1L);
         teams.put(blueTeam.getId(), blueTeam);
     }
@@ -181,15 +175,5 @@ public class TeamServiceTest extends AbstractTransactionalTestNGSpringContextTes
     public void findAllTeamCarDriversEmptyTest() {
         teams.clear();
         assertThat(teamService.findAllTeamCarDrivers()).hasSize(0);
-    }
-
-    private Car createSampleCar(String driverName, String driverSurname) {
-        Driver driver = new Driver(driverName, driverSurname, "US");
-        Component engine = new Component("Engine Black", false, ComponentType.ENGINE);
-        Component aerodynamics = new Component("Aero Black", false, ComponentType.AERODYNAMICS);
-        Component breaks = new Component("Breaks Black", false, ComponentType.BRAKES);
-        Component suspension = new Component("Susp Black", false, ComponentType.SUSPENSION);
-        Component transmission = new Component("Transmission Black", false, ComponentType.TRANSMISSION);
-        return new Car(driver, engine, aerodynamics, suspension, transmission, breaks);
     }
 }
