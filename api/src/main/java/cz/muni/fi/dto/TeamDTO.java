@@ -6,18 +6,18 @@ import lombok.Getter;
 /**
  * @author Matus Macko
  */
-public class TeamDto {
+public class TeamDTO {
     @Getter @Setter private Long id;
     @Getter @Setter private String name;
-    @Getter @Setter private CarDto carOne;
-    @Getter @Setter private CarDto carTwo;
+    @Getter @Setter private CarDTO carOne;
+    @Getter @Setter private CarDTO carTwo;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || !(o instanceof TeamDto)) return false;
+        if (o == null || !(o instanceof TeamDTO)) return false;
 
-        TeamDto teamDto = (TeamDto) o;
+        TeamDTO teamDto = (TeamDTO) o;
 
         if (!name.equals(teamDto.name)) return false;
         if (!carOne.equals(teamDto.carOne)) return false;

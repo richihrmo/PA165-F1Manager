@@ -6,17 +6,17 @@ import lombok.Setter;
 /**
  * @author Matus Macko
  */
-public class NewTeamDto {
+public class NewTeamDTO {
     @Getter @Setter private String name;
-    @Getter @Setter private CarDto carOne;
-    @Getter @Setter private CarDto carTwo;
+    @Getter @Setter private CarDTO carOne;
+    @Getter @Setter private CarDTO carTwo;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || !(o instanceof NewTeamDto)) return false;
+        if (o == null || !(o instanceof NewTeamDTO)) return false;
 
-        NewTeamDto that = (NewTeamDto) o;
+        NewTeamDTO that = (NewTeamDTO) o;
 
         if (!name.equals(that.name)) return false;
         if (!carOne.equals(that.carOne)) return false;

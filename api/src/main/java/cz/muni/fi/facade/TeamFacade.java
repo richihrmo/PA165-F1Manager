@@ -2,8 +2,9 @@ package cz.muni.fi.facade;
 
 import java.util.List;
 
-import cz.muni.fi.dto.NewTeamDto;
-import cz.muni.fi.dto.TeamDto;
+import cz.muni.fi.dto.DriverDTO;
+import cz.muni.fi.dto.NewTeamDTO;
+import cz.muni.fi.dto.TeamDTO;
 
 /**
  * @author Matus Macko
@@ -14,7 +15,7 @@ public interface TeamFacade {
      *
      * @return list of all teams
      */
-    List<TeamDto> getAllTeams();
+    List<TeamDTO> getAllTeams();
 
     /**
      * Get Team by id
@@ -22,21 +23,21 @@ public interface TeamFacade {
      * @param teamId team id
      * @return found Team or Null
      */
-    TeamDto getTeamById(Long teamId);
+    TeamDTO getTeamById(Long teamId);
 
     /**
      * Create new Team
      *
      * @param team team to be created
      */
-    void createTeam(NewTeamDto team);
+    void createTeam(NewTeamDTO team);
 
     /**
      * Update team
      *
      * @param team team to be updated
      */
-    void updateTeam(TeamDto team);
+    void updateTeam(TeamDTO team);
 
     /**
      * Delete team
@@ -50,5 +51,5 @@ public interface TeamFacade {
      *
      * @return list of car drivers
      */
-    List<DriverDto> getAllTeamCarDrivers();
+    List<DriverDTO> getAllTeamCarDrivers();
 }
