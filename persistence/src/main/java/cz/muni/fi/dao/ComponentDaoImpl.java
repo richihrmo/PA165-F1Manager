@@ -51,6 +51,12 @@ public class ComponentDaoImpl implements ComponentDao {
         if(component == null){
             throw new IllegalArgumentException("argument is null");
         }
+        if (component.getId() != null) {
+            throw new IllegalArgumentException("Id must be null!");
+        }
+        if (component.getName() == null || component.getComponentType() == null) {
+            throw new IllegalArgumentException("Component attributes cannot be null!");
+        }
         em.persist(component);
         return component;
     }
@@ -59,6 +65,9 @@ public class ComponentDaoImpl implements ComponentDao {
         if(component == null){
             throw new IllegalArgumentException("argument is null");
         }
+        if (component.getName() == null || component.getComponentType() == null || component.getId() == null) {
+            throw new IllegalArgumentException("Component attributes cannot be null!");
+        }
         em.merge(component);
         return component;
     }
@@ -66,6 +75,9 @@ public class ComponentDaoImpl implements ComponentDao {
     public Component deleteComponent(Component component) {
         if(component == null){
             throw new IllegalArgumentException("argument is null");
+        }
+        if (component.getName() == null || component.getComponentType() == null || component.getId() == null) {
+            throw new IllegalArgumentException("Component attributes cannot be null!");
         }
         em.remove(em.merge(component));
         return component;
