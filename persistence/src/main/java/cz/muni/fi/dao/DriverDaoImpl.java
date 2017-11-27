@@ -79,6 +79,7 @@ public class DriverDaoImpl implements DriverDao{
         if (driver.getName() == null) throw new IllegalArgumentException("update: name is null");
         if (driver.getNationality() == null) throw new IllegalArgumentException("update: nationality is null");
         if (driver.getSurname() == null) throw new IllegalArgumentException("update: surname is null");
+        em.merge(driver);
         return driver;
     }
 
