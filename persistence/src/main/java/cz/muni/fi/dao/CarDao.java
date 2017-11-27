@@ -39,7 +39,8 @@ public interface CarDao {
      * Adds car to DB
      *
      * @param car car to be added
-     * @throws IllegalArgumentException when argument is null
+     * @throws IllegalArgumentException when argument is null or not nullable attributes are null
+     * @return car
      */
     Car addCar(Car car);
 
@@ -47,7 +48,8 @@ public interface CarDao {
      * Updates car in DB
      *
      * @param car car to be updated
-     * @throws IllegalArgumentException when argument is null
+     * @throws IllegalArgumentException when argument is null or not nullable attributes are null
+     * @return car
      */
     Car updateCar(Car car);
 
@@ -55,7 +57,8 @@ public interface CarDao {
      * Deletes car from DB
      *
      * @param car car to be deleted
-     * @throws IllegalArgumentException when argument is null
+     * @throws IllegalArgumentException when argument is null or not nullable attributes are null
+     * @return car
      */
     boolean deleteCar(Car car);
 }
