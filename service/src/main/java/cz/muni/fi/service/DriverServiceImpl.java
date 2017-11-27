@@ -22,8 +22,6 @@ public class DriverServiceImpl implements DriverService {
             return driverDao.listDrivers();
         } catch(Throwable ex){
             throw new FormulaTeamDataAccessException(ex.getMessage()) {};
-        }
-        
     }
 
     @Override
@@ -32,7 +30,6 @@ public class DriverServiceImpl implements DriverService {
             return driverDao.listTestDrivers();
         } catch(Throwable ex){
             throw new FormulaTeamDataAccessException(ex.getMessage()) {};
-        }
     }
 
     @Override

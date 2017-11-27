@@ -48,35 +48,40 @@ public class Car {
     public Car(){}
     
     public void setEngine(Component engine) {
-        if(engine.getComponentType() != ComponentType.ENGINE){
+        if (engine == null) throw new IllegalArgumentException("set with null attribute");
+        if (engine.getComponentType() != ComponentType.ENGINE){
             throw new IllegalArgumentException("type of component is not ENGINE");
         }
         this.engine = engine;
     }
 
     public void setAerodynamics(Component aerodynamics) {
-        if(aerodynamics.getComponentType() != ComponentType.AERODYNAMICS){
+        if (aerodynamics == null) throw new IllegalArgumentException("set with null attribute");
+        if (aerodynamics.getComponentType() != ComponentType.AERODYNAMICS){
             throw new IllegalArgumentException("type of component is not AERODYNAMICS");
         }
         this.aerodynamics = aerodynamics;
     }
 
     public void setSuspension(Component suspension) {
-        if(suspension.getComponentType() != ComponentType.SUSPENSION){
+        if (suspension == null) throw new IllegalArgumentException("set with null attribute");
+        if (suspension.getComponentType() != ComponentType.SUSPENSION){
             throw new IllegalArgumentException("type of component is not SUSPENSION");
         }
         this.suspension = suspension;
     }
 
     public void setTransmission(Component transmission) {
-        if(transmission.getComponentType() != ComponentType.TRANSMISSION){
+        if (transmission == null) throw new IllegalArgumentException("set with null attribute");
+        if (transmission.getComponentType() != ComponentType.TRANSMISSION){
             throw new IllegalArgumentException("type of component is not TRANSMISSION");
         }
         this.transmission = transmission;
     }
 
     public void setBrakes(Component brakes) {
-        if(brakes.getComponentType() != ComponentType.BRAKES){
+        if (brakes == null) throw new IllegalArgumentException("set with null attribute");
+        if (brakes.getComponentType() != ComponentType.BRAKES){
             throw new IllegalArgumentException("type of component is not BRAKES");
         }
         this.brakes = brakes;
