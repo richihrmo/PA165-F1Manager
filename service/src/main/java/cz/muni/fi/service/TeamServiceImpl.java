@@ -55,24 +55,24 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public void createTeam(Team team) {
+    public Team createTeam(Team team) {
         if (team == null) {
             throw new IllegalArgumentException("Team argument cannot be null!");
         }
         try {
-            teamDao.addTeam(team);
+            return teamDao.addTeam(team);
         } catch (Throwable ex) {
             throw new TeamFormulaDataAccessException("Error during createTeam", ex);
         }
     }
 
     @Override
-    public void updateTeam(Team team) {
+    public Team updateTeam(Team team) {
         if (team == null) {
             throw new IllegalArgumentException("Team argument cannot be null!");
         }
         try {
-            teamDao.updateTeam(team);
+            return teamDao.updateTeam(team);
         } catch (Throwable ex) {
             throw new TeamFormulaDataAccessException("Error during updateTeam", ex);
         }
