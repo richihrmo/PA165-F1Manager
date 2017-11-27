@@ -15,47 +15,50 @@ public interface CarDao {
      *
      * @return list of cars
      */
-    public List<Car> listAllCars();
+    List<Car> listAllCars();
 
     /**
      * Find specific car by its driver
      *
      * @param driver driver
      * @return car with driver
-     * @throws IllegalArgumentException when argumet is null
+     * @throws IllegalArgumentException when argument is null
      */
-    public Car findCarByDriver(Driver driver);
+    Car findCarByDriver(Driver driver);
 
     /**
      * Find specific car by its id
      *
      * @param id DB id
      * @return car
-     * @throws IllegalArgumentException when argumet is null
+     * @throws IllegalArgumentException when argument is null
      */
-    public Car findCarById(Long id);
+    Car findCarById(Long id);
 
     /**
      * Adds car to DB
      *
      * @param car car to be added
-     * @throws IllegalArgumentException when argumet is null
+     * @throws IllegalArgumentException when argument is null or not nullable attributes are null
+     * @return car
      */
-    public void addCar(Car car);
+    Car addCar(Car car);
 
     /**
      * Updates car in DB
      *
      * @param car car to be updated
-     * @throws IllegalArgumentException when argumet is null
+     * @throws IllegalArgumentException when argument is null or not nullable attributes are null
+     * @return car
      */
-    public void updateCar(Car car);
+    Car updateCar(Car car);
 
     /**
      * Deletes car from DB
      *
      * @param car car to be deleted
-     * @throws IllegalArgumentException when argumet is null
+     * @throws IllegalArgumentException when argument is null or not nullable attributes are null
+     * @return car
      */
-    public void deleteCar(Car car);
+    boolean deleteCar(Car car);
 }

@@ -30,16 +30,14 @@ public class DriverDaoImpl implements DriverDao{
     }
 
     public Driver findDriverById(Long id) {
-        if(id == null){
-            throw new IllegalArgumentException("argument is null");
-        }
+        if(id == null) throw new IllegalArgumentException("find: id is null");
+
         return em.find(Driver.class, id);
     }
 
     public Driver findDriverByName(String name, String surname) {
-        if(name == null || surname == null){
-            throw new IllegalArgumentException("argument is null");
-        }
+        if(name == null || surname == null) throw new IllegalArgumentException("find: name is null");
+
         try {
             return em.createQuery("select d from Driver d where name = :name and surname = :surname", Driver.class)
                     .setParameter("name", name)
@@ -52,7 +50,7 @@ public class DriverDaoImpl implements DriverDao{
 
     public Driver findTestDriver(String name, String surname) {
         if(name == null || surname == null){
-            throw new IllegalArgumentException("argument is null");
+            throw new IllegalArgumentException("find: testdriver is null");
         }
         try {
             return em.createQuery("select d from Driver d where ismaindriver = :ismaindriver and name = :name and surname = :surname", Driver.class)
@@ -66,23 +64,32 @@ public class DriverDaoImpl implements DriverDao{
     }
 
     public void addDriver(Driver driver) {
-        if(driver == null){
-            throw new IllegalArgumentException("argument is null");
-        }
+        if (driver == null) throw new IllegalArgumentException("add: driver is null");
+        if (driver.getId() != null) throw new IllegalArgumentException("add: id must be null");
+        if (driver.getName() == null) throw new IllegalArgumentException("add: name is null");
+        if (driver.getNationality() == null) throw new IllegalArgumentException("add: nationality is null");
+        if (driver.getSurname() == null) throw new IllegalArgumentException("add: surname is null");
+
         em.persist(driver);
     }
 
     public void updateDriver(Driver driver) {
-        if(driver == null){
-            throw new IllegalArgumentException("argument is null");
-        }
+        if (driver == null) throw new IllegalArgumentException("update: driver is null");
+        if (driver.getId() == null) throw new IllegalArgumentException("update: id is null");
+        if (driver.getName() == null) throw new IllegalArgumentException("update: name is null");
+        if (driver.getNationality() == null) throw new IllegalArgumentException("update: nationality is null");
+        if (driver.getSurname() == null) throw new IllegalArgumentException("update: surname is null");
+
         em.merge(driver);
     }
 
     public void deleteDriver(Driver driver) {
-        if(driver == null){
-            throw new IllegalArgumentException("argument is null");
-        }
+        if (driver == null) throw new IllegalArgumentException("delete: driver is null");
+        if (driver.getId() == null) throw new IllegalArgumentException("delete: id is null");
+        if (driver.getName() == null) throw new IllegalArgumentException("delete: name is null");
+        if (driver.getNationality() == null) throw new IllegalArgumentException("delete: nationality is null");
+        if (driver.getSurname() == null) throw new IllegalArgumentException("delete: surname is null");
+
         em.remove(em.merge(driver));
     }
 }
