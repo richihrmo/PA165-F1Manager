@@ -39,7 +39,7 @@ public class TeamServiceTest extends AbstractTransactionalTestNGSpringContextTes
     private TeamService teamService;
 
     private Team blueTeam;
-    private Team redTeam = new Team("Red team", UtilityClass.createSampleCar("James", "Bond"), UtilityClass.createSampleCar("Bruce", "Wayne"));
+    private Team redTeam;
     private Map<Long, Team> teams = new HashMap<>();
 
     @BeforeClass
@@ -56,8 +56,8 @@ public class TeamServiceTest extends AbstractTransactionalTestNGSpringContextTes
                 throw new IllegalArgumentException("Id must be null!");
             }
 
-            if (mockedTeam.getName() == null) {
-                throw new IllegalArgumentException("Mission name can't be null!");
+            if (mockedTeam.getName() == null || mockedTeam.getCarTwo() == null || mockedTeam.getCarOne() == null) {
+                throw new IllegalArgumentException("Team attributes can't be null!");
             }
 
             mockedTeam.setId(Long.valueOf(teams.size()));
@@ -74,8 +74,8 @@ public class TeamServiceTest extends AbstractTransactionalTestNGSpringContextTes
                 throw new IllegalArgumentException("Team is null!");
             }
 
-            if (mockedTeam.getId() == null) {
-                throw new IllegalArgumentException("Id cannot be null!");
+            if (mockedTeam.getId() == null || mockedTeam.getName() == null || mockedTeam.getCarOne() == null || mockedTeam.getCarTwo() == null) {
+                throw new IllegalArgumentException("Tema attributes cannot be null!");
             }
 
             teams.remove(mockedTeam.getId(), mockedTeam);
@@ -95,8 +95,8 @@ public class TeamServiceTest extends AbstractTransactionalTestNGSpringContextTes
             if (mockedTeam.getId() == null) {
                 throw new IllegalArgumentException("Id cannot be null!");
             }
-            if (mockedTeam.getName() == null) {
-                throw new IllegalArgumentException("Name cannot be null!");
+            if (mockedTeam.getName() == null || mockedTeam.getCarOne() == null || mockedTeam.getCarTwo() == null) {
+                throw new IllegalArgumentException("Team attributes cannot be null!");
             }
 
             teams.replace(mockedTeam.getId(), mockedTeam);
@@ -109,6 +109,8 @@ public class TeamServiceTest extends AbstractTransactionalTestNGSpringContextTes
         blueTeam = new Team("Blue team", UtilityClass.createSampleCar("John", "Smith"), UtilityClass.createSampleCar("Jane", "Doe"));
         blueTeam.setId(1L);
         teams.put(blueTeam.getId(), blueTeam);
+
+        redTeam = new Team("Red team", UtilityClass.createSampleCar("James", "Bond"), UtilityClass.createSampleCar("Bruce", "Wayne"));
     }
 
     @Test
@@ -117,9 +119,22 @@ public class TeamServiceTest extends AbstractTransactionalTestNGSpringContextTes
         assertThat(teams.values()).hasSize(1).contains(redTeam);
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void createNullTeamTest() {
         teamService.createTeam(null);
+    }
+
+    @Test(expectedExceptions = DataAccessException.class)
+    public void createNotNullIdTeamTest() {
+        teamService.createTeam(blueTeam);
+    }
+
+    @Test(expectedExceptions = DataAccessException.class)
+    public void createTeamWithNullAttributesTest() {
+        redTeam.setName(null);
+        redTeam.setCarOne(null);
+        redTeam.setCarTwo(null);
+        teamService.createTeam(redTeam);
     }
 
     @Test
@@ -135,9 +150,15 @@ public class TeamServiceTest extends AbstractTransactionalTestNGSpringContextTes
         assertThat(updatedTeam).isEqualToComparingFieldByField(blueTeam);
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void updateNullTeamTest() {
         teamService.updateTeam(null);
+    }
+
+    @Test(expectedExceptions = DataAccessException.class)
+    public void updateTeamWithNullAttributeTest() {
+        blueTeam.setId(null);
+        teamService.updateTeam(blueTeam);
     }
 
     @Test
@@ -145,7 +166,7 @@ public class TeamServiceTest extends AbstractTransactionalTestNGSpringContextTes
         assertThat(teamService.findTeamById(blueTeam.getId())).isEqualTo(blueTeam);
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void findTeamByNullIdTest() {
         teamService.findTeamById(null);
     }
@@ -156,9 +177,15 @@ public class TeamServiceTest extends AbstractTransactionalTestNGSpringContextTes
         assertThat(teams.values()).isEmpty();
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void deleteNullTeamTest() {
         teamService.deleteTeam(null);
+    }
+
+    @Test(expectedExceptions = DataAccessException.class)
+    public void deleteTeamWithNullAttributesTest() {
+        blueTeam.setId(null);
+        teamService.deleteTeam(blueTeam);
     }
 
     @Test

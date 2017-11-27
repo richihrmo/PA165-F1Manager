@@ -21,6 +21,9 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public Team findTeamById(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("Id argument cannot be null!");
+        }
         try {
             return teamDao.findTeamById(id);
         } catch (Throwable ex) {
@@ -53,6 +56,9 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public void createTeam(Team team) {
+        if (team == null) {
+            throw new IllegalArgumentException("Team argument cannot be null!");
+        }
         try {
             teamDao.addTeam(team);
         } catch (Throwable ex) {
@@ -62,6 +68,9 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public void updateTeam(Team team) {
+        if (team == null) {
+            throw new IllegalArgumentException("Team argument cannot be null!");
+        }
         try {
             teamDao.updateTeam(team);
         } catch (Throwable ex) {
@@ -71,6 +80,9 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public void deleteTeam(Team team) {
+        if (team == null) {
+            throw new IllegalArgumentException("Team argument cannot be null!");
+        }
         try {
             teamDao.deleteTeam(team);
         } catch (Throwable ex) {
