@@ -18,7 +18,7 @@ public class DriverDTO {
     
     @Getter @Setter private String nationality;
     
-    @Getter @Setter private boolean isMainDriver;
+    @Getter @Setter private boolean mainDriver;
     
     @Getter @Setter private DrivingSkill specialSkill;
 
@@ -28,7 +28,7 @@ public class DriverDTO {
         hash = 97 * hash + Objects.hashCode(this.name);
         hash = 97 * hash + Objects.hashCode(this.surname);
         hash = 97 * hash + Objects.hashCode(this.nationality);
-        hash = 97 * hash + (this.isMainDriver ? 1 : 0);
+        hash = 97 * hash + (this.mainDriver ? 1 : 0);
         hash = 97 * hash + Objects.hashCode(this.specialSkill);
         return hash;
     }
@@ -45,7 +45,7 @@ public class DriverDTO {
             return false;
         }
         final DriverDTO other = (DriverDTO) obj;
-        if (this.isMainDriver != other.isMainDriver) {
+        if (this.mainDriver != other.mainDriver) {
             return false;
         }
         if (!Objects.equals(this.name, other.name)) {

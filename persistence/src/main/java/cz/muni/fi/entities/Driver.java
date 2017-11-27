@@ -22,7 +22,7 @@ public class Driver {
     @Getter @Setter @NotNull private String name;
     @Getter @Setter @NotNull private String surname;
     @Getter @Setter @NotNull private String nationality;
-    @Getter private boolean isMainDriver = false;
+    @Getter @Setter private boolean mainDriver = false;
     @Enumerated @Getter @Setter private DrivingSkill specialSkill;
 
 
@@ -35,10 +35,10 @@ public class Driver {
     }
 
     public void setAsMainDriver() {
-        isMainDriver = Boolean.TRUE;
+        mainDriver = Boolean.TRUE;
     }
 
     public void setAsTestDriver() {
-        isMainDriver = Boolean.FALSE;
+        mainDriver = Boolean.FALSE;
     }
 }

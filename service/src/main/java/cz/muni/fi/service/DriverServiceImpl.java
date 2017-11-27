@@ -4,6 +4,7 @@ import cz.muni.fi.dao.DriverDao;
 import cz.muni.fi.entities.Driver;
 import cz.muni.fi.service.exception.ServiceDataAccessException;
 import org.dozer.inject.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
 @Service
 public class DriverServiceImpl implements DriverService {
 
-    @Inject
+    @Autowired
     private DriverDao driverDao;
     
     @Override

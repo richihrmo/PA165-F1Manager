@@ -24,8 +24,8 @@ public class DriverDaoImpl implements DriverDao{
     }
 
     public List<Driver> listTestDrivers() {
-        return em.createQuery("select d from Driver d where ismaindriver = :ismaindriver", Driver.class)
-                .setParameter("ismaindriver", false)
+        return em.createQuery("select d from Driver d where maindriver = :maindriver", Driver.class)
+                .setParameter("maindriver", false)
                 .getResultList();
     }
 
@@ -53,10 +53,10 @@ public class DriverDaoImpl implements DriverDao{
             throw new IllegalArgumentException("find: testdriver is null");
         }
         try {
-            return em.createQuery("select d from Driver d where ismaindriver = :ismaindriver and name = :name and surname = :surname", Driver.class)
+            return em.createQuery("select d from Driver d where maindriver = :maindriver and name = :name and surname = :surname", Driver.class)
                     .setParameter("name", name)
                     .setParameter("surname", surname)
-                    .setParameter("ismaindriver", false)
+                    .setParameter("maindriver", false)
                     .getSingleResult();
         } catch (NoResultException nrf) {
             return null;
