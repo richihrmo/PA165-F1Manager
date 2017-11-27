@@ -26,7 +26,9 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
+/**
+ * @author Matus Macko
+ */
 @DirtiesContext
 @ContextConfiguration(classes = ServiceConfiguration.class)
 public class TeamFacadeTest extends AbstractTransactionalTestNGSpringContextTests {
