@@ -4,23 +4,33 @@ import cz.muni.fi.dao.CarDao;
 import cz.muni.fi.entities.Car;
 import cz.muni.fi.entities.Component;
 import cz.muni.fi.entities.Driver;
+import cz.muni.fi.entities.Team;
 import cz.muni.fi.persistanceEnums.ComponentType;
 import cz.muni.fi.service.config.ServiceConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import org.mockito.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Richard Hrmo
@@ -55,6 +65,66 @@ public class CarServiceTest extends AbstractTransactionalTestNGSpringContextTest
     private Component engineV8;
     private Component engineV10;
     private Component engineV12;
+
+    private Map<Long, Car> cars = new HashMap<>();
+
+    @BeforeClass
+    public void mockitoSetup(){
+        MockitoAnnotations.initMocks(this);
+
+        when(carDao.addCar(any(Car.class))).then(invoke -> {
+            Car mockedCar = invoke.getArgumentAt(0, Car.class);
+            if (mockedCar == null) throw new IllegalArgumentException("Car is null");
+            if (mockedCar.getId() != null) throw new IllegalArgumentException("Id must be null");
+            if (mockedCar.getEngine() == null
+                    || mockedCar.getAerodynamics() == null
+                    || mockedCar.getBrakes() == null
+                    || mockedCar.getTransmission() == null
+                    || mockedCar.getSuspension() == null
+                    || mockedCar.getDriver() == null) throw new IllegalArgumentException("Car attribute is null");
+
+            mockedCar.setId(Long.valueOf(cars.size()));
+
+            cars.put(mockedCar.getId(), mockedCar);
+            return mockedCar;
+        });
+
+        when(carDao.listAllCars()).then(invoke -> Collections.unmodifiableList(new ArrayList<>(cars.values())));
+
+        when(carDao.deleteCar(any(Car.class))).then(invoke -> {
+            Car mockedCar = invoke.getArgumentAt(0, Car.class);
+            if (mockedCar == null) throw new IllegalArgumentException("Car is null!");
+            if (mockedCar.getId() == null
+                    || mockedCar.getSuspension() == null
+                    || mockedCar.getTransmission() == null
+                    || mockedCar.getBrakes() == null
+                    || mockedCar.getAerodynamics() == null
+                    || mockedCar.getEngine() == null) throw new IllegalArgumentException("Car attributes cannot be null!");
+
+            cars.remove(mockedCar.getId(), mockedCar);
+            return true;
+        });
+
+        when(carDao.findCarById(anyLong())).then(invoke -> {
+            Long id = invoke.getArgumentAt(0, Long.class);
+            if (id == null) throw new IllegalArgumentException("Id is null");
+            return cars.get(id);
+        });
+
+        when(carDao.updateCar(any(Car.class))).then(invoke -> {
+            Car mockedCar = invoke.getArgumentAt(0, Car.class);
+            if (mockedCar.getId() == null
+                    || mockedCar.getSuspension() == null
+                    || mockedCar.getTransmission() == null
+                    || mockedCar.getBrakes() == null
+                    || mockedCar.getAerodynamics() == null
+                    || mockedCar.getEngine() == null) throw new IllegalArgumentException("Car attributes cannot be null!");
+
+
+            cars.replace(mockedCar.getId(), mockedCar);
+            return mockedCar;
+        });
+    }
 
     @BeforeMethod
     public void setup(){
@@ -91,51 +161,62 @@ public class CarServiceTest extends AbstractTransactionalTestNGSpringContextTest
         ferrari.setBrakes(brake);
         ferrari.setTransmission(transmission);
         ferrari.setEngine(engineV12);
+    }
 
+    @AfterMethod
+    public void tearDown(){
+        for (Car car : cars.values()) {
+            try {
+                carDao.deleteCar(car);
+            } catch (Exception e){
+                throw new RuntimeException("fail delete tear down", e);
+            }
+        }
     }
 
     @Test
     public void createCarTest(){
-        carService.createCar(redbullF1);
-        assertThat(carService.findCarById(redbullF1.getId())).isEqualTo(redbullF1);
+        Car new_car = new Car(ricciardo, engineV10, aero, suspension, transmission, brake);
+        carService.createCar(new_car);
+        assertThat(cars.values()).hasSize(1).contains(new_car);
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void createNullCar(){
-        carService.createCar(marussia);
+        carService.createCar(null);
     }
 
     @Test(expectedExceptions = DataAccessException.class)
     public void createCarNullDriverTest(){
-        redbullF1.setDriver(verstappen);
+        redbullF1.setDriver(null);
         carService.createCar(redbullF1);
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void createCarNullEngineTest(){
         redbullF1.setEngine(null);
         carService.createCar(redbullF1);
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void createCarNullTransmissionTest(){
         redbullF1.setTransmission(null);
         carService.createCar(redbullF1);
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void createCarNullSuspensionTest(){
         redbullF1.setSuspension(null);
         carService.createCar(redbullF1);
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void createCarNullBrakesTest(){
         redbullF1.setBrakes(null);
         carService.createCar(redbullF1);
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void createCarNullAerodynamicsTest(){
         redbullF1.setAerodynamics(null);
         carService.createCar(redbullF1);
@@ -153,13 +234,14 @@ public class CarServiceTest extends AbstractTransactionalTestNGSpringContextTest
 
     @Test
     public void deleteCarTest(){
-        carService.createCar(redbullF1);
-        assertThat(carService.findCarById(redbullF1.getId())).isEqualTo(redbullF1);
-        carService.deleteCar(redbullF1);
-        assertThat(carService.findCarById(redbullF1.getId())).isNull();
+        carService.createCar(ferrari);
+        assertThat(cars.values()).hasSize(1).contains(ferrari);
+        carService.deleteCar(ferrari);
+        assertThat(cars.values()).hasSize(0);
+        assertThat(carService.findCarById(ferrari.getId())).isNull();
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void deleteNullCar(){
         carService.deleteCar(marussia);
     }
@@ -171,35 +253,35 @@ public class CarServiceTest extends AbstractTransactionalTestNGSpringContextTest
         carService.updateCar(redbullF1);
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void updateWithNullTransmission(){
         carService.createCar(redbullF1);
         redbullF1.setTransmission(null);
         carService.updateCar(redbullF1);
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void updateWithNullEngine(){
         carService.createCar(redbullF1);
         redbullF1.setEngine(null);
         carService.updateCar(redbullF1);
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void updateWithNullBrakes(){
         carService.createCar(redbullF1);
         redbullF1.setBrakes(null);
         carService.updateCar(redbullF1);
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void updateWithNullAerodynamics(){
         carService.createCar(redbullF1);
         redbullF1.setAerodynamics(null);
         carService.updateCar(redbullF1);
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void updateWithNullSuspension(){
         carService.createCar(redbullF1);
         redbullF1.setSuspension(null);
@@ -208,11 +290,11 @@ public class CarServiceTest extends AbstractTransactionalTestNGSpringContextTest
 
     @Test
     public void listCarsByComponentNameTest(){
-        carService.createCar(redbullF1);
         carService.createCar(ferrari);
+        carService.createCar(redbullF1);
         carService.createCar(jordan);
 
-        assertThat(carService.listCarsByComponentName("V8")).containsExactly(redbullF1);
-        assertThat(carService.listCarsByComponentName("suspension")).containsExactly(redbullF1, ferrari, jordan);
+        assertThat(carService.listCarsByComponentName("V12")).containsExactly(ferrari);
+        assertThat(carService.listCarsByComponentName("suspension")).containsExactlyInAnyOrder(redbullF1, ferrari, jordan);
     }
 }
