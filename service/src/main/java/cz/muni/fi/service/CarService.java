@@ -15,7 +15,7 @@ public interface CarService {
      *
      * @param id
      * @return Car entity
-     * @throws org.springframework.dao.DataAccessException if there is problem with dao
+     * @throws cz.muni.fi.service.exception.ServiceDataAccessException if there is problem with dao
      */
     Car findCarById(Long id);
 
@@ -24,7 +24,7 @@ public interface CarService {
      *
      * @param driver
      * @return Car entity
-     * @throws org.springframework.dao.DataAccessException if there is problem with dao
+     * @throws cz.muni.fi.service.exception.ServiceDataAccessException if there is problem with dao
      */
     Car findCarByDriver(Driver driver);
 
@@ -32,7 +32,7 @@ public interface CarService {
      * Returns List of all cars
      *
      * @return List of Car entities
-     * @throws org.springframework.dao.DataAccessException if there is problem with dao
+     * @throws cz.muni.fi.service.exception.ServiceDataAccessException if there is problem with dao
      */
     List<Car> listAllCars();
 
@@ -41,7 +41,7 @@ public interface CarService {
      *
      * @param car
      * @return car
-     * @throws org.springframework.dao.DataAccessException if there is problem with dao
+     * @throws cz.muni.fi.service.exception.ServiceDataAccessException if there is problem with dao
      */
     Car createCar(Car car);
 
@@ -50,7 +50,7 @@ public interface CarService {
      *
      * @param car
      * @return car
-     * @throws org.springframework.dao.DataAccessException if there is problem with dao
+     * @throws cz.muni.fi.service.exception.ServiceDataAccessException if there is problem with dao
      */
     Car updateCar(Car car);
 
@@ -59,7 +59,7 @@ public interface CarService {
      *
      * @param car
      * @return boolean
-     * @throws org.springframework.dao.DataAccessException if there is problem with dao
+     * @throws cz.muni.fi.service.exception.ServiceDataAccessException if there is problem with dao
      */
     boolean deleteCar(Car car);
 
@@ -68,7 +68,7 @@ public interface CarService {
      *
      * @param componentName string
      * @return List of Car entities
-     * @throws org.springframework.dao.DataAccessException if there is problem with dao
+     * @throws cz.muni.fi.service.exception.ServiceDataAccessException if there is problem with dao
      */
     List<Car> listCarsByComponentName(String componentName);
 

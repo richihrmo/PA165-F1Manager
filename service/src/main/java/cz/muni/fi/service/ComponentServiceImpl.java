@@ -3,7 +3,7 @@ package cz.muni.fi.service;
 import cz.muni.fi.dao.ComponentDao;
 import cz.muni.fi.entities.Component;
 import cz.muni.fi.persistanceEnums.ComponentType;
-import cz.muni.fi.service.Exceptions.ServiceDataAccessException;
+import cz.muni.fi.service.exception.ServiceDataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;

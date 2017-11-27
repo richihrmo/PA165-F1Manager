@@ -15,6 +15,7 @@ public interface TeamService {
      * @param id team id
      * @return found team
      * @throws IllegalArgumentException if id argument id null
+     * @throws cz.muni.fi.service.exception.ServiceDataAccessException if there is problem with dao
      */
     Team findTeamById(Long id);
 
@@ -22,6 +23,7 @@ public interface TeamService {
      * Find all teams
      *
      * @return list of found teams
+     * @throws cz.muni.fi.service.exception.ServiceDataAccessException if there is problem with dao
      */
     List<Team> findAllTeams();
 
@@ -29,6 +31,7 @@ public interface TeamService {
      * Find all team drivers
      *
      * @return list of team drivers
+     * @throws cz.muni.fi.service.exception.ServiceDataAccessException if there is problem with dao
      */
     List<Driver> findAllTeamCarDrivers();
 
@@ -38,6 +41,7 @@ public interface TeamService {
      * @param team team to be created
      * @return created Team
      * @throws IllegalArgumentException if team argument id null
+     * @throws cz.muni.fi.service.exception.ServiceDataAccessException if there is problem with dao
      */
     Team createTeam(Team team);
 
@@ -47,6 +51,7 @@ public interface TeamService {
      * @param team team to be updated
      * @return updated Team
      * @throws IllegalArgumentException if team argument id null
+     * @throws cz.muni.fi.service.exception.ServiceDataAccessException if there is problem with dao
      */
     Team updateTeam(Team team);
 
@@ -55,6 +60,7 @@ public interface TeamService {
      *
      * @param team team to be updated
      * @throws IllegalArgumentException if team argument id null
+     * @throws cz.muni.fi.service.exception.ServiceDataAccessException if there is problem with dao
      */
     void deleteTeam(Team team);
 }

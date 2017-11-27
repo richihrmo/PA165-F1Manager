@@ -11,6 +11,7 @@ public interface ComponentService {
      * Returns all Components from the database
      *
      * @return List of all Components, empty List if no Component is found
+     * @throws cz.muni.fi.service.exception.ServiceDataAccessException if there is problem with dao
      */
     List<Component> listAllComponents();
 
@@ -20,6 +21,7 @@ public interface ComponentService {
      * @param type component type
      * @return List of all Components, empty List if no Component is found
      * @throws IllegalArgumentException when type argument is null
+     * @throws cz.muni.fi.service.exception.ServiceDataAccessException if there is problem with dao
      */
     List<Component> listAllComponentsWithType(ComponentType type);
 
@@ -27,6 +29,7 @@ public interface ComponentService {
      * Returns all available Components from the database
      *
      * @return List of all Components, empty List if no Component is found
+     * @throws cz.muni.fi.service.exception.ServiceDataAccessException if there is problem with dao
      */
     List<Component> listAllAvailableComponents();
 
@@ -36,6 +39,7 @@ public interface ComponentService {
      * @param type component type
      * @return List of all Components, empty List if no Component is found
      * @throws IllegalArgumentException when type argument is null
+     * @throws cz.muni.fi.service.exception.ServiceDataAccessException if there is problem with dao
      */
     List<Component> listAllAvailableComponentsWithType(ComponentType type);
 
@@ -45,6 +49,7 @@ public interface ComponentService {
      * @param id of Component object, non-null
      * @return Component entity if found, null otherwise
      * @throws IllegalArgumentException when id argument is null
+     * @throws cz.muni.fi.service.exception.ServiceDataAccessException if there is problem with dao
      */
     Component findComponentByID(Long id);
 
@@ -54,6 +59,7 @@ public interface ComponentService {
      * @param name non-null string representing name
      * @return component with given name if exists, null otherwise
      * @throws IllegalArgumentException when name argument is null
+     * @throws cz.muni.fi.service.exception.ServiceDataAccessException if there is problem with dao
      */
     Component findComponentByName(String name);
 
@@ -62,6 +68,7 @@ public interface ComponentService {
      *
      * @param component non-null object to be created in a database
      * @throws IllegalArgumentException when component argument is null
+     * @throws cz.muni.fi.service.exception.ServiceDataAccessException if there is problem with dao
      */
     void createComponent(Component component);
 
@@ -70,6 +77,7 @@ public interface ComponentService {
      *
      * @param component non-null object to be updated in a database
      * @throws IllegalArgumentException when component argument is null
+     * @throws cz.muni.fi.service.exception.ServiceDataAccessException if there is problem with dao
      */
     void updateComponent(Component component);
 
@@ -78,6 +86,7 @@ public interface ComponentService {
      *
      * @param component non-null object to be deleted from the database
      * @throws IllegalArgumentException when component argument is null
+     * @throws cz.muni.fi.service.exception.ServiceDataAccessException if there is problem with dao
      */
     void deleteComponent(Component component);
 }
