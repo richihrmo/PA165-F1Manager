@@ -57,8 +57,8 @@ public interface CarService {
     /**
      * Returns list of cars using component of given name
      *
-     * @param componentName
-     * @return
+     * @param componentName string
+     * @return List of Car entities
      */
     List<Car> listCarsByComponentName(String componentName);
 

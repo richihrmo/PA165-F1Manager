@@ -22,40 +22,40 @@ public interface CarDao {
      *
      * @param driver driver
      * @return car with driver
-     * @throws IllegalArgumentException when argumet is null
+     * @throws IllegalArgumentException when argument is null
      */
-    Car findCarByDriver(Driver driver) throws IllegalArgumentException;
+    Car findCarByDriver(Driver driver);
 
     /**
      * Find specific car by its id
      *
      * @param id DB id
      * @return car
-     * @throws IllegalArgumentException when argumet is null
+     * @throws IllegalArgumentException when argument is null
      */
-    Car findCarById(Long id) throws IllegalArgumentException;
+    Car findCarById(Long id);
 
     /**
      * Adds car to DB
      *
      * @param car car to be added
-     * @throws IllegalArgumentException when argumet is null
+     * @throws IllegalArgumentException when argument is null
      */
-    Car addCar(Car car) throws IllegalArgumentException;
+    Car addCar(Car car);
 
     /**
      * Updates car in DB
      *
      * @param car car to be updated
-     * @throws IllegalArgumentException when argumet is null
+     * @throws IllegalArgumentException when argument is null
      */
-    Car updateCar(Car car) throws IllegalArgumentException;
+    Car updateCar(Car car);
 
     /**
      * Deletes car from DB
      *
      * @param car car to be deleted
-     * @throws IllegalArgumentException when argumet is null
+     * @throws IllegalArgumentException when argument is null
      */
-    boolean deleteCar(Car car) throws IllegalArgumentException;
+    boolean deleteCar(Car car);
 }
