@@ -7,8 +7,6 @@ import cz.muni.fi.entities.Car;
 import cz.muni.fi.facade.CarFacade;
 import cz.muni.fi.service.BeanMappingService;
 import cz.muni.fi.service.CarService;
-import cz.muni.fi.service.DriverService;
-import org.dozer.inject.Inject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,9 +26,6 @@ public class CarFacadeImpl implements CarFacade {
 
     @Autowired
     private DriverDao driverDao;
-
-//    @Autowired
-//    private DriverService driverService;
 
     @Autowired
     private BeanMappingService beanMappingService;

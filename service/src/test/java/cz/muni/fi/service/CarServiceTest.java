@@ -14,13 +14,11 @@ import org.springframework.test.context.testng.AbstractTransactionalTestNGSpring
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import org.mockito.*;
 
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -53,7 +51,6 @@ public class CarServiceTest extends AbstractTransactionalTestNGSpringContextTest
     private Car ferrari = new Car();
 
     private Driver ricciardo;
-    private Driver verstappen;
     private Driver alonso;
     private Driver vettel;
 
@@ -131,7 +128,6 @@ public class CarServiceTest extends AbstractTransactionalTestNGSpringContextTest
         ricciardo = new Driver("Daniel", "Ricciardo","AUS");
         alonso = new Driver("Fernando", "Alonso","ESP");
         vettel = new Driver("Sebastian", "Vettel","GER");
-        verstappen = null;
 
         transmission = new Component("transmission", true, ComponentType.TRANSMISSION);
         suspension = new Component("suspension", true, ComponentType.SUSPENSION);

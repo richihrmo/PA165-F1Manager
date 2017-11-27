@@ -1,7 +1,6 @@
 package cz.muni.fi.service;
 
 
-import cz.muni.fi.dao.CarDao;
 import cz.muni.fi.dao.ComponentDao;
 import cz.muni.fi.dao.DriverDao;
 import cz.muni.fi.dto.CarDTO;
@@ -16,9 +15,7 @@ import cz.muni.fi.service.config.ServiceConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
@@ -37,9 +34,6 @@ public class CarFacadeTest extends AbstractTestNGSpringContextTests {
     private CarFacade carFacade;
 
     @Autowired
-    private CarDao carDao;
-
-    @Autowired
     private DriverDao driverDao;
 
     @Autowired
@@ -47,9 +41,6 @@ public class CarFacadeTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
     private BeanMappingService beanMappingService;
-
-    private List<CarDTO> carsList = new ArrayList<>();
-    private List<Component> components = new ArrayList<>();
 
     private CarDTO redbullF1;
     private CarDTO jordan;
@@ -68,6 +59,8 @@ public class CarFacadeTest extends AbstractTestNGSpringContextTests {
 
     @BeforeClass
     public void setup(){
+        List<CarDTO> carsList = new ArrayList<>();
+
         Component transmission = new Component("transmission", true, ComponentType.TRANSMISSION);
         componentDao.addComponent(transmission);
         transmissionDTO = beanMappingService.mapTo(transmission, ComponentDTO.class);
@@ -130,7 +123,6 @@ public class CarFacadeTest extends AbstractTestNGSpringContextTests {
     public void createCarTest(){
         CarDTO new_car = new CarDTO(ricciardo, engineV8DTO, aeroDTO, suspensionDTO, transmissionDTO, brakeDTO);
         carFacade.createCar(new_car);
-        carsList.add(new_car);
         assertThat(carFacade.findCarById(new_car.getId())).isEqualTo(new_car);
     }
 
@@ -140,7 +132,6 @@ public class CarFacadeTest extends AbstractTestNGSpringContextTests {
         carFacade.updateCar(ferrari);
         CarDTO updated_car = carFacade.findCarById(ferrari.getId());
         assertThat(updated_car).isEqualTo(ferrari);
-        assertThat(updated_car.getDriver()).isEqualTo(rookie);
     }
 
     @Test

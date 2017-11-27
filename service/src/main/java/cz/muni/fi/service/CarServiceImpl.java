@@ -5,7 +5,6 @@ import cz.muni.fi.entities.Car;
 import cz.muni.fi.entities.Driver;
 import cz.muni.fi.service.exception.TeamFormulaDataAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ public class CarServiceImpl implements CarService {
     private CarDao carDao;
 
     @Override
-    public Car findCarById(Long id) throws DataAccessException {
+    public Car findCarById(Long id) {
         if (id == null) throw new IllegalArgumentException("find by id argument is null");
         try {
             return carDao.findCarById(id);
@@ -34,7 +33,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Car findCarByDriver(Driver driver) throws DataAccessException {
+    public Car findCarByDriver(Driver driver) {
         if (driver == null) throw new IllegalArgumentException("find by driver argument is null");
         try {
             return carDao.findCarByDriver(driver);
@@ -44,7 +43,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public List<Car> listAllCars() throws DataAccessException {
+    public List<Car> listAllCars() {
         try {
             return carDao.listAllCars();
         } catch (Throwable throwable) {
@@ -53,7 +52,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Car createCar(Car car) throws DataAccessException {
+    public Car createCar(Car car) {
         if (car == null) throw new IllegalArgumentException("car create argument is null");
         try {
             return carDao.addCar(car);
@@ -63,7 +62,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Car updateCar(Car car) throws DataAccessException {
+    public Car updateCar(Car car) {
         if (car == null) throw new IllegalArgumentException("car update argument is null");
         try {
             return carDao.updateCar(car);
@@ -73,7 +72,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public boolean deleteCar(Car car) throws DataAccessException {
+    public boolean deleteCar(Car car) {
         if (car == null) throw new IllegalArgumentException("car delete argument is null");
         try {
             return carDao.deleteCar(car);
@@ -83,20 +82,14 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public List<Car> listCarsByComponentName(String componentName) throws DataAccessException {
+    public List<Car> listCarsByComponentName(String componentName) {
         List<Car> cars = listAllCars();
-        List<Car> aero = cars.stream().filter(p -> p.getAerodynamics().getName().equals(componentName)).collect(Collectors.toList());
-        List<Car> engine = cars.stream().filter(p -> p.getEngine().getName().equals(componentName)).collect(Collectors.toList());
-        List<Car> brakes = cars.stream().filter(p -> p.getBrakes().getName().equals(componentName)).collect(Collectors.toList());
-        List<Car> transmission = cars.stream().filter(p -> p.getTransmission().getName().equals(componentName)).collect(Collectors.toList());
-        List<Car> suspension = cars.stream().filter(p -> p.getSuspension().getName().equals(componentName)).collect(Collectors.toList());
-
         List<Car> result = new ArrayList<>();
-        result.addAll(aero);
-        result.addAll(engine);
-        result.addAll(brakes);
-        result.addAll(transmission);
-        result.addAll(suspension);
+        result.addAll(cars.stream().filter(p -> p.getAerodynamics().getName().equals(componentName)).collect(Collectors.toList()));
+        result.addAll(cars.stream().filter(p -> p.getEngine().getName().equals(componentName)).collect(Collectors.toList()));
+        result.addAll(cars.stream().filter(p -> p.getBrakes().getName().equals(componentName)).collect(Collectors.toList()));
+        result.addAll(cars.stream().filter(p -> p.getTransmission().getName().equals(componentName)).collect(Collectors.toList()));
+        result.addAll(cars.stream().filter(p -> p.getSuspension().getName().equals(componentName)).collect(Collectors.toList()));
         return result;
     }
 }
