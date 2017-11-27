@@ -29,6 +29,7 @@ public interface DriverService {
      * 
      * @param id of wanted driver
      * @return wanted driver
+     * @throws DataAccessException when DAO throws some exception
      */
     Driver findDriverById(Long id);
     
@@ -38,6 +39,7 @@ public interface DriverService {
      * @param name of driver
      * @param surname of driver
      * @return wanted driver
+     * @throws DataAccessException when DAO throws some exception
      */
     Driver findDriverByName(String name, String surname);
     
@@ -47,6 +49,7 @@ public interface DriverService {
      * @param name of driver
      * @param surname of driver
      * @return wanted driver
+     * @throws DataAccessException when DAO throws some exception
      */
     Driver findTestDriver(String name, String surname);
     
@@ -54,6 +57,7 @@ public interface DriverService {
      * Add driver
      * 
      * @param driver to add
+     * @throws DataAccessException when DAO throws some exception
      */
     void addDriver(Driver driver);
     
@@ -61,6 +65,7 @@ public interface DriverService {
      * Update driver
      * 
      * @param driver to update
+     * @throws DataAccessException when DAO throws some exception
      */
     void updateDriver(Driver driver);
     
@@ -68,6 +73,7 @@ public interface DriverService {
      * Delete driver
      * 
      * @param driver to delete
+     * @throws DataAccessException when DAO throws some exception
      */
     void deleteDriver(Driver driver);
 }
