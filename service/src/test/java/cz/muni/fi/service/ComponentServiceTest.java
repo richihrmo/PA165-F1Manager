@@ -251,7 +251,7 @@ public class ComponentServiceTest extends AbstractTestNGSpringContextTests {
     @Test
     public void listAllComponentsWithType() {
         for (ComponentType type : EnumSet.allOf(ComponentType.class)) {
-            assertThat(componentService.listAllAvailableComponentsWithType(type))
+            assertThat(componentService.listAllComponentsWithType(type))
                     .containsExactlyElementsOf(allComponents.stream().filter(p -> p.getComponentType() == type).collect(Collectors.toList()));
         }
     }
