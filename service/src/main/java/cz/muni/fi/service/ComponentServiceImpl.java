@@ -3,7 +3,6 @@ package cz.muni.fi.service;
 import cz.muni.fi.dao.ComponentDao;
 import cz.muni.fi.entities.Component;
 import cz.muni.fi.persistanceEnums.ComponentType;
-import cz.muni.fi.service.exceptions.TeamFormulaDataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -18,89 +17,53 @@ public class ComponentServiceImpl implements ComponentService {
 
     @Override
     public List<Component> listAllComponents() {
-        try {
-            return componentDao.listAllComponents();
-        } catch (Throwable e) {
-            throw new TeamFormulaDataAccessException("Could not list all components.", e);
-        }
+        return componentDao.listAllComponents();
     }
 
     @Override
     public List<Component> listAllComponentsWithType(ComponentType type) {
         if (type == null) throw new IllegalArgumentException("Type cannot be null");
-        try {
-            return componentDao.listAllComponents().stream().filter(p -> p.getComponentType() == type).collect(Collectors.toList());
-        } catch (Throwable e) {
-            throw new TeamFormulaDataAccessException("Could not list all  components with type.", e);
-        }
+        return componentDao.listAllComponents().stream().filter(p -> p.getComponentType() == type).collect(Collectors.toList());
     }
 
     @Override
     public List<Component> listAllAvailableComponents() {
-        try {
-            return componentDao.listAvailableComponents();
-        } catch (Throwable e) {
-            throw new TeamFormulaDataAccessException("Could not list all available components.", e);
-        }
+        return componentDao.listAvailableComponents();
     }
 
     @Override
     public List<Component> listAllAvailableComponentsWithType(ComponentType type) {
         if (type == null) throw new IllegalArgumentException("Type cannot be null");
-        try {
-            return componentDao.listAvailableComponents().stream().filter(p -> p.getComponentType() == type).collect(Collectors.toList());
-        } catch (Throwable e) {
-            throw new TeamFormulaDataAccessException("Could not list all available components with type.", e);
-        }
+        return componentDao.listAvailableComponents().stream().filter(p -> p.getComponentType() == type).collect(Collectors.toList());
     }
 
     @Override
     public Component findComponentByID(Long id) {
         if (id == null) throw new IllegalArgumentException("Type cannot be null");
-        try {
-            return componentDao.findComponentById(id);
-        } catch (Throwable e) {
-            throw new TeamFormulaDataAccessException("Could not find component by name.", e);
-        }
+        return componentDao.findComponentById(id);
     }
 
     @Override
     public Component findComponentByName(String name) {
         if (name == null) throw new IllegalArgumentException("Name cannot be null");
-        try {
-            return componentDao.findComponentByName(name);
-        } catch (Throwable e) {
-            throw new TeamFormulaDataAccessException("Could not find component by name.", e);
-        }
+        return componentDao.findComponentByName(name);
     }
 
     @Override
     public void createComponent(Component component) {
         if (component == null) throw new IllegalArgumentException("Component cannot be null");
-        try {
-            componentDao.addComponent(component);
-        } catch (Throwable e) {
-            throw new TeamFormulaDataAccessException("Could not create component.", e);
-        }
+        componentDao.addComponent(component);
     }
 
     @Override
     public void updateComponent(Component component) {
         if (component == null) throw new IllegalArgumentException("Component cannot be null");
-        try {
-            componentDao.updateComponent(component);
-        } catch (Throwable e) {
-            throw new TeamFormulaDataAccessException("Could not update component.", e);
-        }
+        componentDao.updateComponent(component);
     }
 
     @Override
     public void deleteComponent(Component component) {
         if (component == null) throw new IllegalArgumentException("Component cannot be null");
-        try {
-            componentDao.deleteComponent(component);
-        } catch (Throwable e) {
-            throw new TeamFormulaDataAccessException("Could not delete component.", e);
-        }
+        componentDao.deleteComponent(component);
     }
 }
