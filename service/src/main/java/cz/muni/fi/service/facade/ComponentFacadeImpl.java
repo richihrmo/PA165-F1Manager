@@ -18,14 +18,6 @@ import java.util.List;
 @Service
 @Transactional
 public class ComponentFacadeImpl implements ComponentFacade {
-/*
-    private static Map<ComponentType, cz.muni.fi.persistanceEnums.ComponentType> enumMap =
-            new HashMap<ComponentType, cz.muni.fi.persistanceEnums.ComponentType>() {{
-                for (int i = 0; i < ComponentType.values().length; i++) {
-                    put(ComponentType.values()[i], cz.muni.fi.persistanceEnums.ComponentType.values()[i]);
-                }
-    }};*/
-
     @Autowired
     private ComponentService componentService;
 
