@@ -1,7 +1,6 @@
 package cz.muni.fi.service.facade;
 
 import cz.muni.fi.dto.DriverDTO;
-import cz.muni.fi.dto.NewTeamDTO;
 import cz.muni.fi.dto.TeamDTO;
 import cz.muni.fi.entities.Team;
 import cz.muni.fi.facade.TeamFacade;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,7 +36,7 @@ public class TeamFacadeImpl implements TeamFacade{
     }
 
     @Override
-    public void createTeam(NewTeamDTO team) {
+    public void createTeam(TeamDTO team) {
         Team mappedTeam = beanMappingService.mapTo(team, Team.class);
         teamService.createTeam(mappedTeam);
     }

@@ -1,7 +1,6 @@
 package cz.muni.fi.facade;
 
 import cz.muni.fi.UtilityClass;
-import cz.muni.fi.dto.NewTeamDTO;
 import cz.muni.fi.dto.TeamDTO;
 import cz.muni.fi.entities.Team;
 import cz.muni.fi.service.BeanMappingService;
@@ -45,18 +44,12 @@ public class TeamFacadeTest extends AbstractTransactionalTestNGSpringContextTest
 
     private Team blueTeam;
     private TeamDTO blueTeamDTO;
-    private NewTeamDTO newBlueTeamDTO;
 
 
     @BeforeClass
     public void setUp() throws ServiceException {
         MockitoAnnotations.initMocks(this);
 
-        blueTeam = new Team("Red team", UtilityClass.createSampleCar("James", "Bond"), UtilityClass.createSampleCar("Bruce", "Wayne"));;
-        newBlueTeamDTO = beanMappingService.mapTo(blueTeam, NewTeamDTO.class);
-
-        blueTeam.setId(1L);
-        blueTeamDTO = beanMappingService.mapTo(blueTeam, TeamDTO.class);
     }
 
     @Test
@@ -74,7 +67,7 @@ public class TeamFacadeTest extends AbstractTransactionalTestNGSpringContextTest
 
     @Test
     public void createTeamTest() {
-        teamFacade.createTeam(newBlueTeamDTO);
+        teamFacade.createTeam(null);
     }
 
     @Test
