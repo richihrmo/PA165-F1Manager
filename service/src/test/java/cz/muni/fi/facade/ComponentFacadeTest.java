@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ComponentFacadeTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
-    ComponentFacade componentFacade;
+    private ComponentFacade componentFacade;
 
     private List<ComponentDTO> allComponents;
     private List<ComponentDTO> availableComponents;
