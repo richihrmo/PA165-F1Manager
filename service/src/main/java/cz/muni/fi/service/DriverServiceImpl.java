@@ -3,10 +3,10 @@ package cz.muni.fi.service;
 import cz.muni.fi.dao.DriverDao;
 import cz.muni.fi.entities.Driver;
 import cz.muni.fi.service.Exceptions.ServiceDataAccessException;
-import java.util.List;
 import org.dozer.inject.Inject;
-import cz.muni.fi.service.exception.TeamFormulaDataAccessException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author Lucie Kureckova, 445264
@@ -21,16 +21,20 @@ public class DriverServiceImpl implements DriverService {
     public List<Driver> listDrivers() {
         try{
             return driverDao.listDrivers();
-        } catch(Throwable throwable){
-            throw new ServiceDataAccessException("could not list all drivers", throwable) {};
+        } catch(Throwable throwable) {
+            throw new ServiceDataAccessException("could not list all drivers", throwable) {
+            };
+        }
     }
 
     @Override
     public List<Driver> listTestDrivers() {
         try{
             return driverDao.listTestDrivers();
-        } catch(Throwable throwable){
-            throw new ServiceDataAccessException("could not list all test drivers", throwable) {};
+        } catch(Throwable throwable) {
+            throw new ServiceDataAccessException("could not list all test drivers", throwable) {
+            };
+        }
     }
 
     @Override
