@@ -58,7 +58,7 @@ public interface DriverDao{
      * @return Driver
      * @throws IllegalArgumentException when argumet is null
      */
-    public void addDriver(Driver driver);
+    public Driver addDriver(Driver driver);
 
     /**
      * Update driver
@@ -67,7 +67,7 @@ public interface DriverDao{
      * @return Driver
      * @throws IllegalArgumentException when argumet is null
      */
-    public void updateDriver(Driver driver);
+    public Driver updateDriver(Driver driver);
 
     /**
      * Delete driver
@@ -76,6 +76,6 @@ public interface DriverDao{
      * @return Driver
      * @throws IllegalArgumentException when argumet is null
      */
-    public void deleteDriver(Driver driver);
+    public Driver deleteDriver(Driver driver);
 
 }
