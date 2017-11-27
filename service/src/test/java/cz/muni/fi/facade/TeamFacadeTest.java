@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -123,4 +124,19 @@ public class TeamFacadeTest extends AbstractTransactionalTestNGSpringContextTest
         assertThat(teamFacade.getAllTeamCarDrivers()).containsAll(drivers);
     }
 
+    @AfterClass
+    public void tearDown() {
+        teamDao.deleteTeam(beanMappingService.mapTo(redTeam, Team.class));
+
+        carDao.deleteCar(carOne);
+        carDao.deleteCar(carTwo);
+
+        for (Component component : carOneComponents) {
+            componentDao.deleteComponent(component);
+        }
+
+        for (DriverDTO driver : drivers) {
+            driverDao.deleteDriver(beanMappingService.mapTo(driver, Driver.class));
+        }
+    }
 }
