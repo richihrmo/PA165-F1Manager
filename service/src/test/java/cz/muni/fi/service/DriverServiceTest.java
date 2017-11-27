@@ -2,22 +2,10 @@ package cz.muni.fi.service;
 
 import cz.muni.fi.dao.DriverDao;
 import cz.muni.fi.entities.Driver;
-import cz.muni.fi.persistanceEnums.DrivingSkill;
 import cz.muni.fi.service.config.ServiceConfiguration;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import static org.assertj.core.api.Assertions.assertThat;
 import org.hibernate.service.spi.ServiceException;
 import org.mockito.InjectMocks;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyString;
 import org.mockito.Mock;
-import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -27,7 +15,16 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import java.lang.IllegalArgumentException;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Lucie Kureckova, 445264
@@ -139,7 +136,7 @@ public class DriverServiceTest extends AbstractTransactionalTestNGSpringContextT
         
         testDriver = new Driver();
         testDriver.setAsTestDriver();
-        driver.setId(counter);
+        testDriver.setId(counter);
         testDriver.setName("Harry");
         testDriver.setSurname("Potter");
         testDriver.setNationality("english");
@@ -261,7 +258,7 @@ public class DriverServiceTest extends AbstractTransactionalTestNGSpringContextT
         driverService.deleteDriver(null);
     }
     
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void deleteNonExistingDriverTest(){
         driver.setId(null);
         driverService.deleteDriver(driver);
