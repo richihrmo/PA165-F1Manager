@@ -94,7 +94,7 @@ public class DriverFacadeTest extends AbstractTransactionalTestNGSpringContextTe
         driver1.setNationality("unknown");
         
         driverFacade.createDriver(driver1);
-        assertThat(driverFacade.getDriverByName(driver1.getName(), driver1.getSurname())).isEqualTo(driver1);
+        assertThat(driverFacade.getDriverByName(driver1.getName(), driver1.getSurname())).isEqualToIgnoringGivenFields(driver1, "id", "mainDriver");
     }
     
     @Test
@@ -108,6 +108,6 @@ public class DriverFacadeTest extends AbstractTransactionalTestNGSpringContextTe
     public void deleteDriverTest(){
         Long id = testDriverDTO.getId();
         driverFacade.deleteDriver(testDriverDTO);
-        assertThat(driverFacade.getDriverByID(id)).isNull();
+        assertThat(driverFacade.getAllDrivers()).doesNotContain(testDriverDTO);
     }
 }
