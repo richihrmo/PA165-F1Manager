@@ -4,7 +4,6 @@ import cz.muni.fi.dao.CarDao;
 import cz.muni.fi.entities.Car;
 import cz.muni.fi.entities.Component;
 import cz.muni.fi.entities.Driver;
-import cz.muni.fi.entities.Team;
 import cz.muni.fi.persistanceEnums.ComponentType;
 import cz.muni.fi.service.config.ServiceConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -29,7 +27,6 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
@@ -163,16 +160,16 @@ public class CarServiceTest extends AbstractTransactionalTestNGSpringContextTest
         ferrari.setEngine(engineV12);
     }
 
-    @AfterMethod
-    public void tearDown(){
-        for (Car car : cars.values()) {
-            try {
-                carDao.deleteCar(car);
-            } catch (Exception e){
-                throw new RuntimeException("fail delete tear down", e);
-            }
-        }
-    }
+//    @AfterMethod
+//    public void tearDown(){
+//        for (Car car : cars.values()) {
+//            try {
+//                carDao.deleteCar(car);
+//            } catch (Exception e){
+//                throw new RuntimeException("fail delete tear down", e);
+//            }
+//        }
+//    }
 
     @Test
     public void createCarTest(){

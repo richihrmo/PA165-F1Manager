@@ -73,10 +73,10 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public void deleteCar(Car car) throws DataAccessException {
+    public boolean deleteCar(Car car) throws DataAccessException {
         if (car == null) throw new IllegalArgumentException("car delete argument is null");
         try {
-            carDao.deleteCar(car);
+            return carDao.deleteCar(car);
         } catch (Throwable throwable) {
             throw new TeamFormulaDataAccessException("could not delete car", throwable);
         }

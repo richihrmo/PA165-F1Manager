@@ -52,7 +52,7 @@ public interface CarService {
      *
      * @param car
      */
-    void deleteCar(Car car);
+    boolean deleteCar(Car car);
 
     /**
      * Returns list of cars using component of given name

@@ -43,14 +43,12 @@ public class CarFacadeImpl implements CarFacade {
         return carDTO;
     }
 
-    //TODO
     @Override
     public CarDTO findCarByDriver(DriverDTO driverDTO) {
         Car car = carService.findCarByDriver(driverDao.findDriverById(driverDTO.getId()));
         if (car == null) return null;
         CarDTO carDTO = beanMappingService.mapTo(car, CarDTO.class);
         return carDTO;
-//        return null;
     }
 
     @Override
@@ -82,7 +80,6 @@ public class CarFacadeImpl implements CarFacade {
         if (carDTO == null) throw new IllegalArgumentException("null carDTO, cannot delete");
 
         carService.deleteCar(beanMappingService.mapTo(carDTO, Car.class));
-
     }
 
     @Override
