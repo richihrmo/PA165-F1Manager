@@ -24,7 +24,7 @@ public interface CarDao {
      * @return car with driver
      * @throws IllegalArgumentException when argumet is null
      */
-    public Car findCarByDriver(Driver driver) throws IllegalArgumentException;
+    public Car findCarByDriver(Driver driver);
 
     /**
      * Find specific car by its id
@@ -33,7 +33,7 @@ public interface CarDao {
      * @return car
      * @throws IllegalArgumentException when argumet is null
      */
-    public Car findCarById(Long id) throws IllegalArgumentException;
+    public Car findCarById(Long id);
 
     /**
      * Adds car to DB
@@ -41,7 +41,7 @@ public interface CarDao {
      * @param car car to be added
      * @throws IllegalArgumentException when argumet is null
      */
-    public void addCar(Car car) throws IllegalArgumentException;
+    public void addCar(Car car);
 
     /**
      * Updates car in DB
@@ -49,7 +49,7 @@ public interface CarDao {
      * @param car car to be updated
      * @throws IllegalArgumentException when argumet is null
      */
-    public void updateCar(Car car) throws IllegalArgumentException;
+    public void updateCar(Car car);
 
     /**
      * Deletes car from DB
@@ -57,5 +57,5 @@ public interface CarDao {
      * @param car car to be deleted
      * @throws IllegalArgumentException when argumet is null
      */
-    public void deleteCar(Car car) throws IllegalArgumentException;
+    public void deleteCar(Car car);
 }
