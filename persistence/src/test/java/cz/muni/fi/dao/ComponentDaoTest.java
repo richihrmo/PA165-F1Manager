@@ -9,6 +9,7 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -83,7 +84,7 @@ public class ComponentDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(foundComponent).isEqualTo(engine);
     }
     
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
     public void findComponentByNullNameTest(){
         componentManager.findComponentByName(null);
     }
@@ -94,7 +95,7 @@ public class ComponentDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(foundComponent).isEqualTo(aerodynamic);
     }
     
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
     public void findComponentByNullIdTest(){
         componentManager.findComponentById(null);
     }
@@ -110,18 +111,18 @@ public class ComponentDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(em.find(Component.class, breaks.getId())).isEqualTo(breaks);
     }
     
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
     public void addNullComponentTest(){
         componentManager.addComponent(null);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
     public void addComponentWithNullAttributesTest(){
         Component breaks = new Component();
         componentManager.addComponent(breaks);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
     public void addComponentWithNotNullIdTest(){
         componentManager.addComponent(engine);
     }
@@ -138,12 +139,12 @@ public class ComponentDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(em.find(Component.class, engine.getId())).isEqualTo(engine);
     }
     
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
     public void updateNullComponentTest(){
         componentManager.updateComponent(null);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
     public void updateComponentWithNullAttributesTest(){
         engine.setId(null);
         componentManager.updateComponent(engine);
@@ -156,12 +157,12 @@ public class ComponentDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(em.find(Component.class, engine.getId())).isNull();
     }
     
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
     public void deleteNullComponentTest(){
         componentManager.deleteComponent(null);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
     public void deleteComponentWithNullAttributesTest(){
         engine.setId(null);
         componentManager.deleteComponent(engine);
