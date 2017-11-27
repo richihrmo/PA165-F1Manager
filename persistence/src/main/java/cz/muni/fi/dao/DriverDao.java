@@ -55,24 +55,39 @@ public interface DriverDao{
      * Add driver
      *
      * @param driver Driver
+     * @return Driver
      * @throws IllegalArgumentException when argumet is null
      */
+<<<<<<< HEAD
     public void addDriver(Driver driver);
+=======
+    public Driver addDriver(Driver driver) throws IllegalArgumentException;
+>>>>>>> facade test and service tests
 
     /**
      * Update driver
      *
      * @param driver Driver
+     * @return Driver
      * @throws IllegalArgumentException when argumet is null
      */
+<<<<<<< HEAD
     public void updateDriver(Driver driver);
+=======
+    public Driver updateDriver(Driver driver) throws IllegalArgumentException;
+>>>>>>> facade test and service tests
 
     /**
      * Delete driver
      *
      * @param driver Driver
+     * @return Driver
      * @throws IllegalArgumentException when argumet is null
      */
+<<<<<<< HEAD
     public void deleteDriver(Driver driver);
+=======
+    public Driver deleteDriver(Driver driver) throws IllegalArgumentException;
+>>>>>>> facade test and service tests
 
 }
