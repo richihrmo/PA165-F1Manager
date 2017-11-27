@@ -26,9 +26,8 @@ public class CarDaoImpl implements CarDao{
     }
 
     public Car findCarByDriver(Driver driver) {
-        if(driver == null){
-            throw new IllegalArgumentException("argument is null");
-        }
+        if (driver == null) throw new IllegalArgumentException("find: name is null");
+
         try {
             return em.createQuery("select c from Car c where c.driver = :driver", Car.class)
                     .setParameter("driver", driver).getSingleResult();
@@ -38,41 +37,40 @@ public class CarDaoImpl implements CarDao{
     }
 
     public Car findCarById(Long id) {
-        if(id == null){
-            throw new IllegalArgumentException("argument is null");
-        }
+        if (id == null) throw new IllegalArgumentException("find: id is null");
+        
         return em.find(Car.class, id);
     }
 
     public void addCar(Car car) {
-        if (car == null) throw new IllegalArgumentException("argument is null");
-        if (car.getDriver() == null) throw new IllegalArgumentException("driver is null");
-        if (car.getSuspension() == null) throw new IllegalArgumentException("suspension is null");
-        if (car.getTransmission() == null) throw new IllegalArgumentException("transmission is null");
-        if (car.getBrakes() == null) throw new IllegalArgumentException("brakes are null");
-        if (car.getEngine() == null) throw new IllegalArgumentException("engine is null");
-        if (car.getAerodynamics() == null) throw new IllegalArgumentException("aero is null");
-        if (car.getId() == null) throw new IllegalArgumentException("id is null");
+        if (car == null) throw new IllegalArgumentException("add: car is null");
+        if (car.getDriver() == null) throw new IllegalArgumentException("add: driver is null");
+        if (car.getSuspension() == null) throw new IllegalArgumentException("add: suspension is null");
+        if (car.getTransmission() == null) throw new IllegalArgumentException("add: transmission is null");
+        if (car.getBrakes() == null) throw new IllegalArgumentException("add: brakes are null");
+        if (car.getEngine() == null) throw new IllegalArgumentException("add: engine is null");
+        if (car.getAerodynamics() == null) throw new IllegalArgumentException("add: aero is null");
+        if (car.getId() == null) throw new IllegalArgumentException("add: id is null");
 
         em.persist(car);
     }
 
     public void updateCar(Car car) {
-        if (car == null) throw new IllegalArgumentException("argument is null");
-        if (car.getDriver() == null) throw new IllegalArgumentException("driver is null");
-        if (car.getSuspension() == null) throw new IllegalArgumentException("suspension is null");
-        if (car.getTransmission() == null) throw new IllegalArgumentException("transmission is null");
-        if (car.getBrakes() == null) throw new IllegalArgumentException("brakes are null");
-        if (car.getEngine() == null) throw new IllegalArgumentException("engine is null");
-        if (car.getAerodynamics() == null) throw new IllegalArgumentException("aero is null");
-        if (car.getId() == null) throw new IllegalArgumentException("id is null");
+        if (car == null) throw new IllegalArgumentException("update: car is null");
+        if (car.getDriver() == null) throw new IllegalArgumentException("update: driver is null");
+        if (car.getSuspension() == null) throw new IllegalArgumentException("update: suspension is null");
+        if (car.getTransmission() == null) throw new IllegalArgumentException("update: transmission is null");
+        if (car.getBrakes() == null) throw new IllegalArgumentException("update: brakes are null");
+        if (car.getEngine() == null) throw new IllegalArgumentException("update: engine is null");
+        if (car.getAerodynamics() == null) throw new IllegalArgumentException("update: aero is null");
+        if (car.getId() == null) throw new IllegalArgumentException("update: id is null");
 
         em.merge(car);
     }
 
     public void deleteCar(Car car) {
-        if (car == null) throw new IllegalArgumentException("argument is null");
-        if (car.getId() == null) throw new IllegalArgumentException("id is null");
+        if (car == null) throw new IllegalArgumentException("delete: car is null");
+        if (car.getId() == null) throw new IllegalArgumentException("delete: id is null");
 
         em.remove(em.merge(car));
     }
