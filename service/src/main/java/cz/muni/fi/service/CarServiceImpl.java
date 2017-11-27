@@ -1,12 +1,12 @@
 package cz.muni.fi.service;
 
 import cz.muni.fi.dao.CarDao;
-import cz.muni.fi.dto.CarDTO;
 import cz.muni.fi.entities.Car;
 import cz.muni.fi.entities.Driver;
-import cz.muni.fi.service.exception.CustomDataAccessException;
-import org.dozer.inject.Inject;
+import cz.muni.fi.service.exception.TeamFormulaDataAccessException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +17,10 @@ import java.util.stream.Collectors;
  * @author Richard Hrmo
  */
 
+@Service
 public class CarServiceImpl implements CarService {
 
-    @Inject
+    @Autowired
     private CarDao carDao;
 
     @Override
@@ -28,7 +29,7 @@ public class CarServiceImpl implements CarService {
         try {
             return carDao.findCarById(id);
         } catch (Throwable throwable) {
-            throw new CustomDataAccessException("could not find by id car", throwable);
+            throw new TeamFormulaDataAccessException("could not find by id car", throwable);
         }
     }
 
@@ -38,7 +39,7 @@ public class CarServiceImpl implements CarService {
         try {
             return carDao.findCarByDriver(driver);
         } catch (Throwable throwable) {
-            throw new CustomDataAccessException("could not find by driver car", throwable);
+            throw new TeamFormulaDataAccessException("could not find by driver car", throwable);
         }
     }
 
@@ -47,27 +48,27 @@ public class CarServiceImpl implements CarService {
         try {
             return carDao.listAllCars();
         } catch (Throwable throwable) {
-            throw new CustomDataAccessException("could not list all cars", throwable);
+            throw new TeamFormulaDataAccessException("could not list all cars", throwable);
         }
     }
 
     @Override
-    public void createCar(Car car) throws DataAccessException {
+    public Car createCar(Car car) throws DataAccessException {
         if (car == null) throw new IllegalArgumentException("car create argument is null");
         try {
-            carDao.addCar(car);
+            return carDao.addCar(car);
         } catch (Throwable throwable) {
-            throw new CustomDataAccessException("could not create car", throwable);
+            throw new TeamFormulaDataAccessException("could not create car", throwable);
         }
     }
 
     @Override
-    public void updateCar(Car car) throws DataAccessException {
+    public Car updateCar(Car car) throws DataAccessException {
         if (car == null) throw new IllegalArgumentException("car update argument is null");
         try {
-            carDao.updateCar(car);
+            return carDao.updateCar(car);
         } catch (Throwable throwable) {
-            throw new CustomDataAccessException("could not update car", throwable);
+            throw new TeamFormulaDataAccessException("could not update car", throwable);
         }
     }
 
@@ -77,7 +78,7 @@ public class CarServiceImpl implements CarService {
         try {
             carDao.deleteCar(car);
         } catch (Throwable throwable) {
-            throw new CustomDataAccessException("could not delete car", throwable);
+            throw new TeamFormulaDataAccessException("could not delete car", throwable);
         }
     }
 

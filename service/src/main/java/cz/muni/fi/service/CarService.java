@@ -38,14 +38,14 @@ public interface CarService {
      *
      * @param car
      */
-    void createCar(Car car);
+    Car createCar(Car car);
 
     /**
      * CRUD operation update
      *
      * @param car
      */
-    void updateCar(Car car);
+    Car updateCar(Car car);
 
     /**
      * CRUD operation delete

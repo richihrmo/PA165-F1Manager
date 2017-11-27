@@ -65,10 +65,10 @@ public class DriverDaoImpl implements DriverDao{
 
     public void addDriver(Driver driver) {
         if (driver == null) throw new IllegalArgumentException("add: driver is null");
-        if (driver.getId() == null) throw new IllegalArgumentException("add: id is null");
+        if (driver.getId() != null) throw new IllegalArgumentException("add: id must be null");
         if (driver.getName() == null) throw new IllegalArgumentException("add: name is null");
         if (driver.getNationality() == null) throw new IllegalArgumentException("add: nationality is null");
-        if (driver.getSpecialSkill() == null) throw new IllegalArgumentException("add: skill is null");
+//        if (driver.getSpecialSkill() == null) throw new IllegalArgumentException("add: skill is null");
         if (driver.getSurname() == null) throw new IllegalArgumentException("add: surname is null");
 
         em.persist(driver);
@@ -79,7 +79,7 @@ public class DriverDaoImpl implements DriverDao{
         if (driver.getId() == null) throw new IllegalArgumentException("update: id is null");
         if (driver.getName() == null) throw new IllegalArgumentException("update: name is null");
         if (driver.getNationality() == null) throw new IllegalArgumentException("update: nationality is null");
-        if (driver.getSpecialSkill() == null) throw new IllegalArgumentException("update: skill is null");
+//        if (driver.getSpecialSkill() == null) throw new IllegalArgumentException("update: skill is null");
         if (driver.getSurname() == null) throw new IllegalArgumentException("update: surname is null");
 
         em.merge(driver);

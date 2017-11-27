@@ -2,6 +2,7 @@ package cz.muni.fi.dto;
 
 import cz.muni.fi.enums.ComponentType;
 import cz.muni.fi.exceptions.WrongComponentException;
+import cz.muni.fi.facade.CarFacade;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,6 +20,18 @@ public class CarDTO {
     @Getter private ComponentDTO suspension;
     @Getter private ComponentDTO transmission;
     @Getter private ComponentDTO brakes;
+
+    public CarDTO(){}
+
+    public CarDTO(DriverDTO driver, ComponentDTO engine, ComponentDTO aerodynamics,
+                  ComponentDTO suspension, ComponentDTO transmission, ComponentDTO brakes){
+        this.driver = driver;
+        this.engine = engine;
+        this.aerodynamics = aerodynamics;
+        this.suspension = suspension;
+        this.transmission = transmission;
+        this.brakes = brakes;
+    }
 
     public void setEngine(ComponentDTO engine) {
         if (engine.getType() != ComponentType.ENGINE){

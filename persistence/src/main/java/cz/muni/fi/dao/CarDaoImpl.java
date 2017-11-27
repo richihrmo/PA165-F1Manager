@@ -38,11 +38,11 @@ public class CarDaoImpl implements CarDao{
 
     public Car findCarById(Long id) {
         if (id == null) throw new IllegalArgumentException("find: id is null");
-        
+
         return em.find(Car.class, id);
     }
 
-    public void addCar(Car car) {
+    public Car addCar(Car car) {
         if (car == null) throw new IllegalArgumentException("add: car is null");
         if (car.getDriver() == null) throw new IllegalArgumentException("add: driver is null");
         if (car.getSuspension() == null) throw new IllegalArgumentException("add: suspension is null");
@@ -50,12 +50,13 @@ public class CarDaoImpl implements CarDao{
         if (car.getBrakes() == null) throw new IllegalArgumentException("add: brakes are null");
         if (car.getEngine() == null) throw new IllegalArgumentException("add: engine is null");
         if (car.getAerodynamics() == null) throw new IllegalArgumentException("add: aero is null");
-        if (car.getId() == null) throw new IllegalArgumentException("add: id is null");
+        if (car.getId() != null) throw new IllegalArgumentException("add: id must be null");
 
         em.persist(car);
+        return car;
     }
 
-    public void updateCar(Car car) {
+    public Car updateCar(Car car) {
         if (car == null) throw new IllegalArgumentException("update: car is null");
         if (car.getDriver() == null) throw new IllegalArgumentException("update: driver is null");
         if (car.getSuspension() == null) throw new IllegalArgumentException("update: suspension is null");
@@ -66,12 +67,14 @@ public class CarDaoImpl implements CarDao{
         if (car.getId() == null) throw new IllegalArgumentException("update: id is null");
 
         em.merge(car);
+        return car;
     }
 
-    public void deleteCar(Car car) {
+    public boolean deleteCar(Car car) {
         if (car == null) throw new IllegalArgumentException("delete: car is null");
         if (car.getId() == null) throw new IllegalArgumentException("delete: id is null");
 
         em.remove(em.merge(car));
+        return true;
     }
 }

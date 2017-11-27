@@ -1,23 +1,41 @@
 package cz.muni.fi.service;
 
+import cz.muni.fi.dao.CarDao;
 import cz.muni.fi.entities.Car;
 import cz.muni.fi.entities.Component;
 import cz.muni.fi.entities.Driver;
 import cz.muni.fi.persistanceEnums.ComponentType;
-import org.hibernate.validator.constraints.br.TituloEleitoral;
+import cz.muni.fi.service.config.ServiceConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
+import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+
+import org.mockito.*;
 
 import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Richard Hrmo
  */
-public class CarServiceTest {
+
+@ContextConfiguration(classes = ServiceConfiguration.class)
+@TestExecutionListeners(TransactionalTestExecutionListener.class)
+@Transactional
+public class CarServiceTest extends AbstractTransactionalTestNGSpringContextTests {
+
+    @Mock
+    private CarDao carDao;
 
     @Autowired
+    @InjectMocks
     private CarService carService = new CarServiceImpl();
 
     private Car redbullF1 = new Car();
@@ -38,7 +56,7 @@ public class CarServiceTest {
     private Component engineV10;
     private Component engineV12;
 
-    @BeforeTest
+    @BeforeMethod
     public void setup(){
         ricciardo = new Driver("Daniel", "Ricciardo","AUS");
         alonso = new Driver("Fernando", "Alonso","ESP");

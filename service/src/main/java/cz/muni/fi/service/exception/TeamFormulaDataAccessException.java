@@ -7,12 +7,12 @@ import org.springframework.dao.DataAccessException;
  *
  * @author Richard Hrmo
  */
-public class CustomDataAccessException extends DataAccessException {
-    public CustomDataAccessException(String msg) {
+public class TeamFormulaDataAccessException extends DataAccessException {
+    public TeamFormulaDataAccessException(String msg) {
         super(msg);
     }
 
-    public CustomDataAccessException(String msg, Throwable cause) {
+    public TeamFormulaDataAccessException(String msg, Throwable cause) {
         super(msg, cause);
     }
 }
