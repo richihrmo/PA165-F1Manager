@@ -10,7 +10,6 @@ import org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver
 import org.springframework.instrument.classloading.LoadTimeWeaver;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -28,11 +27,6 @@ public class PersistenceApplicationContext {
     @Bean
     public JpaTransactionManager transactionManager(){
         return  new JpaTransactionManager(entityManagerFactory().getObject());
-    }
-
-    @Bean
-    public PersistenceExceptionTranslationPostProcessor postProcessor() {
-        return new PersistenceExceptionTranslationPostProcessor();
     }
 
     @Bean
