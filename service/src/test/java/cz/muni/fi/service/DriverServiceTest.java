@@ -94,23 +94,6 @@ public class DriverServiceTest extends AbstractTransactionalTestNGSpringContextT
             return drivers.get(index);
         });
 
-        when(driverDao.findDriverByName(anyString(), anyString())).then(invoke -> {
-            String name = invoke.getArgumentAt(0, String.class);
-            String surname = invoke.getArgumentAt(1, String.class);
-
-            if (name == null || surname == null) throw new IllegalArgumentException("Cannot search with null name!");
-            return drivers.values().stream().filter(p -> p.getName().equals(name) && p.getSurname().equals(surname)).findFirst();
-        });
-
-        when(driverDao.findTestDriver(anyString(), anyString())).then(invoke -> {
-
-            String name = invoke.getArgumentAt(0, String.class);
-            String surname = invoke.getArgumentAt(1, String.class);
-
-            if (name == null || surname == null) throw new IllegalArgumentException("Cannot search with null name");
-            return drivers.values().stream().filter(p -> p.getName().equals(name) && p.getSurname().equals(surname) && !p.isMainDriver()).findFirst().get();
-        });
-
         when(driverDao.listDrivers()).then(invoke ->
                 Collections.unmodifiableList(new ArrayList<>(drivers.values())));
         
