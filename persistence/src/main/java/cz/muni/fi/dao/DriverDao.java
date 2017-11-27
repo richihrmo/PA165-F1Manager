@@ -58,15 +58,7 @@ public interface DriverDao{
      * @return Driver
      * @throws IllegalArgumentException when argumet is null
      */
-<<<<<<< HEAD
-<<<<<<< HEAD
-    public void addDriver(Driver driver);
-=======
-    public Driver addDriver(Driver driver) throws IllegalArgumentException;
->>>>>>> facade test and service tests
-=======
     public Driver addDriver(Driver driver);
->>>>>>> update DriverDao
 
     /**
      * Update driver
@@ -75,15 +67,7 @@ public interface DriverDao{
      * @return Driver
      * @throws IllegalArgumentException when argumet is null
      */
-<<<<<<< HEAD
-<<<<<<< HEAD
-    public void updateDriver(Driver driver);
-=======
-    public Driver updateDriver(Driver driver) throws IllegalArgumentException;
->>>>>>> facade test and service tests
-=======
     public Driver updateDriver(Driver driver);
->>>>>>> update DriverDao
 
     /**
      * Delete driver
@@ -92,14 +76,6 @@ public interface DriverDao{
      * @return Driver
      * @throws IllegalArgumentException when argumet is null
      */
-<<<<<<< HEAD
-<<<<<<< HEAD
-    public void deleteDriver(Driver driver);
-=======
-    public Driver deleteDriver(Driver driver) throws IllegalArgumentException;
->>>>>>> facade test and service tests
-=======
     public Driver deleteDriver(Driver driver);
->>>>>>> update DriverDao
 
 }
