@@ -1,6 +1,5 @@
 package cz.muni.fi.facade;
 
-import cz.muni.fi.dto.ComponentCreateDTO;
 import cz.muni.fi.dto.ComponentDTO;
 import cz.muni.fi.enums.ComponentType;
 
