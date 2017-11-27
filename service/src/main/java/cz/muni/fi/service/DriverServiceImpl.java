@@ -2,6 +2,7 @@ package cz.muni.fi.service;
 
 import cz.muni.fi.dao.DriverDao;
 import cz.muni.fi.entities.Driver;
+import cz.muni.fi.service.Exceptions.ServiceDataAccessException;
 import java.util.List;
 import org.dozer.inject.Inject;
 import cz.muni.fi.service.exception.TeamFormulaDataAccessException;
@@ -21,7 +22,7 @@ public class DriverServiceImpl implements DriverService {
         try{
             return driverDao.listDrivers();
         } catch(Throwable ex){
-            throw new FormulaTeamDataAccessException(ex.getMessage()) {};
+            throw new ServiceDataAccessException(ex.getMessage()) {};
     }
 
     @Override
@@ -29,7 +30,7 @@ public class DriverServiceImpl implements DriverService {
         try{
             return driverDao.listTestDrivers();
         } catch(Throwable ex){
-            throw new FormulaTeamDataAccessException(ex.getMessage()) {};
+            throw new ServiceDataAccessException(ex.getMessage()) {};
     }
 
     @Override
@@ -40,7 +41,7 @@ public class DriverServiceImpl implements DriverService {
         try{
             return driverDao.findDriverById(id);
         } catch(Throwable ex){
-            throw new FormulaTeamDataAccessException(ex.getMessage()) {};
+            throw new ServiceDataAccessException(ex.getMessage()) {};
         }
     }
 
@@ -52,7 +53,7 @@ public class DriverServiceImpl implements DriverService {
         try{
             return driverDao.findDriverByName(name, surname);
         } catch(Throwable ex){
-            throw new FormulaTeamDataAccessException(ex.getMessage()) {};
+            throw new ServiceDataAccessException(ex.getMessage()) {};
         }
     }
 
@@ -64,7 +65,7 @@ public class DriverServiceImpl implements DriverService {
         try{
             return driverDao.findTestDriver(name, surname);
         } catch(Throwable ex){
-            throw new FormulaTeamDataAccessException(ex.getMessage()) {};
+            throw new ServiceDataAccessException(ex.getMessage()) {};
         }
     }
 
@@ -76,7 +77,7 @@ public class DriverServiceImpl implements DriverService {
         try{
             driverDao.addDriver(driver);
         } catch(Throwable ex){
-            throw new FormulaTeamDataAccessException(ex.getMessage()) {};
+            throw new ServiceDataAccessException(ex.getMessage()) {};
         }
     }
 
@@ -88,7 +89,7 @@ public class DriverServiceImpl implements DriverService {
         try{
             driverDao.updateDriver(driver);
         } catch(Throwable ex){
-            throw new FormulaTeamDataAccessException(ex.getMessage()) {};
+            throw new ServiceDataAccessException(ex.getMessage()) {};
         }
     }
 
@@ -100,7 +101,7 @@ public class DriverServiceImpl implements DriverService {
         try{
             driverDao.deleteDriver(driver);
         } catch(Throwable ex){
-            throw new FormulaTeamDataAccessException(ex.getMessage()) {};
+            throw new ServiceDataAccessException(ex.getMessage()) {};
         }
     }
 }
