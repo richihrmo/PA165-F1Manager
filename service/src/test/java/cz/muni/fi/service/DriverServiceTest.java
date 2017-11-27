@@ -95,11 +95,10 @@ public class DriverServiceTest extends AbstractTransactionalTestNGSpringContextT
         });
 
         when(driverDao.findDriverByName(anyString(), anyString())).then(invoke -> {
-
             String name = invoke.getArgumentAt(0, String.class);
             String surname = invoke.getArgumentAt(1, String.class);
             
-            if (name == null || surname == null) throw new IllegalArgumentException("Cannont search with null name");
+            if (name == null || surname == null) throw new IllegalArgumentException("Cannot search with null name!");
             return drivers.values().stream().filter(p -> p.getName().equals(name) && p.getSurname().equals(surname)).findFirst();
         });
         
@@ -108,7 +107,7 @@ public class DriverServiceTest extends AbstractTransactionalTestNGSpringContextT
             String name = invoke.getArgumentAt(0, String.class);
             String surname = invoke.getArgumentAt(1, String.class);
             
-            if (name == null || surname == null) throw new IllegalArgumentException("Cannont search with null name");
+            if (name == null || surname == null) throw new IllegalArgumentException("Cannot search with null name");
             return drivers.values().stream().filter(p -> p.getName().equals(name) && p.getSurname().equals(surname) && !p.isMainDriver()).findFirst();
         });
 
