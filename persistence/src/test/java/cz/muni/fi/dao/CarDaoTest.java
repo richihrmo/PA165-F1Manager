@@ -8,7 +8,6 @@ import cz.muni.fi.persistanceEnums.ComponentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -109,7 +108,7 @@ public class CarDaoTest extends AbstractTestNGSpringContextTests{
           assertThat(carDao.findCarById(ferrari.getId())).isEqualTo(ferrari);
      }
      
-     @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+     @Test(expectedExceptions = IllegalArgumentException.class)
      public void findCarByNullIdTest(){
          carDao.findCarById(null);
      }
@@ -119,7 +118,7 @@ public class CarDaoTest extends AbstractTestNGSpringContextTests{
           assertThat(carDao.findCarByDriver(ferrariDriver)).isEqualTo(ferrari);
      }
      
-     @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+     @Test(expectedExceptions = IllegalArgumentException.class)
      public void findCarByNullDriverTest(){
          carDao.findCarByDriver(null);
      }
@@ -130,7 +129,7 @@ public class CarDaoTest extends AbstractTestNGSpringContextTests{
           assertThat(em.find(Car.class, skoda.getId())).isEqualTo(skoda);
      }
      
-     @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+     @Test(expectedExceptions = IllegalArgumentException.class)
      public void addNullCarTest(){
          carDao.addCar(null);
      }
@@ -150,7 +149,7 @@ public class CarDaoTest extends AbstractTestNGSpringContextTests{
           assertThat(em.find(Car.class, bmw.getId())).isEqualTo(bmw);
      }
      
-     @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+     @Test(expectedExceptions = IllegalArgumentException.class)
      public void updateNullCarTest(){
          carDao.updateCar(null);
      }
@@ -162,7 +161,7 @@ public class CarDaoTest extends AbstractTestNGSpringContextTests{
           assertThat(em.find(Car.class, ferrari.getId())).isNull();
      }
      
-     @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+     @Test(expectedExceptions = IllegalArgumentException.class)
      public void deleteNullCarTest(){
          carDao.deleteCar(null);
      }

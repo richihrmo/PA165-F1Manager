@@ -4,7 +4,6 @@ import cz.muni.fi.PersistenceApplicationContext;
 import cz.muni.fi.entities.Driver;
 import cz.muni.fi.persistanceEnums.DrivingSkill;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.AfterMethod;
@@ -85,7 +84,7 @@ public class DriverDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(driverManager.findDriverById(testDriver1.getId())).isEqualTo(testDriver1);
     }
     
-    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void findDriverByNullIdTest(){
         driverManager.findDriverById(null);
     }
@@ -96,12 +95,12 @@ public class DriverDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(driverManager.findDriverByName("sasa", "sasula")).isNull();
     }
     
-    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void findDriverByNullNameTest(){
         driverManager.findDriverByName(null, "Rich");
     }
     
-    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void findDriverByNullName2Test(){
         driverManager.findDriverByName("Richard", null);
     }
@@ -112,12 +111,12 @@ public class DriverDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(driverManager.findTestDriver(testDriver1.getName(), testDriver1.getSurname())).isEqualTo(testDriver1);
     }
     
-    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void findNullDeveloperTest(){
         driverManager.findDriverByName("Richard", null);
     }
     
-    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void findNullDeveloper2Test(){
         driverManager.findDriverByName(null, "Rich");
     }
@@ -132,7 +131,7 @@ public class DriverDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(em.find(Driver.class, driver1.getId())).isEqualTo(driver1);
     }
     
-    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void addNullDriverTest(){
         driverManager.addDriver(null);
     }
@@ -156,7 +155,7 @@ public class DriverDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(em.find(Driver.class, driver2.getId())).isEqualTo(driver2);
     }
     
-    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void updateNullDriverTest(){
         driverManager.updateDriver(null);
     }
@@ -178,7 +177,7 @@ public class DriverDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(em.find(Driver.class, driver3.getId())).isNull();
     }
     
-    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void deleteNullDriverTest(){
         driverManager.deleteDriver(null);
     }
