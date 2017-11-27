@@ -65,24 +65,27 @@ public class DriverDaoImpl implements DriverDao{
         }
     }
 
-    public void addDriver(Driver driver) {
+    public Driver addDriver(Driver driver) {
         if(driver == null){
             throw new IllegalArgumentException("argument is null");
         }
         em.persist(driver);
+        return driver;
     }
 
-    public void updateDriver(Driver driver) {
+    public Driver updateDriver(Driver driver) {
         if(driver == null){
             throw new IllegalArgumentException("argument is null");
         }
         em.merge(driver);
+        return driver;
     }
 
-    public void deleteDriver(Driver driver) {
+    public Driver deleteDriver(Driver driver) {
         if(driver == null){
             throw new IllegalArgumentException("argument is null");
         }
         em.remove(em.merge(driver));
+        return driver;
     }
 }
