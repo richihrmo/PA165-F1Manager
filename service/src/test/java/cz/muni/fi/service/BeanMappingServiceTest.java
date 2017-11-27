@@ -35,31 +35,31 @@ public class BeanMappingServiceTest extends AbstractTestNGSpringContextTests {
         Component brakes = new Component();
         brakes.setName("Brakes");
         brakes.setComponentType(ComponentType.BRAKES);
-        brakes.setAvailable(false);
+        brakes.setAvailability(false);
         components.add(brakes);
 
         Component engine = new Component();
         engine.setName("Engine");
         engine.setComponentType(ComponentType.ENGINE);
-        engine.setAvailable(false);
+        engine.setAvailability(false);
         components.add(engine);
 
         Component aerodynamics = new Component();
         aerodynamics.setName("Aerodynamics");
         aerodynamics.setComponentType(ComponentType.AERODYNAMICS);
-        aerodynamics.setAvailable(false);
+        aerodynamics.setAvailability(false);
         components.add(aerodynamics);
 
         Component suspension = new Component();
         suspension.setName("Suspension");
         suspension.setComponentType(ComponentType.SUSPENSION);
-        suspension.setAvailable(false);
+        suspension.setAvailability(false);
         components.add(suspension);
 
         Component transmission = new Component();
         transmission.setName("Transmission");
         transmission.setComponentType(ComponentType.TRANSMISSION);
-        suspension.setAvailable(true);
+        suspension.setAvailability(true);
         components.add(transmission);
 
         Driver driver = new Driver();

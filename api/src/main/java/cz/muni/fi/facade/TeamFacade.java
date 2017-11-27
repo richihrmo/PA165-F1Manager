@@ -1,10 +1,9 @@
 package cz.muni.fi.facade;
 
-import java.util.List;
-
 import cz.muni.fi.dto.DriverDTO;
-import cz.muni.fi.dto.NewTeamDTO;
 import cz.muni.fi.dto.TeamDTO;
+
+import java.util.List;
 
 /**
  * @author Matus Macko
@@ -29,22 +28,24 @@ public interface TeamFacade {
      * Create new Team
      *
      * @param team team to be created
+     * @return created Team
      */
-    void createTeam(NewTeamDTO team);
+    TeamDTO createTeam(TeamDTO team);
 
     /**
      * Update team
      *
      * @param team team to be updated
+     * @return updated Team
      */
-    void updateTeam(TeamDTO team);
+    TeamDTO updateTeam(TeamDTO team);
 
     /**
      * Delete team
      *
-     * @param teamId id of a team to be deleted
+     * @param team team to be deleted
      */
-    void deleteTeam(Long teamId);
+    void deleteTeam(TeamDTO team);
 
     /**
      * Get all car drivers of team cars

@@ -19,7 +19,7 @@ public class ComponentDaoImpl implements ComponentDao {
     private EntityManager em;
 
     public List<Component> listAvailableComponents() {
-        return em.createQuery("select c from Component c where c.isAvailable = :bool", Component.class).setParameter("bool", true).getResultList();
+        return em.createQuery("select c from Component c where c.availability = :bool", Component.class).setParameter("bool", true).getResultList();
     }
 
     public List<Component> listAllComponents() {
@@ -47,24 +47,39 @@ public class ComponentDaoImpl implements ComponentDao {
         return em.find(Component.class, id);
     }
 
-    public void addComponent(Component component) {
+    public Component addComponent(Component component) {
         if(component == null){
             throw new IllegalArgumentException("argument is null");
+        }
+        if (component.getId() != null) {
+            throw new IllegalArgumentException("Id must be null!");
+        }
+        if (component.getName() == null || component.getComponentType() == null) {
+            throw new IllegalArgumentException("Component attributes cannot be null!");
         }
         em.persist(component);
+        return component;
     }
 
-    public void updateComponent(Component component) {
+    public Component updateComponent(Component component) {
         if(component == null){
             throw new IllegalArgumentException("argument is null");
+        }
+        if (component.getName() == null || component.getComponentType() == null || component.getId() == null) {
+            throw new IllegalArgumentException("Component attributes cannot be null!");
         }
         em.merge(component);
+        return component;
     }
 
-    public void deleteComponent(Component component) {
+    public Component deleteComponent(Component component) {
         if(component == null){
             throw new IllegalArgumentException("argument is null");
         }
+        if (component.getName() == null || component.getComponentType() == null || component.getId() == null) {
+            throw new IllegalArgumentException("Component attributes cannot be null!");
+        }
         em.remove(em.merge(component));
+        return component;
     }
 }

@@ -1,6 +1,5 @@
 package cz.muni.fi.facade;
 
-import cz.muni.fi.dto.ComponentCreateDTO;
 import cz.muni.fi.dto.ComponentDTO;
 import cz.muni.fi.enums.ComponentType;
 
@@ -37,7 +36,7 @@ public interface ComponentFacade {
      *
      * @return List of all Components, empty List if no Component is found
      */
-    List<ComponentDTO> listAllAvailableComponentsWithType();
+    List<ComponentDTO> listAllAvailableComponentsWithType(ComponentType type);
 
     /**
      * Takes unique id of Component and returns a corresponding entity if found
@@ -60,7 +59,7 @@ public interface ComponentFacade {
      *
      * @param component non-null object to be created in a database
      */
-    void createComponent(ComponentCreateDTO component);
+    void createComponent(ComponentDTO component);
 
     /**
      * Takes an object of type Component and updates an entry in a database

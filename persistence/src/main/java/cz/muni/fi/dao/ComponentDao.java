@@ -13,54 +13,55 @@ public interface ComponentDao {
      *
      * @return list of all available components
      */
-    public List<Component> listAvailableComponents();
+    List<Component> listAvailableComponents();
 
     /**
      * List all components in DB
      *
      * @return list of all components
      */
-    public List<Component> listAllComponents();
+    List<Component> listAllComponents();
 
     /**
      * Find component in DB by name
      *
      * @param name component name
      * @return found component or null
-     * @throws IllegalArgumentException when argumet is null
+     * @throws IllegalArgumentException when argument name is null
      */
-    public Component findComponentByName(String name) throws IllegalArgumentException;
+    Component findComponentByName(String name);
 
     /**
      * Find component in DB by id
      *
      * @param id component id
      * @return found component or null
-     * @throws IllegalArgumentException when argumet is null
+     * @throws IllegalArgumentException when id is null
      */
-    public Component findComponentById(Long id) throws IllegalArgumentException;
+    Component findComponentById(Long id);
 
     /**
      * Add component to DB
      *
      * @param component component to be added
-     * @throws IllegalArgumentException when argumet is null
+     * @throws IllegalArgumentException when argument is null or component id is not null
+     *         or not nullable component attributes are null
      */
-    public void addComponent(Component component) throws IllegalArgumentException;
+    Component addComponent(Component component);
 
     /**
      * Update component in DB
      *
-     * @param component compondent to be updated
-     * @throws IllegalArgumentException when argumet is null
+     * @param component component to be updated
+     * @throws IllegalArgumentException when argument is null or not nullable component attributes are null
      */
-    public void updateComponent(Component component) throws IllegalArgumentException;
+    Component updateComponent(Component component);
 
     /**
      * Delete component from DB
      *
      * @param component component to be deleted
-     * @throws IllegalArgumentException when argumet is null
+     * @throws IllegalArgumentException when argument is null or not nullable component attributes are null
      */
-    public void deleteComponent(Component component) throws IllegalArgumentException;
+    Component deleteComponent(Component component);
 }

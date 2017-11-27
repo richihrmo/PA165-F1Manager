@@ -13,48 +13,52 @@ public interface TeamDao {
      * Add team to DB
      * 
      * @param team to be added
-     * @throws IllegalArgumentException when argumet is null
+     * @return created Team
+     * @throws IllegalArgumentException when argument is null, or not nullable attributes are null,
+     *         or id is not null
      */
-    public void addTeam(Team team) throws IllegalArgumentException;
+    Team addTeam(Team team);
     
     /**
      * Update team in DB
      * 
      * @param team to be updated
-     * @throws IllegalArgumentException when argumet is null
+     * @return updated team
+     * @throws IllegalArgumentException when argument is null or not nullable attributes are null
      */
-    public void updateTeam(Team team) throws IllegalArgumentException;
+    Team updateTeam(Team team);
     
     /**
      * Delete team in DB
      * 
      * @param team to be deleted
-     * @throws IllegalArgumentException when argumet is null
+     * @return true if deleted successfully
+     * @throws IllegalArgumentException when argument is null or not nullable attributes are null
      */
-    public void deleteTeam(Team team) throws IllegalArgumentException;
+    boolean deleteTeam(Team team);
     
     /**
      * List all teams in DB
      * 
      * @return list of teams in DB
      */
-    public List<Team> listTeams();
+    List<Team> listTeams();
     
     /**
      * Find team by name
      * 
      * @param name of team
      * @return found Team
-     * @throws IllegalArgumentException when argumet is null
+     * @throws IllegalArgumentException when argument is null
      */
-    public Team findTeamByName(String name) throws IllegalArgumentException;
+    Team findTeamByName(String name);
     
     /**
      * Find team by id
      * 
      * @param id of team
      * @return found Team
-     * @throws IllegalArgumentException when argumet is null
+     * @throws IllegalArgumentException when argument is null
      */
-    public Team findTeamById(Long id) throws IllegalArgumentException;
+    Team findTeamById(Long id);
 }

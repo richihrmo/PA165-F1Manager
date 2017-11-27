@@ -20,7 +20,7 @@ public class Component{
 
     @Getter @Setter @NotNull private String name;
 
-    @Getter @Setter private boolean isAvailable = false;
+    @Getter @Setter private boolean availability = false;
 
     @Enumerated
     @Getter @NotNull private ComponentType componentType;
@@ -29,8 +29,17 @@ public class Component{
 
     public Component(String name, boolean isAvailable, ComponentType componentType){
         this.name = name;
-        this.isAvailable = isAvailable;
+        this.availability = isAvailable;
         this.componentType = componentType;
+    }
+
+    @Override
+    public String toString() {
+        return "Component{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", componentType=" + componentType +
+                '}';
     }
 
     public void setComponentType(ComponentType componentType) {
