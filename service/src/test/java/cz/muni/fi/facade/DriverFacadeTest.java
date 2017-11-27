@@ -73,7 +73,7 @@ public class DriverFacadeTest extends AbstractTransactionalTestNGSpringContextTe
     
     @Test
     public void getDriverByIDTest(){
-        assertThat(driverFacade.getDriverByID(1L)).isEqualTo(driverDTO);
+        assertThat(driverFacade.getDriverByID(driverDTO.getId())).isEqualTo(driverDTO);
     }
     
     @Test
