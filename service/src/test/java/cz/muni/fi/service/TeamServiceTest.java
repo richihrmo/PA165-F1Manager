@@ -7,6 +7,7 @@ import cz.muni.fi.entities.Team;
 import cz.muni.fi.service.config.ServiceConfiguration;
 import org.hibernate.service.spi.ServiceException;
 import org.mockito.InjectMocks;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,15 +53,15 @@ public class TeamServiceTest extends AbstractTransactionalTestNGSpringContextTes
         when(teamDao.addTeam(any(Team.class))).then(invoke -> {
             Team mockedTeam = invoke.getArgumentAt(0, Team.class);
             if (mockedTeam == null) {
-                throw new IllegalArgumentException("Team is null!");
+                throw new InvalidDataAccessApiUsageException("Team is null!");
             }
 
             if (mockedTeam.getId() != null) {
-                throw new IllegalArgumentException("Id must be null!");
+                throw new InvalidDataAccessApiUsageException("Id must be null!");
             }
 
             if (mockedTeam.getName() == null || mockedTeam.getCarTwo() == null || mockedTeam.getCarOne() == null) {
-                throw new IllegalArgumentException("Team attributes can't be null!");
+                throw new InvalidDataAccessApiUsageException("Team attributes can't be null!");
             }
 
             mockedTeam.setId(Long.valueOf(teams.size()));
@@ -74,11 +75,11 @@ public class TeamServiceTest extends AbstractTransactionalTestNGSpringContextTes
         when(teamDao.deleteTeam(any(Team.class))).then(invoke -> {
             Team mockedTeam = invoke.getArgumentAt(0, Team.class);
             if (mockedTeam == null) {
-                throw new IllegalArgumentException("Team is null!");
+                throw new InvalidDataAccessApiUsageException("Team is null!");
             }
 
             if (mockedTeam.getId() == null || mockedTeam.getName() == null || mockedTeam.getCarOne() == null || mockedTeam.getCarTwo() == null) {
-                throw new IllegalArgumentException("Tema attributes cannot be null!");
+                throw new InvalidDataAccessApiUsageException("Tema attributes cannot be null!");
             }
 
             teams.remove(mockedTeam.getId(), mockedTeam);
@@ -88,7 +89,7 @@ public class TeamServiceTest extends AbstractTransactionalTestNGSpringContextTes
         when(teamDao.findTeamById(anyLong())).then(invoke -> {
             Long id = invoke.getArgumentAt(0, Long.class);
             if (id == null) {
-                throw new IllegalArgumentException("Id cannot be null!");
+                throw new InvalidDataAccessApiUsageException("Id cannot be null!");
             }
             return teams.get(id);
         });
@@ -96,10 +97,10 @@ public class TeamServiceTest extends AbstractTransactionalTestNGSpringContextTes
         when(teamDao.updateTeam(any(Team.class))).then(invoke -> {
             Team mockedTeam = invoke.getArgumentAt(0, Team.class);
             if (mockedTeam.getId() == null) {
-                throw new IllegalArgumentException("Id cannot be null!");
+                throw new InvalidDataAccessApiUsageException("Id cannot be null!");
             }
             if (mockedTeam.getName() == null || mockedTeam.getCarOne() == null || mockedTeam.getCarTwo() == null) {
-                throw new IllegalArgumentException("Team attributes cannot be null!");
+                throw new InvalidDataAccessApiUsageException("Team attributes cannot be null!");
             }
 
             teams.replace(mockedTeam.getId(), mockedTeam);
