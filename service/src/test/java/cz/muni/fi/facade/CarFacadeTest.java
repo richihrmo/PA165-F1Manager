@@ -1,6 +1,7 @@
-package cz.muni.fi.service;
+package cz.muni.fi.facade;
 
 
+import cz.muni.fi.dao.CarDao;
 import cz.muni.fi.dao.ComponentDao;
 import cz.muni.fi.dao.DriverDao;
 import cz.muni.fi.dto.CarDTO;
@@ -11,10 +12,13 @@ import cz.muni.fi.entities.Component;
 import cz.muni.fi.entities.Driver;
 import cz.muni.fi.facade.CarFacade;
 import cz.muni.fi.persistanceEnums.ComponentType;
+import cz.muni.fi.service.BeanMappingService;
 import cz.muni.fi.service.config.ServiceConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -32,6 +36,9 @@ public class CarFacadeTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
     private CarFacade carFacade;
+
+    @Autowired
+    private CarDao carDao;
 
     @Autowired
     private DriverDao driverDao;
@@ -117,6 +124,13 @@ public class CarFacadeTest extends AbstractTestNGSpringContextTests {
             carFacade.createCar(carDTO);
             assertThat(carFacade.findCarById(carDTO.getId())).isEqualTo(carDTO);
         }
+    }
+
+    @AfterClass
+    public void afterMethod(){
+        carDao.listAllCars().forEach(carDao::deleteCar);
+        componentDao.listAllComponents().forEach(componentDao::deleteComponent);
+        driverDao.listDrivers().forEach(driverDao::deleteDriver);
     }
 
     @Test
