@@ -13,12 +13,14 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import org.mockito.*;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -65,7 +67,7 @@ public class CarServiceTest extends AbstractTransactionalTestNGSpringContextTest
 
     private Map<Long, Car> cars = new HashMap<>();
 
-    @BeforeClass
+    @BeforeMethod
     public void mockitoSetup(){
         MockitoAnnotations.initMocks(this);
 
@@ -111,6 +113,7 @@ public class CarServiceTest extends AbstractTransactionalTestNGSpringContextTest
         when(carDao.updateCar(any(Car.class))).then(invoke -> {
             Car mockedCar = invoke.getArgumentAt(0, Car.class);
             if (mockedCar.getId() == null
+                    || mockedCar.getDriver() == null
                     || mockedCar.getSuspension() == null
                     || mockedCar.getTransmission() == null
                     || mockedCar.getBrakes() == null
@@ -160,16 +163,13 @@ public class CarServiceTest extends AbstractTransactionalTestNGSpringContextTest
         ferrari.setEngine(engineV12);
     }
 
-//    @AfterMethod
-//    public void tearDown(){
-//        for (Car car : cars.values()) {
-//            try {
-//                carDao.deleteCar(car);
-//            } catch (Exception e){
-//                throw new RuntimeException("fail delete tear down", e);
-//            }
-//        }
-//    }
+    @AfterMethod
+    public void tearDown(){
+        cars.clear();
+        ferrari.setId(null);
+        jordan.setId(null);
+        redbullF1.setId(null);
+    }
 
     @Test
     public void createCarTest(){
@@ -246,7 +246,7 @@ public class CarServiceTest extends AbstractTransactionalTestNGSpringContextTest
     @Test(expectedExceptions = DataAccessException.class)
     public void updateWithNullDriver(){
         carService.createCar(redbullF1);
-        redbullF1.setDriver(verstappen);
+        redbullF1.setDriver(null);
         carService.updateCar(redbullF1);
     }
 
