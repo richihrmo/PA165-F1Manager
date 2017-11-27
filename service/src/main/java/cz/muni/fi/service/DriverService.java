@@ -3,6 +3,7 @@ package cz.muni.fi.service;
 import cz.muni.fi.entities.Driver;
 import java.util.List;
 import org.springframework.stereotype.Service;
+import cz.muni.fi.service.exception.ServiceDataAccessException;
 
 /**
  * @author Lucie Kureckova, 445264

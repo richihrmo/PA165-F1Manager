@@ -2,7 +2,7 @@ package cz.muni.fi.service;
 
 import cz.muni.fi.dao.DriverDao;
 import cz.muni.fi.entities.Driver;
-import cz.muni.fi.service.Exceptions.ServiceDataAccessException;
+import cz.muni.fi.service.exception.ServiceDataAccessException;
 import org.dozer.inject.Inject;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +22,7 @@ public class DriverServiceImpl implements DriverService {
         try{
             return driverDao.listDrivers();
         } catch(Throwable throwable) {
-            throw new ServiceDataAccessException("could not list all drivers", throwable) {
-            };
+            throw new ServiceDataAccessException("could not list all drivers", throwable);
         }
     }
 
@@ -32,8 +31,7 @@ public class DriverServiceImpl implements DriverService {
         try{
             return driverDao.listTestDrivers();
         } catch(Throwable throwable) {
-            throw new ServiceDataAccessException("could not list all test drivers", throwable) {
-            };
+            throw new ServiceDataAccessException("could not list all test drivers", throwable);
         }
     }
 
@@ -45,7 +43,7 @@ public class DriverServiceImpl implements DriverService {
         try{
             return driverDao.findDriverById(id);
         } catch(Throwable throwable){
-            throw new ServiceDataAccessException("could not find driver by id", throwable) {};
+            throw new ServiceDataAccessException("could not find driver by id", throwable);
         }
     }
 
@@ -57,7 +55,7 @@ public class DriverServiceImpl implements DriverService {
         try{
             return driverDao.findDriverByName(name, surname);
         } catch(Throwable throwable){
-            throw new ServiceDataAccessException("could not find driver by name and surname", throwable) {};
+            throw new ServiceDataAccessException("could not find driver by name and surname", throwable);
         }
     }
 
@@ -69,7 +67,7 @@ public class DriverServiceImpl implements DriverService {
         try{
             return driverDao.findTestDriver(name, surname);
         } catch(Throwable throwable){
-            throw new ServiceDataAccessException("could not find test driver by name and surname", throwable) {};
+            throw new ServiceDataAccessException("could not find test driver by name and surname", throwable);
         }
     }
 
@@ -81,7 +79,7 @@ public class DriverServiceImpl implements DriverService {
         try{
             driverDao.addDriver(driver);
         } catch(Throwable throwable){
-            throw new ServiceDataAccessException("could not create a driver", throwable) {};
+            throw new ServiceDataAccessException("could not create a driver", throwable);
         }
     }
 
@@ -93,7 +91,7 @@ public class DriverServiceImpl implements DriverService {
         try{
             driverDao.updateDriver(driver);
         } catch(Throwable throwable){
-            throw new ServiceDataAccessException("could not update a driver", throwable) {};
+            throw new ServiceDataAccessException("could not update a driver", throwable);
         }
     }
 
@@ -105,7 +103,7 @@ public class DriverServiceImpl implements DriverService {
         try{
             driverDao.deleteDriver(driver);
         } catch(Throwable throwable){
-            throw new ServiceDataAccessException("could not delete a driver", throwable) {};
+            throw new ServiceDataAccessException("could not delete a driver", throwable);
         }
     }
 }
