@@ -263,8 +263,4 @@ public class ComponentServiceTest extends AbstractTestNGSpringContextTests {
                     .containsExactlyElementsOf(availableComponents.stream().filter(p -> p.getComponentType() == type).collect(Collectors.toList()));
         }
     }
-
-
-
-
 }
