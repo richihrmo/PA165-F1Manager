@@ -37,27 +37,18 @@ public class DriverFacadeImpl implements DriverFacade {
     @Override
     public DriverDTO getDriverByID(Long id) {
         Driver d = driverService.findDriverById(id);
-        if(d == null){
-            return null;
-        }
         return beanMappingService.mapTo(d, DriverDTO.class);
     }
 
     @Override
     public DriverDTO getDriverByName(String name, String surname) {
         Driver d = driverService.findDriverByName(name, surname);
-        if(d == null){
-            return null;
-        }
         return beanMappingService.mapTo(d, DriverDTO.class);
     }
 
     @Override
     public DriverDTO getTestDriverByName(String name, String surname) {
         Driver d = driverService.findTestDriver(name, surname);
-        if(d == null){
-            return null;
-        }
         return beanMappingService.mapTo(d, DriverDTO.class);
     }
 

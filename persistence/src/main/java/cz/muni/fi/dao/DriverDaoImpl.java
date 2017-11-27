@@ -69,6 +69,12 @@ public class DriverDaoImpl implements DriverDao{
         if(driver == null){
             throw new IllegalArgumentException("argument is null");
         }
+        if(driver.getId() != null){
+            throw new IllegalArgumentException("Id must be null!");
+        }
+        if(driver.getName() == null || driver.getSurname() == null || driver.getNationality() == null){
+            throw new IllegalArgumentException("Driver attributes cannot be null!");
+        }
         em.persist(driver);
         return driver;
     }
@@ -77,6 +83,9 @@ public class DriverDaoImpl implements DriverDao{
         if(driver == null){
             throw new IllegalArgumentException("argument is null");
         }
+        if(driver.getName() == null || driver.getSurname() == null || driver.getNationality() == null || driver.getId() == null){
+            throw new IllegalArgumentException("Driver attributes cannot be null!");
+        }
         em.merge(driver);
         return driver;
     }
@@ -84,6 +93,9 @@ public class DriverDaoImpl implements DriverDao{
     public Driver deleteDriver(Driver driver) {
         if(driver == null){
             throw new IllegalArgumentException("argument is null");
+        }
+        if(driver.getName() == null || driver.getSurname() == null || driver.getNationality() == null || driver.getId() == null){
+            throw new IllegalArgumentException("Driver attributes cannot be null!");
         }
         em.remove(em.merge(driver));
         return driver;

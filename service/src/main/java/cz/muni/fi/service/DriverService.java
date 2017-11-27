@@ -14,6 +14,7 @@ public interface DriverService {
      * Find all drivers
      * 
      * @return list of drivers
+     * @throws FormulaTeamDataAccessException when DAO throws some exception
      */
     List<Driver> listDrivers();
     
@@ -21,6 +22,7 @@ public interface DriverService {
      * Find all test drivers
      * 
      * @return list of test drivers
+     * @throws FormulaTeamDataAccessException when DAO throws some exception
      */
     List<Driver> listTestDrivers();
     
@@ -29,7 +31,8 @@ public interface DriverService {
      * 
      * @param id of wanted driver
      * @return wanted driver
-     * @throws DataAccessException when DAO throws some exception
+     * @throws FormulaTeamDataAccessException when DAO throws some exception
+     * @throws IllegalArgumentException when argument is null
      */
     Driver findDriverById(Long id);
     
@@ -39,7 +42,8 @@ public interface DriverService {
      * @param name of driver
      * @param surname of driver
      * @return wanted driver
-     * @throws DataAccessException when DAO throws some exception
+     * @throws FormulaTeamDataAccessException when DAO throws some exception
+     * @throws IllegalArgumentException when some argument is null
      */
     Driver findDriverByName(String name, String surname);
     
@@ -49,7 +53,8 @@ public interface DriverService {
      * @param name of driver
      * @param surname of driver
      * @return wanted driver
-     * @throws DataAccessException when DAO throws some exception
+     * @throws FormulaTeamDataAccessException when DAO throws some exception
+     * @throws IllegalArgumentException when some argument is null
      */
     Driver findTestDriver(String name, String surname);
     
@@ -57,7 +62,8 @@ public interface DriverService {
      * Add driver
      * 
      * @param driver to add
-     * @throws DataAccessException when DAO throws some exception
+     * @throws FormulaTeamDataAccessException when DAO throws some exception
+     * @throws IllegalArgumentException when argument is null
      */
     void addDriver(Driver driver);
     
@@ -65,7 +71,8 @@ public interface DriverService {
      * Update driver
      * 
      * @param driver to update
-     * @throws DataAccessException when DAO throws some exception
+     * @throws FormulaTeamDataAccessException when DAO throws some exception
+     * @throws IllegalArgumentException when argument is null
      */
     void updateDriver(Driver driver);
     
@@ -73,7 +80,8 @@ public interface DriverService {
      * Delete driver
      * 
      * @param driver to delete
-     * @throws DataAccessException when DAO throws some exception
+     * @throws FormulaTeamDataAccessException when DAO throws some exception
+     * @throws IllegalArgumentException when argument is null
      */
     void deleteDriver(Driver driver);
 }

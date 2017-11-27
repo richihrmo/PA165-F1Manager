@@ -45,8 +45,7 @@ public class DriverServiceTest extends AbstractTransactionalTestNGSpringContextT
     private Driver driver;
     private Driver testDriver;
     private Map<Long, Driver> drivers = new HashMap<>();
-    
-    Long counter = 20L;
+    private Long counter = 20L;
 
     @BeforeClass
     public void setup() throws ServiceException
@@ -117,6 +116,7 @@ public class DriverServiceTest extends AbstractTransactionalTestNGSpringContextT
 
         when(driverDao.listDrivers()).then(invoke ->
                 Collections.unmodifiableList(new ArrayList<>(drivers.values())));
+        
         when(driverDao.listTestDrivers()).then(invoke ->
                 drivers.values().stream().filter(p -> !p.isMainDriver()).collect(Collectors.toList()));
 

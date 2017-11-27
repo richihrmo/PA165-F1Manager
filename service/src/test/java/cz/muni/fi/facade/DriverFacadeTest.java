@@ -33,12 +33,6 @@ public class DriverFacadeTest extends AbstractTransactionalTestNGSpringContextTe
     @Autowired
     private BeanMappingService beanMappingService;
     
-    @BeforeClass
-    public void setup()
-    {
-    
-    }
-    
     private Driver driver;
     private DriverDTO driverDTO;
     private Driver testDriver;
