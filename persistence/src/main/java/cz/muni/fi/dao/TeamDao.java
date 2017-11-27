@@ -13,6 +13,7 @@ public interface TeamDao {
      * Add team to DB
      * 
      * @param team to be added
+     * @return created Team
      * @throws IllegalArgumentException when argument is null, or not nullable attributes are null,
      *         or id is not null
      */
@@ -22,6 +23,7 @@ public interface TeamDao {
      * Update team in DB
      * 
      * @param team to be updated
+     * @return updated team
      * @throws IllegalArgumentException when argument is null or not nullable attributes are null
      */
     Team updateTeam(Team team);
@@ -30,6 +32,7 @@ public interface TeamDao {
      * Delete team in DB
      * 
      * @param team to be deleted
+     * @return true if deleted successfully
      * @throws IllegalArgumentException when argument is null or not nullable attributes are null
      */
     boolean deleteTeam(Team team);
