@@ -115,6 +115,18 @@ public class ComponentDaoTest extends AbstractTestNGSpringContextTests {
         componentManager.addComponent(null);
     }
 
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void addComponentWithNullAttributesTest(){
+        Component breaks = new Component();
+        componentManager.addComponent(breaks);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void addComponentWithNotNullIdTest(){
+        componentManager.addComponent(engine);
+    }
+
+
     @Test
     public void updateComponent() {
         assertThat(em.find(Component.class, engine.getId())).isEqualTo(engine);
@@ -131,6 +143,12 @@ public class ComponentDaoTest extends AbstractTestNGSpringContextTests {
         componentManager.updateComponent(null);
     }
 
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void updateComponentWithNullAttributesTest(){
+        engine.setId(null);
+        componentManager.updateComponent(engine);
+    }
+
     @Test
     public void deleteComponentTest() {
         assertThat(em.find(Component.class, engine.getId())).isEqualTo(engine);
@@ -141,6 +159,12 @@ public class ComponentDaoTest extends AbstractTestNGSpringContextTests {
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void deleteNullComponentTest(){
         componentManager.deleteComponent(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void deleteComponentWithNullAttributesTest(){
+        engine.setId(null);
+        componentManager.deleteComponent(engine);
     }
 
     @AfterMethod

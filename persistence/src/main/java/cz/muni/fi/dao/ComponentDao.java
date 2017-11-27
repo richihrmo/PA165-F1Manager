@@ -27,7 +27,7 @@ public interface ComponentDao {
      *
      * @param name component name
      * @return found component or null
-     * @throws IllegalArgumentException when argumet is null
+     * @throws IllegalArgumentException when argument name is null
      */
     Component findComponentByName(String name) throws IllegalArgumentException;
 
@@ -36,7 +36,7 @@ public interface ComponentDao {
      *
      * @param id component id
      * @return found component or null
-     * @throws IllegalArgumentException when argumet is null
+     * @throws IllegalArgumentException when id is null
      */
     Component findComponentById(Long id) throws IllegalArgumentException;
 
@@ -44,15 +44,16 @@ public interface ComponentDao {
      * Add component to DB
      *
      * @param component component to be added
-     * @throws IllegalArgumentException when argumet is null
+     * @throws IllegalArgumentException when argument is null or component id is not null
+     *         or not nullable component attributes are null
      */
     Component addComponent(Component component) throws IllegalArgumentException;
 
     /**
      * Update component in DB
      *
-     * @param component compondent to be updated
-     * @throws IllegalArgumentException when argumet is null
+     * @param component component to be updated
+     * @throws IllegalArgumentException when argument is null or not nullable component attributes are null
      */
     Component updateComponent(Component component) throws IllegalArgumentException;
 
@@ -60,7 +61,7 @@ public interface ComponentDao {
      * Delete component from DB
      *
      * @param component component to be deleted
-     * @throws IllegalArgumentException when argumet is null
+     * @throws IllegalArgumentException when argument is null or not nullable component attributes are null
      */
     Component deleteComponent(Component component) throws IllegalArgumentException;
 }
