@@ -40,19 +40,21 @@ public interface TeamService {
      * Create new team
      *
      * @param team team to be created
+     * @return created Team
      * @throws IllegalArgumentException if team argument id null
      * @throws TeamFormulaDataAccessException if case of error on data access layer
      */
-    void createTeam(Team team);
+    Team createTeam(Team team);
 
     /**
      * Update team
      *
      * @param team team to be updated
+     * @return updated Team
      * @throws IllegalArgumentException if team argument id null
      * @throws TeamFormulaDataAccessException if case of error on data access layer
      */
-    void updateTeam(Team team);
+    Team updateTeam(Team team);
 
     /**
      * Delete team

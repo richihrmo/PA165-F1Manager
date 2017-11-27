@@ -36,15 +36,15 @@ public class TeamFacadeImpl implements TeamFacade{
     }
 
     @Override
-    public void createTeam(TeamDTO team) {
+    public TeamDTO createTeam(TeamDTO team) {
         Team mappedTeam = beanMappingService.mapTo(team, Team.class);
-        teamService.createTeam(mappedTeam);
+        return beanMappingService.mapTo(teamService.createTeam(mappedTeam), TeamDTO.class);
     }
 
     @Override
-    public void updateTeam(TeamDTO team) {
+    public TeamDTO updateTeam(TeamDTO team) {
         Team mappedTeam = beanMappingService.mapTo(team, Team.class);
-        teamService.updateTeam(mappedTeam);
+        return beanMappingService.mapTo(teamService.updateTeam(mappedTeam), TeamDTO.class);
     }
 
     @Override

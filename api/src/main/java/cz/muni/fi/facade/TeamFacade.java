@@ -28,15 +28,17 @@ public interface TeamFacade {
      * Create new Team
      *
      * @param team team to be created
+     * @return created Team
      */
-    void createTeam(TeamDTO team);
+    TeamDTO createTeam(TeamDTO team);
 
     /**
      * Update team
      *
      * @param team team to be updated
+     * @return updated Team
      */
-    void updateTeam(TeamDTO team);
+    TeamDTO updateTeam(TeamDTO team);
 
     /**
      * Delete team

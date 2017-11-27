@@ -12,6 +12,14 @@ public class TeamDTO {
     @Getter @Setter private CarDTO carOne;
     @Getter @Setter private CarDTO carTwo;
 
+    public TeamDTO() {}
+
+    public TeamDTO(String name, CarDTO carOne, CarDTO carTwo) {
+        this.name = name;
+        this.carOne = carOne;
+        this.carTwo = carTwo;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
