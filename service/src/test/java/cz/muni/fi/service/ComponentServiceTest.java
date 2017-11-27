@@ -141,7 +141,7 @@ public class ComponentServiceTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void createComponent() throws DataAccessException {
+    public void createComponent() {
         Component component = new Component("New component", true, ComponentType.ENGINE);
 
         int sizeBefore = mockedComponents.size();
@@ -173,7 +173,7 @@ public class ComponentServiceTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void updateComponent() throws DataAccessException {
+    public void updateComponent() {
         Component component = allComponents.get(0);
         component.setName("Updated name for");
 
@@ -208,7 +208,7 @@ public class ComponentServiceTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void deleteComponent() throws DataAccessException {
+    public void deleteComponent() {
         Component component = allComponents.get(0);
 
         int beforeSize = mockedComponents.size();
@@ -228,7 +228,7 @@ public class ComponentServiceTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void deleteComponentWhichIsNotInDB() throws DataAccessException {
+    public void deleteComponentWhichIsNotInDB() {
         Component component = new Component("Lets summon some non-mocked component", true, ComponentType.TRANSMISSION);
         component.setId(666L);
 

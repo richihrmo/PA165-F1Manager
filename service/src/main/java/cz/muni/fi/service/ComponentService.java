@@ -24,7 +24,7 @@ public interface ComponentService {
      * @throws IllegalArgumentException when type argument is null
      * @throws TeamFormulaDataAccessException when error on data access layer occurs
      */
-    List<Component> listAllComponentsWithType(ComponentType type) throws IllegalArgumentException;
+    List<Component> listAllComponentsWithType(ComponentType type);
 
     /**
      * Returns all available Components from the database
@@ -42,7 +42,7 @@ public interface ComponentService {
      * @throws IllegalArgumentException when type argument is null
      * @throws TeamFormulaDataAccessException when error on data access layer occurs
      */
-    List<Component> listAllAvailableComponentsWithType(ComponentType type) throws IllegalArgumentException;
+    List<Component> listAllAvailableComponentsWithType(ComponentType type);
 
     /**
      * Takes unique id of Component and returns a corresponding entity if found
@@ -52,7 +52,7 @@ public interface ComponentService {
      * @throws IllegalArgumentException when id argument is null
      * @throws TeamFormulaDataAccessException when error on data access layer occurs
      */
-    Component findComponentByID(Long id) throws IllegalArgumentException;
+    Component findComponentByID(Long id);
 
     /**
      * Takes unique name of Component and returns a corresponding entity if found
@@ -62,7 +62,7 @@ public interface ComponentService {
      * @throws IllegalArgumentException when name argument is null
      * @throws TeamFormulaDataAccessException when error on data access layer occurs
      */
-    Component findComponentByName(String name) throws IllegalArgumentException;
+    Component findComponentByName(String name);
 
     /**
      * Takes an object of type Component and creates an entry in a database
@@ -71,7 +71,7 @@ public interface ComponentService {
      * @throws IllegalArgumentException when component argument is null
      * @throws TeamFormulaDataAccessException when error on data access layer occurs
      */
-    void createComponent(Component component) throws IllegalArgumentException;
+    void createComponent(Component component);
 
     /**
      * Takes an object of type Component and updates an entry in a database
@@ -80,7 +80,7 @@ public interface ComponentService {
      * @throws IllegalArgumentException when component argument is null
      * @throws TeamFormulaDataAccessException when error on data access layer occurs
      */
-    void updateComponent(Component component) throws IllegalArgumentException;
+    void updateComponent(Component component);
 
     /**
      * Takes an object of type Component and deletes an entry from the database
@@ -89,5 +89,5 @@ public interface ComponentService {
      * @throws IllegalArgumentException when component argument is null
      * @throws TeamFormulaDataAccessException when error on data access layer occurs
      */
-    void deleteComponent(Component component) throws IllegalArgumentException;
+    void deleteComponent(Component component);
 }
