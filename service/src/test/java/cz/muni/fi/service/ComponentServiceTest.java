@@ -49,9 +49,9 @@ public class ComponentServiceTest extends AbstractTestNGSpringContextTests {
         when(componentDao.addComponent(any(Component.class))).then(invoke -> {
 
             Component mockedComponent = invoke.getArgumentAt(0, Component.class);
-            if (mockedComponent.getId() != null) throw new InvalidDataAccessApiUsageException("Component already exists");
-            if (mockedComponent.getName() == null) throw new InvalidDataAccessApiUsageException("Component name cannot be null");
-            if (mockedComponent.getComponentType() == null) throw new InvalidDataAccessApiUsageException("Component type cannot be null");
+            if (mockedComponent.getId() != null) throw new IllegalArgumentException("Component already exists");
+            if (mockedComponent.getName() == null) throw new IllegalArgumentException("Component name cannot be null");
+            if (mockedComponent.getComponentType() == null) throw new IllegalArgumentException("Component type cannot be null");
 
             long index = counter;
             mockedComponent.setId(index);
@@ -63,9 +63,9 @@ public class ComponentServiceTest extends AbstractTestNGSpringContextTests {
         when(componentDao.updateComponent(any(Component.class))).then(invoke -> {
 
             Component mockedComponent = invoke.getArgumentAt(0, Component.class);
-            if (mockedComponent.getId() == null) throw new InvalidDataAccessApiUsageException("Component ID cannot be null");
-            if (mockedComponent.getName() == null) throw new InvalidDataAccessApiUsageException("Component name cannot be null");
-            if (mockedComponent.getComponentType() == null) throw new InvalidDataAccessApiUsageException("Component type cannot be null");
+            if (mockedComponent.getId() == null) throw new IllegalArgumentException("Component ID cannot be null");
+            if (mockedComponent.getName() == null) throw new IllegalArgumentException("Component name cannot be null");
+            if (mockedComponent.getComponentType() == null) throw new IllegalArgumentException("Component type cannot be null");
 
             mockedComponents.replace(mockedComponent.getId(), mockedComponent);
             return mockedComponent;
@@ -74,7 +74,7 @@ public class ComponentServiceTest extends AbstractTestNGSpringContextTests {
         when(componentDao.deleteComponent(any(Component.class))).then(invoke -> {
 
             Component mockedComponent = invoke.getArgumentAt(0, Component.class);
-            if (mockedComponent.getId() == null) throw new InvalidDataAccessApiUsageException("Component is not stored");
+            if (mockedComponent.getId() == null) throw new IllegalArgumentException("Component is not stored");
 
             mockedComponents.remove(mockedComponent.getId(), mockedComponent);
             return mockedComponent;
@@ -83,7 +83,7 @@ public class ComponentServiceTest extends AbstractTestNGSpringContextTests {
         when(componentDao.findComponentById(anyLong())).then(invoke -> {
 
             Long index = invoke.getArgumentAt(0, Long.class);
-            if (index == null) throw new InvalidDataAccessApiUsageException("Cannot search with null ID");
+            if (index == null) throw new IllegalArgumentException("Cannot search with null ID");
 
             return mockedComponents.get(index);
         });
@@ -91,7 +91,7 @@ public class ComponentServiceTest extends AbstractTestNGSpringContextTests {
         when(componentDao.findComponentByName(anyString())).then(invoke -> {
 
             String name = invoke.getArgumentAt(0, String.class);
-            if (name == null) throw new InvalidDataAccessApiUsageException("Cannont search with null name");
+            if (name == null) throw new IllegalArgumentException("Cannont search with null name");
             return mockedComponents.values().stream().filter(p -> p.getName().equals(name)).findFirst();
         });
 
