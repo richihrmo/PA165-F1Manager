@@ -13,7 +13,7 @@ public interface CarService {
     /**
      * Returns entity based on Id
      *
-     * @param id
+     * @param id car id
      * @return Car entity
      * @throws cz.muni.fi.service.exception.ServiceDataAccessException if there is problem with dao
      */
@@ -22,7 +22,7 @@ public interface CarService {
     /**
      * Returns entity based on driver
      *
-     * @param driver
+     * @param driver driver to look for
      * @return Car entity
      * @throws cz.muni.fi.service.exception.ServiceDataAccessException if there is problem with dao
      */
@@ -39,7 +39,7 @@ public interface CarService {
     /**
      * CRUD operation create
      *
-     * @param car
+     * @param car car to be created
      * @return car
      * @throws cz.muni.fi.service.exception.ServiceDataAccessException if there is problem with dao
      */
@@ -48,7 +48,7 @@ public interface CarService {
     /**
      * CRUD operation update
      *
-     * @param car
+     * @param car car to be updated
      * @return car
      * @throws cz.muni.fi.service.exception.ServiceDataAccessException if there is problem with dao
      */
@@ -57,7 +57,7 @@ public interface CarService {
     /**
      * CRUD operation delete
      *
-     * @param car
+     * @param car to be deleted
      * @return boolean
      * @throws cz.muni.fi.service.exception.ServiceDataAccessException if there is problem with dao
      */

@@ -2,22 +2,10 @@ package cz.muni.fi.service;
 
 import cz.muni.fi.dao.DriverDao;
 import cz.muni.fi.entities.Driver;
-import cz.muni.fi.persistanceEnums.DrivingSkill;
 import cz.muni.fi.service.config.ServiceConfiguration;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import static org.assertj.core.api.Assertions.assertThat;
 import org.hibernate.service.spi.ServiceException;
 import org.mockito.InjectMocks;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyString;
 import org.mockito.Mock;
-import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -27,7 +15,16 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Lucie Kureckova, 445264
@@ -55,10 +52,10 @@ public class DriverServiceTest extends AbstractTransactionalTestNGSpringContextT
         when(driverDao.addDriver(any(Driver.class))).then(invoke -> {
 
             Driver mockedDriver = invoke.getArgumentAt(0, Driver.class);
-            if(mockedDriver.getId() != null) throw new InvalidDataAccessApiUsageException("Driver already exists");
-            if(mockedDriver.getName() == null) throw new InvalidDataAccessApiUsageException("Driver name cannot be null");
-            if(mockedDriver.getSurname() == null) throw new InvalidDataAccessApiUsageException("Driver surname cannot be null");
-            if(mockedDriver.getNationality() == null) throw new InvalidDataAccessApiUsageException("Driver nationality cannot be null");
+            if(mockedDriver.getId() != null) throw new IllegalArgumentException("Driver already exists");
+            if(mockedDriver.getName() == null) throw new IllegalArgumentException("Driver name cannot be null");
+            if(mockedDriver.getSurname() == null) throw new IllegalArgumentException("Driver surname cannot be null");
+            if(mockedDriver.getNationality() == null) throw new IllegalArgumentException("Driver nationality cannot be null");
 
             long index = counter;
             mockedDriver.setId(index);
@@ -70,10 +67,10 @@ public class DriverServiceTest extends AbstractTransactionalTestNGSpringContextT
         when(driverDao.updateDriver(any(Driver.class))).then(invoke -> {
 
             Driver mockedDriver = invoke.getArgumentAt(0, Driver.class);
-            if(mockedDriver.getId() != null) throw new InvalidDataAccessApiUsageException("Driver already exists");
-            if(mockedDriver.getName() == null) throw new InvalidDataAccessApiUsageException("Driver name cannot be null");
-            if(mockedDriver.getSurname() == null) throw new InvalidDataAccessApiUsageException("Driver surname cannot be null");
-            if(mockedDriver.getNationality() == null) throw new InvalidDataAccessApiUsageException("Driver nationality cannot be null");
+            if(mockedDriver.getId() == null) throw new IllegalArgumentException("Driver id cannot be null!");
+            if(mockedDriver.getName() == null) throw new IllegalArgumentException("Driver name cannot be null");
+            if(mockedDriver.getSurname() == null) throw new IllegalArgumentException("Driver surname cannot be null");
+            if(mockedDriver.getNationality() == null) throw new IllegalArgumentException("Driver nationality cannot be null");
 
             drivers.replace(mockedDriver.getId(), mockedDriver);
             return mockedDriver;
@@ -82,7 +79,8 @@ public class DriverServiceTest extends AbstractTransactionalTestNGSpringContextT
         when(driverDao.deleteDriver(any(Driver.class))).then(invoke -> {
 
             Driver mockedDriver = invoke.getArgumentAt(0, Driver.class);
-            if (mockedDriver.getId() == null) throw new InvalidDataAccessApiUsageException("Driver is not stored");
+            if (mockedDriver == null) throw new IllegalArgumentException("Driver cannot be null!");
+            if (mockedDriver.getId() == null) throw new IllegalArgumentException("Driver is not stored");
 
             drivers.remove(mockedDriver.getId(), mockedDriver);
             return mockedDriver;
@@ -91,27 +89,9 @@ public class DriverServiceTest extends AbstractTransactionalTestNGSpringContextT
         when(driverDao.findDriverById(anyLong())).then(invoke -> {
 
             Long index = invoke.getArgumentAt(0, Long.class);
-            if (index == null) throw new InvalidDataAccessApiUsageException("Cannot search with null ID");
+            if (index == null) throw new IllegalArgumentException("Cannot search with null ID");
 
             return drivers.get(index);
-        });
-
-        when(driverDao.findDriverByName(anyString(), anyString())).then(invoke -> {
-
-            String name = invoke.getArgumentAt(0, String.class);
-            String surname = invoke.getArgumentAt(1, String.class);
-            
-            if (name == null || surname == null) throw new InvalidDataAccessApiUsageException("Cannont search with null name");
-            return drivers.values().stream().filter(p -> p.getName().equals(name) && p.getSurname().equals(surname)).findFirst();
-        });
-        
-        when(driverDao.findTestDriver(anyString(), anyString())).then(invoke -> {
-
-            String name = invoke.getArgumentAt(0, String.class);
-            String surname = invoke.getArgumentAt(1, String.class);
-            
-            if (name == null || surname == null) throw new InvalidDataAccessApiUsageException("Cannont search with null name");
-            return drivers.values().stream().filter(p -> p.getName().equals(name) && p.getSurname().equals(surname) && !p.isMainDriver()).findFirst();
         });
 
         when(driverDao.listDrivers()).then(invoke ->
@@ -138,7 +118,7 @@ public class DriverServiceTest extends AbstractTransactionalTestNGSpringContextT
         
         testDriver = new Driver();
         testDriver.setAsTestDriver();
-        driver.setId(counter);
+        testDriver.setId(counter);
         testDriver.setName("Harry");
         testDriver.setSurname("Potter");
         testDriver.setNationality("english");
@@ -165,7 +145,7 @@ public class DriverServiceTest extends AbstractTransactionalTestNGSpringContextT
         assertThat(driverService.listTestDrivers()).containsExactlyInAnyOrder(testDriver);
         assertThat(driverService.listTestDrivers()).doesNotContain(driver);
     }
-    
+
     @Test
     public void listNoTestDriversTest(){
         drivers.clear();
@@ -182,51 +162,33 @@ public class DriverServiceTest extends AbstractTransactionalTestNGSpringContextT
     public void findDriverByNullIdTest(){
         driverService.findDriverById(null);
     }
-    
-    @Test
-    public void findDriverByNameTest(){
-        assertThat(driverService.findDriverByName(driver.getName(), driver.getSurname())).isEqualTo(driver);
-        assertThat(driverService.findDriverByName("lola", "neni")).isNull();
-    }
+
     
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void findDriverByNullNameTest(){
         driverService.findDriverByName(null, null);
     }
-    
-    @Test
-    public void findTestDriverTest(){
-        assertThat(driverService.findTestDriver(testDriver.getName(), testDriver.getSurname())).isEqualTo(testDriver);
-        assertThat(driverService.findTestDriver("lola", "neni")).isNull();
-    }
-    
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void findNullTestDriverTest(){
-        driverService.findTestDriver(null, null);
-    }
-    
-    
+
     @Test
     public void addDriverTest(){
         Driver newDriver = new Driver();
-        newDriver.setId(counter);
         newDriver.setAsMainDriver();
         newDriver.setName("Anakin");
         newDriver.setSurname("Skywalker");
         newDriver.setNationality("unknown");
         counter++;
         int count = drivers.size();
-        driverService.addDriver(driver);
+        driverService.addDriver(newDriver);
         assertThat(drivers.size()).isEqualTo(count+1);
     }
-    
+
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void addNullDriverTest(){
         driverService.addDriver(null);
     }
     
     @Test(expectedExceptions = DataAccessException.class)
-    public void addNullAtributDriverTest(){
+    public void addNullAtributeDriverTest(){
         Driver newDriver = new Driver();
         newDriver.setId(counter);
         counter++;
@@ -247,15 +209,9 @@ public class DriverServiceTest extends AbstractTransactionalTestNGSpringContextT
     
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void updateNullDriverTest(){
-        driverService.addDriver(null);
+        driverService.updateDriver(null);
     }
-    
-    @Test(expectedExceptions = DataAccessException.class)
-    public void updateNullAtributeDriverTest(){
-        driver.setName("Adam");
-        driverService.updateDriver(driver);
-    }
-    
+
     @Test
     public void deleteDriverTest(){
         driverService.deleteDriver(driver);
@@ -269,7 +225,7 @@ public class DriverServiceTest extends AbstractTransactionalTestNGSpringContextT
     
     @Test(expectedExceptions = DataAccessException.class)
     public void deleteNonExistingDriverTest(){
-        drivers.remove(driver.getId());
+        driver.setId(null);
         driverService.deleteDriver(driver);
     }
     
