@@ -3,11 +3,10 @@ package cz.muni.fi.dao;
 import cz.muni.fi.PersistenceApplicationContext;
 import cz.muni.fi.entities.Car;
 import cz.muni.fi.entities.Component;
-import cz.muni.fi.entities.Team;
 import cz.muni.fi.entities.Driver;
+import cz.muni.fi.entities.Team;
 import cz.muni.fi.persistanceEnums.ComponentType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.AfterMethod;
@@ -132,7 +131,7 @@ public class TeamDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(teamManager.findTeamByName(blueTeam.getName())).isEqualTo(blueTeam);
     }
     
-    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void findTeamByNullNameTest(){
         teamManager.findTeamByName(null);
     }
@@ -142,7 +141,7 @@ public class TeamDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(teamManager.findTeamById(blueTeam.getId())).isEqualTo(blueTeam);
     }
     
-    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void findTeamByNullIdTest(){
         teamManager.findTeamById(null);
     }
@@ -157,12 +156,12 @@ public class TeamDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(em.find(Team.class, blueTeam.getId())).isEqualTo(blueTeam);
     }
     
-    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void updateNullTeamTest(){
         teamManager.updateTeam(null);
     }
 
-    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void updateTeamWithNullAttributeTest(){
         blueTeam.setId(null);
         teamManager.updateTeam(blueTeam);
@@ -174,18 +173,18 @@ public class TeamDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(em.find(Team.class, greenTeam.getId())).isEqualTo(greenTeam);
     }
     
-    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void addNullTeamTest(){
         teamManager.addTeam(null);
     }
 
-    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void addTeamWithNullAttributeTest(){
         greenTeam.setName(null);
         teamManager.addTeam(greenTeam);
     }
 
-    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void addTeamWithNotNullIdTest(){
         greenTeam.setId(5L);
         teamManager.addTeam(greenTeam);
@@ -198,12 +197,12 @@ public class TeamDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(em.find(Team.class, blueTeam.getId())).isNull();
     }
     
-    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void deleteNullTeamTest(){
         teamManager.deleteTeam(null);
     }
 
-    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void deleteTeamWithNullAttributeTest(){
         blueTeam.setId(null);
         teamManager.deleteTeam(null);
