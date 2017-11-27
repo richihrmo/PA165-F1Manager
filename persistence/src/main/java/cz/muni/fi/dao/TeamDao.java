@@ -16,7 +16,7 @@ public interface TeamDao {
      * @throws IllegalArgumentException when argument is null, or not nullable attributes are null,
      *         or id is not null
      */
-    Team addTeam(Team team) throws IllegalArgumentException;
+    Team addTeam(Team team);
     
     /**
      * Update team in DB
@@ -49,7 +49,6 @@ public interface TeamDao {
      * @throws IllegalArgumentException when argument is null
      */
     Team findTeamByName(String name);
-
     
     /**
      * Find team by id

@@ -46,7 +46,7 @@ public class TeamServiceTest extends AbstractTransactionalTestNGSpringContextTes
     private Map<Long, Team> teams = new HashMap<>();
 
     @BeforeClass
-    public void setup() throws ServiceException {
+    public void setup() {
         MockitoAnnotations.initMocks(this);
 
         when(teamDao.addTeam(any(Team.class))).then(invoke -> {
