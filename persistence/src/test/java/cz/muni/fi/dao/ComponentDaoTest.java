@@ -44,17 +44,17 @@ public class ComponentDaoTest extends AbstractTestNGSpringContextTests {
         transmission = new Component();
         transmission.setName("Transmission");
         transmission.setComponentType(ComponentType.TRANSMISSION);
-        transmission.setAvailable(true);
+        transmission.setAvailability(true);
 
         engine = new Component();
         engine.setName("Engine");
         engine.setComponentType(ComponentType.ENGINE);
-        engine.setAvailable(false);
+        engine.setAvailability(false);
 
         aerodynamic = new Component();
         aerodynamic.setName("Aerodynamic");
         aerodynamic.setComponentType(ComponentType.AERODYNAMICS);
-        aerodynamic.setAvailable(true);
+        aerodynamic.setAvailability(true);
 
         EntityManager entityManager = emf.createEntityManager();
         entityManager.getTransaction().begin();
@@ -104,7 +104,7 @@ public class ComponentDaoTest extends AbstractTestNGSpringContextTests {
         Component breaks = new Component();
         breaks.setName("Breaks");
         breaks.setComponentType(ComponentType.BRAKES);
-        breaks.setAvailable(true);
+        breaks.setAvailability(true);
 
         componentManager.addComponent(breaks);
         assertThat(em.find(Component.class, breaks.getId())).isEqualTo(breaks);
@@ -120,7 +120,7 @@ public class ComponentDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(em.find(Component.class, engine.getId())).isEqualTo(engine);
 
         engine.setName("Engine with edited name");
-        engine.setAvailable(true);
+        engine.setAvailability(true);
         componentManager.updateComponent(engine);
 
         assertThat(em.find(Component.class, engine.getId())).isEqualTo(engine);

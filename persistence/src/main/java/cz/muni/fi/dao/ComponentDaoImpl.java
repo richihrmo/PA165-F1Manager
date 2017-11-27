@@ -19,7 +19,7 @@ public class ComponentDaoImpl implements ComponentDao {
     private EntityManager em;
 
     public List<Component> listAvailableComponents() {
-        return em.createQuery("select c from Component c where c.isAvailable = :bool", Component.class).setParameter("bool", true).getResultList();
+        return em.createQuery("select c from Component c where c.availability = :bool", Component.class).setParameter("bool", true).getResultList();
     }
 
     public List<Component> listAllComponents() {

@@ -8,6 +8,7 @@ import cz.muni.fi.entities.Car;
 import cz.muni.fi.entities.Component;
 import cz.muni.fi.entities.Driver;
 import cz.muni.fi.entities.Team;
+import cz.muni.fi.enums.ComponentType;
 import org.dozer.loader.api.BeanMappingBuilder;
 import org.dozer.loader.api.TypeMappingOptions;
 

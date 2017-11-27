@@ -95,7 +95,7 @@ public class ComponentServiceTest extends AbstractTestNGSpringContextTests {
         });
 
         when(componentDao.listAvailableComponents()).then(invoke ->
-                mockedComponents.values().stream().filter(p -> p.isAvailable()).collect(Collectors.toList()));
+                mockedComponents.values().stream().filter(p -> p.isAvailability()).collect(Collectors.toList()));
 
         when(componentDao.listAllComponents()).then(invoke ->
                 Collections.unmodifiableList(new ArrayList<>(mockedComponents.values())));

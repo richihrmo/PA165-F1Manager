@@ -60,7 +60,7 @@ public interface ComponentFacade {
      *
      * @param component non-null object to be created in a database
      */
-    void createComponent(ComponentCreateDTO component);
+    void createComponent(ComponentDTO component);
 
     /**
      * Takes an object of type Component and updates an entry in a database
