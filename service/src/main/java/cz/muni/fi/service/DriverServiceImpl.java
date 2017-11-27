@@ -33,7 +33,7 @@ public class DriverServiceImpl implements DriverService {
         }
         try{
             return driverDao.findDriverById(id);
-        } catch(Exception ex){
+        } catch(Throwable ex){
             throw new DataAccessException(ex.getMessage()) {};
         }
     }
@@ -45,7 +45,7 @@ public class DriverServiceImpl implements DriverService {
         }
         try{
             return driverDao.findDriverByName(name, surname);
-        } catch(Exception ex){
+        } catch(Throwable ex){
             throw new DataAccessException(ex.getMessage()) {};
         }
     }
@@ -57,7 +57,7 @@ public class DriverServiceImpl implements DriverService {
         }
         try{
             return driverDao.findTestDriver(name, surname);
-        } catch(Exception ex){
+        } catch(Throwable ex){
             throw new DataAccessException(ex.getMessage()) {};
         }
     }
@@ -69,7 +69,7 @@ public class DriverServiceImpl implements DriverService {
         }
         try{
             driverDao.addDriver(driver);
-        } catch(Exception ex){
+        } catch(Throwable ex){
             throw new DataAccessException(ex.getMessage()) {};
         }
     }
@@ -81,7 +81,7 @@ public class DriverServiceImpl implements DriverService {
         }
         try{
             driverDao.updateDriver(driver);
-        } catch(Exception ex){
+        } catch(Throwable ex){
             throw new DataAccessException(ex.getMessage()) {};
         }
     }
@@ -93,7 +93,7 @@ public class DriverServiceImpl implements DriverService {
         }
         try{
             driverDao.deleteDriver(driver);
-        } catch(Exception ex){
+        } catch(Throwable ex){
             throw new DataAccessException(ex.getMessage()) {};
         }
     }
