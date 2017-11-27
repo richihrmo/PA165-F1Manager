@@ -1,4 +1,4 @@
-package cz.muni.fi.service.Exceptions;
+package cz.muni.fi.service.exception;
 
 import org.springframework.dao.DataAccessException;
 

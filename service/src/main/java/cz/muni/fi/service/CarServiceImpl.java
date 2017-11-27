@@ -3,7 +3,7 @@ package cz.muni.fi.service;
 import cz.muni.fi.dao.CarDao;
 import cz.muni.fi.entities.Car;
 import cz.muni.fi.entities.Driver;
-import cz.muni.fi.service.exception.TeamFormulaDataAccessException;
+import cz.muni.fi.service.exception.ServiceDataAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +28,7 @@ public class CarServiceImpl implements CarService {
         try {
             return carDao.findCarById(id);
         } catch (Throwable throwable) {
-            throw new TeamFormulaDataAccessException("could not find by id car", throwable);
+            throw new ServiceDataAccessException("could not find by id car", throwable);
         }
     }
 
@@ -38,7 +38,7 @@ public class CarServiceImpl implements CarService {
         try {
             return carDao.findCarByDriver(driver);
         } catch (Throwable throwable) {
-            throw new TeamFormulaDataAccessException("could not find by driver car", throwable);
+            throw new ServiceDataAccessException("could not find by driver car", throwable);
         }
     }
 
@@ -47,7 +47,7 @@ public class CarServiceImpl implements CarService {
         try {
             return carDao.listAllCars();
         } catch (Throwable throwable) {
-            throw new TeamFormulaDataAccessException("could not list all cars", throwable);
+            throw new ServiceDataAccessException("could not list all cars", throwable);
         }
     }
 
@@ -57,7 +57,7 @@ public class CarServiceImpl implements CarService {
         try {
             return carDao.addCar(car);
         } catch (Throwable throwable) {
-            throw new TeamFormulaDataAccessException("could not create car", throwable);
+            throw new ServiceDataAccessException("could not create car", throwable);
         }
     }
 
@@ -67,7 +67,7 @@ public class CarServiceImpl implements CarService {
         try {
             return carDao.updateCar(car);
         } catch (Throwable throwable) {
-            throw new TeamFormulaDataAccessException("could not update car", throwable);
+            throw new ServiceDataAccessException("could not update car", throwable);
         }
     }
 
@@ -77,7 +77,7 @@ public class CarServiceImpl implements CarService {
         try {
             return carDao.deleteCar(car);
         } catch (Throwable throwable) {
-            throw new TeamFormulaDataAccessException("could not delete car", throwable);
+            throw new ServiceDataAccessException("could not delete car", throwable);
         }
     }
 
