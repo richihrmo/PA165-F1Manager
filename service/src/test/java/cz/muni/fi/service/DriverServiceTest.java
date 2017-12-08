@@ -193,7 +193,7 @@ public class DriverServiceTest extends AbstractTransactionalTestNGSpringContextT
     @Test
     public void findDriverByNameTest(){
         assertThat(driverService.findDriverByName(driver.getName(), driver.getSurname())).isEqualTo(driver);
-        assertThat(driverService.findDriverByName("lola", "neni")).isNull();
+        assertThat(driverService.findDriverByName("neco", "neni")).isNull();
     }
     
     @Test(expectedExceptions = IllegalArgumentException.class)
@@ -204,7 +204,7 @@ public class DriverServiceTest extends AbstractTransactionalTestNGSpringContextT
     @Test
     public void findTestDriverTest(){
         assertThat(driverService.findTestDriver(testDriver.getName(), testDriver.getSurname())).isEqualTo(testDriver);
-        assertThat(driverService.findTestDriver("lola", "neni")).isNull();
+        assertThat(driverService.findTestDriver(driver.getName(), driver.getSurname())).isNull();
     }
     
     @Test(expectedExceptions = IllegalArgumentException.class)
