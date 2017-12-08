@@ -93,7 +93,34 @@ public class DriverServiceTest extends AbstractTransactionalTestNGSpringContextT
 
             return drivers.get(index);
         });
+        
+        when(driverDao.findDriverByName(anyString(), anyString())).then(invoke -> {
+            
+            String name = invoke.getArgumentAt(0, String.class);
+            String surname = invoke.getArgumentAt(1, String.class);
+            if (name == null || surname == null) throw new IllegalArgumentException("Cannot search with null name");
+            for(Driver d : drivers.values()){
+                if(d.getName().equals(name) && d.getSurname().equals(surname)){
+                    return d;
+                }
+            }
+            return null;
+        });
+        
+        when(driverDao.findTestDriver(anyString(), anyString())).then(invoke -> {
 
+            String name = invoke.getArgumentAt(0, String.class);
+            String surname = invoke.getArgumentAt(1, String.class);
+            
+            if (name == null || surname == null) throw new IllegalArgumentException("Cannot search with null name");
+            for(Driver d : drivers.values()){
+                if(d.getName().equals(name) && d.getSurname().equals(surname) && !d.isMainDriver()){
+                    return d;
+                }
+            }
+            return null;
+        });
+        
         when(driverDao.listDrivers()).then(invoke ->
                 Collections.unmodifiableList(new ArrayList<>(drivers.values())));
         
@@ -162,11 +189,27 @@ public class DriverServiceTest extends AbstractTransactionalTestNGSpringContextT
     public void findDriverByNullIdTest(){
         driverService.findDriverById(null);
     }
-
+    
+    @Test
+    public void findDriverByNameTest(){
+        assertThat(driverService.findDriverByName(driver.getName(), driver.getSurname())).isEqualTo(driver);
+        assertThat(driverService.findDriverByName("lola", "neni")).isNull();
+    }
     
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void findDriverByNullNameTest(){
         driverService.findDriverByName(null, null);
+    }
+    
+    @Test
+    public void findTestDriverTest(){
+        assertThat(driverService.findTestDriver(testDriver.getName(), testDriver.getSurname())).isEqualTo(testDriver);
+        assertThat(driverService.findTestDriver("lola", "neni")).isNull();
+    }
+    
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void findNullTestDriverTest(){
+        driverService.findTestDriver(null, null);
     }
 
     @Test
