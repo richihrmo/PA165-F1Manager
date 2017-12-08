@@ -254,6 +254,12 @@ public class DriverServiceTest extends AbstractTransactionalTestNGSpringContextT
     public void updateNullDriverTest(){
         driverService.updateDriver(null);
     }
+    
+    @Test(expectedExceptions = DataAccessException.class)
+    public void updateNullAtributeDriverTest(){
+        driver.setName(null);
+        driverService.updateDriver(driver);
+    }
 
     @Test
     public void deleteDriverTest(){
