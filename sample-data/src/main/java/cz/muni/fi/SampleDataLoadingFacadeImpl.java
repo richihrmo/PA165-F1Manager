@@ -35,7 +35,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
     private Map<String, cz.muni.fi.entities.Component> components = new HashMap<>();
     private Map<String, Car> cars = new HashMap<>();
     private Map<String, Driver> drivers = new HashMap<>();
-
+    
     @Override
     public void loadData() throws IOException {
         loadComponents();
