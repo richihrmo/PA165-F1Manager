@@ -1,6 +1,7 @@
 package cz.muni.fi.service;
 
 import cz.muni.fi.dao.TeamDao;
+import cz.muni.fi.dto.DriverDTO;
 import cz.muni.fi.entities.Driver;
 import cz.muni.fi.entities.Team;
 import cz.muni.fi.service.exception.ServiceDataAccessException;
@@ -41,7 +42,16 @@ public class TeamServiceImpl implements TeamService {
 
         try {
             for (Team team : teamDao.listTeams()) {
-                drivers.addAll(Arrays.asList(team.getCarOne().getDriver(), team.getCarTwo().getDriver()));
+                Driver carOneDriver = team.getCarOne().getDriver();
+                Driver carTwoDriver = team.getCarTwo().getDriver();
+
+                if (!drivers.contains(carOneDriver)) {
+                    drivers.add(carOneDriver);
+                }
+
+                if (!drivers.contains(carTwoDriver)) {
+                    drivers.add(carTwoDriver);
+                }
             }
         } catch (Throwable e) {
             throw new ServiceDataAccessException("Cannot find all team drivers", e);

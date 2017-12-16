@@ -1,6 +1,7 @@
 package cz.muni.fi.facade;
 
 import cz.muni.fi.dto.DriverDTO;
+import cz.muni.fi.dto.TeamEditDTO;
 import cz.muni.fi.dto.TeamDTO;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public interface TeamFacade {
      * @param team team to be created
      * @return created Team
      */
-    TeamDTO createTeam(TeamDTO team);
+    TeamDTO createTeam(TeamEditDTO team);
 
     /**
      * Update team
@@ -38,7 +39,7 @@ public interface TeamFacade {
      * @param team team to be updated
      * @return updated Team
      */
-    TeamDTO updateTeam(TeamDTO team);
+    TeamDTO updateTeam(TeamEditDTO team);
 
     /**
      * Delete team

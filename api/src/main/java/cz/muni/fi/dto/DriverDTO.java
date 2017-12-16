@@ -62,7 +62,4 @@ public class DriverDTO {
         }
         return true;
     }
-    
-    
-    
 }
