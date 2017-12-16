@@ -29,14 +29,28 @@ public class DriverController {
 
     @Inject
     private DriverFacade driverFacade;
-
+    
+    /**
+     * Get list of driverDTO 
+     * curl -i -X GET http://localhost:8080/pa165/rest/driver
+     * 
+     * @return List of DriverDTO
+     */
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final List<DriverDTO> getDrivers() throws JsonProcessingException {
+    public final List<DriverDTO> getDrivers() {
         
         logger.debug("rest getDrivers()");
         return driverFacade.getAllDrivers();
     }
-
+    
+    /**
+     * Get specific driver by id.
+     * curl -i -X GET http://localhost:8080/pa165/rest/driver/{id}
+     * 
+     * @param id identifier for driver
+     * @return driverDTO
+     * @throws ResourceNotFoundException if resource is not found
+     */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final DriverDTO getDriver(@PathVariable("id") long id) throws Exception {
 
@@ -49,6 +63,13 @@ public class DriverController {
         }
     }
     
+    /**
+     * Delete driver 
+     * curl -i -X DELETE http://localhost:8080/pa165/rest/driver/delete/{id}
+     * 
+     * @param id identifier for driver
+     * @throws ResourceNotFoundException if driver to delete is not found
+     */
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public final void deleteDriver(@PathVariable("id") long id) throws Exception {
         logger.debug("rest deleteDriver({})", id);
@@ -60,6 +81,16 @@ public class DriverController {
         }
     }
     
+    /**
+     * Create driver. 
+     * curl -X POST -i -H "Content-Type: application/json" --data 
+     * '{"name":"test","surname":"test","nationality":"uk","specialSkill":"POWER_SLIDING"}' 
+     * http://localhost:8080/pa165/rest/driver/create
+     * 
+     * @param driver to create
+     * @return the created DriverDTO
+     * @throws ResourceAlreadyExistingException if driver already exist
+     */
     @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public final DriverDTO createProduct(@RequestBody DriverCreateDTO driver) throws Exception {
@@ -74,8 +105,14 @@ public class DriverController {
         }
     }
     
+    /**
+     * Get list of test drivers. 
+     * curl -i -X GET http://localhost:8080/pa165/rest/driver/show-testDrivers
+     * 
+     * @return list of test DriverDTO
+     */
     @RequestMapping(value = "/show-testDrivers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final List<DriverDTO> getTestDrivers() throws JsonProcessingException {
+    public final List<DriverDTO> getTestDrivers(){
         
         logger.debug("rest getTestDrivers()");
         return driverFacade.getAllTestDrivers();
