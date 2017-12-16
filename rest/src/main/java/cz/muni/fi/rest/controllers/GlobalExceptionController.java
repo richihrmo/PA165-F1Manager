@@ -2,6 +2,7 @@ package cz.muni.fi.rest.controllers;
 
 import cz.muni.fi.rest.ApiError;
 import cz.muni.fi.rest.exceptions.ResourceAlreadyExistingException;
+import cz.muni.fi.rest.exceptions.ResourceCouldNotBeDeleted;
 import cz.muni.fi.rest.exceptions.ResourceNotFoundException;
 import java.util.Arrays;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ public class GlobalExceptionController {
     @ResponseBody
     ApiError handleException(ResourceAlreadyExistingException ex) {
         ApiError apiError = new ApiError();
-        apiError.setErrors(Arrays.asList("the requested resource already exists"));
+        apiError.setErrors(Arrays.asList("The requested resource already exists."));
         return apiError;
     }
     
@@ -30,7 +31,16 @@ public class GlobalExceptionController {
     @ResponseBody
     ApiError handleException(ResourceNotFoundException ex) {
         ApiError apiError = new ApiError();
-        apiError.setErrors(Arrays.asList("the requested resource not found"));
+        apiError.setErrors(Arrays.asList("The requested resource not found."));
+        return apiError;
+    }
+    
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
+    @ResponseBody
+    ApiError handleException(ResourceCouldNotBeDeleted ex) {
+        ApiError apiError = new ApiError();
+        apiError.setErrors(Arrays.asList("The resource could not be deleted."));
         return apiError;
     }
 }

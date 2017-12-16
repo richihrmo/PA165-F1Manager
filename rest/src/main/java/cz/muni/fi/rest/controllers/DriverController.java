@@ -1,12 +1,13 @@
 package cz.muni.fi.rest.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import cz.muni.fi.dto.DriverCreateDTO;
 import cz.muni.fi.dto.DriverDTO;
 import cz.muni.fi.facade.DriverFacade;
 import cz.muni.fi.rest.ApiUris;
 import cz.muni.fi.rest.exceptions.ResourceAlreadyExistingException;
+import cz.muni.fi.rest.exceptions.ResourceCouldNotBeDeleted;
 import cz.muni.fi.rest.exceptions.ResourceNotFoundException;
+import java.sql.SQLException;
 import java.util.List;
 import javax.inject.Inject;
 import org.slf4j.Logger;
@@ -54,7 +55,7 @@ public class DriverController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final DriverDTO getDriver(@PathVariable("id") long id) throws Exception {
 
-        logger.debug("rest getDriver({})", id);driverFacade.getDriverByID(id);
+        logger.debug("rest getDriver({})", id);
         try{
             DriverDTO driverDTO = driverFacade.getDriverByID(id);
             return driverDTO;
@@ -75,9 +76,12 @@ public class DriverController {
         logger.debug("rest deleteDriver({})", id);
         try{
             DriverDTO driverDTO = driverFacade.getDriverByID(id);
+            if(driverDTO == null){
+                throw new ResourceNotFoundException();
+            }
             driverFacade.deleteDriver(driverDTO);
         } catch(Exception ex){
-            throw new ResourceNotFoundException();
+            throw new ResourceCouldNotBeDeleted();
         }
     }
     
