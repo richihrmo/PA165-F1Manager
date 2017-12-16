@@ -21,7 +21,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @EnableWebMvc
 @Configuration
 @Import({TeamFormula1SampleDataConfiguration.class})
-@ComponentScan(basePackages = "cz.muni.fi")
+@ComponentScan(basePackages = "cz.muni.fi.controllers")
 public class MySpringMvcConfig extends WebMvcConfigurerAdapter {
 
     //private final static Logger log = LoggerFactory.getLogger(MySpringMvcConfig.class);

@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-
 @Component
 @Transactional
 public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
@@ -35,7 +34,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
     private Map<String, cz.muni.fi.entities.Component> components = new HashMap<>();
     private Map<String, Car> cars = new HashMap<>();
     private Map<String, Driver> drivers = new HashMap<>();
-
+    
     @Override
     public void loadData() throws IOException {
         loadComponents();
