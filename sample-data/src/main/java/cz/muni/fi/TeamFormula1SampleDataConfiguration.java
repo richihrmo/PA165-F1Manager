@@ -24,8 +24,8 @@ public class TeamFormula1SampleDataConfiguration {
 
     @PostConstruct
     public void dataLoading() throws IOException {
-        //log.debug("dataLoading()");
-        //sampleDataLoadingFacade.loadData();
+        log.debug("dataLoading()");
+        sampleDataLoadingFacade.loadData();
     }
 
 }
