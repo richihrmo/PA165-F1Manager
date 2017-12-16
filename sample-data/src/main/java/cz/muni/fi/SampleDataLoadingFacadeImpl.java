@@ -1,6 +1,5 @@
 package cz.muni.fi;
 
-
 import cz.muni.fi.entities.Car;
 import cz.muni.fi.entities.Driver;
 import cz.muni.fi.entities.Team;
