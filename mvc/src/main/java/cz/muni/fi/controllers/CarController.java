@@ -76,7 +76,7 @@ public class CarController {
             return "cars/new";
         }
         carFacade.createCar(carDTO);
-        redirectAttributes.addFlashAttribute("alert_success", "Car " + form.toString() + " was created.");
+        redirectAttributes.addFlashAttribute("alert_success", "Car No." + carDTO.getId() + " was created.");
         return "redirect:" + uriBuilder.path("/cars").build().toUriString();
     }
 
@@ -112,6 +112,7 @@ public class CarController {
                 componentFacade.findComponentByID(form.getSuspensionId()),
                 componentFacade.findComponentByID(form.getTransmissionId()),
                 componentFacade.findComponentByID(form.getBrakesId()));
+        carDTO.setId(form.getId());
         if (carDTO.getDriver() == null){
             model.addAttribute("alert_danger", "Driver is null");
             model.addAttribute("components", componentFacade.listAllComponents());
@@ -128,9 +129,9 @@ public class CarController {
             model.addAttribute("drivers", driverFacade.getAllDrivers());
             return "cars/edit";
         }
-        carFacade.createCar(carDTO);
-        redirectAttributes.addFlashAttribute("alert_success", "Car " + carDTO.getId() + " was updated.");
-        return "redirect:" + uriBuilder.path("/cars/list").build().toUriString();
+        carFacade.updateCar(carDTO);
+        redirectAttributes.addFlashAttribute("alert_success", "Car No." + carDTO.getId() + " was updated.");
+        return "redirect:" + uriBuilder.path("/cars").build().toUriString();
 
     }
 
@@ -138,9 +139,14 @@ public class CarController {
     public String deleteCar(
             @PathVariable long id, Model model, UriComponentsBuilder builder, RedirectAttributes redirectAttributes){
         CarDTO carDTO = carFacade.findCarById(id);
-        carFacade.deleteCar(carDTO);
-        redirectAttributes.addFlashAttribute("alert_success", "Car " + carDTO.toString() + " was deleted.");
-        return "redirect:" + builder.path("cars/list").build().toUriString();
+        try {
+            carFacade.deleteCar(carDTO);
+        } catch (Exception e){
+            redirectAttributes.addFlashAttribute("alert_danger", "Car No." + carDTO.getId() + " cannot be deleted");
+            return "redirect:" + builder.path("/cars").build().toUriString();
+        }
+        redirectAttributes.addFlashAttribute("alert_success", "Car No." + carDTO.getId() + " was deleted.");
+        return "redirect:" + builder.path("/cars").build().toUriString();
     }
 
     @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)

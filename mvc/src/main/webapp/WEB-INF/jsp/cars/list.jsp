@@ -54,7 +54,7 @@
                                     <my:modal_template suffix="${car.id}" title="Delete team">
                                         <jsp:attribute name="body">
                                             <strong>
-                                                Are you sure you want to delete this team: <c:out value="${car.id}"/>
+                                                Are you sure you want to delete this car: <c:out value="${car.id}"/>
                                             </strong>
                                         </jsp:attribute>
                                         <jsp:attribute name="footer">
@@ -77,7 +77,7 @@
                 </table>
                 <c:if test="${empty cars}">
                     <div class="col-md-12">
-                        <h4>No teams are available right now.</h4>
+                        <h4>No cars are available right now.</h4>
                     </div>
                 </c:if>
             </div>
