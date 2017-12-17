@@ -93,7 +93,7 @@ public class DriverController {
             driverFacade.updateDriver(driverDTO);
             redirectAttributes.addFlashAttribute("alert_success", "Driver details were saved.");
         }
-        return "redirect:" + uriBuilder.path("/driver/").build().toUriString();
+        return "redirect:" + "/driver/";
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
@@ -107,9 +107,9 @@ public class DriverController {
             driverFacade.deleteDriver(driverDTO);
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("alert_danger", "Driver " + driverDTO.getName() + " " + driverDTO.getSurname() + " cannot be deleted.");
-            return "redirect:" + uriBuilder.path("/driver/").build().toUriString();
+            return "redirect:" + "/driver/";
         }
         redirectAttributes.addFlashAttribute("alert_success", "Driver " + driverDTO.getName() + " " + driverDTO.getSurname() + " deleted.");
-        return "redirect:" + uriBuilder.path("/driver/").build().toUriString();
+        return "redirect:" + "/driver/";
     }
 }
