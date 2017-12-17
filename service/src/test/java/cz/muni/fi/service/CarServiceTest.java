@@ -1,6 +1,7 @@
 package cz.muni.fi.service;
 
 import cz.muni.fi.dao.CarDao;
+import cz.muni.fi.dao.ComponentDao;
 import cz.muni.fi.entities.Car;
 import cz.muni.fi.entities.Component;
 import cz.muni.fi.entities.Driver;
@@ -19,10 +20,7 @@ import org.testng.annotations.Test;
 
 import org.mockito.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Matchers.any;
@@ -40,6 +38,9 @@ public class CarServiceTest extends AbstractTransactionalTestNGSpringContextTest
 
     @Mock
     private CarDao carDao;
+
+    @Mock
+    private ComponentDao componentDao;
 
     @Autowired
     @InjectMocks
@@ -121,6 +122,14 @@ public class CarServiceTest extends AbstractTransactionalTestNGSpringContextTest
             cars.replace(mockedCar.getId(), mockedCar);
             return mockedCar;
         });
+
+        when(componentDao.updateComponent(any(Component.class))).then(invoke -> {
+            Component mockedComponent = invoke.getArgumentAt(0, Component.class);
+            if (mockedComponent.getName() == null) throw new IllegalArgumentException("Component name cannot be null");
+            if (mockedComponent.getComponentType() == null) throw new IllegalArgumentException("Component type cannot be null");
+
+            return mockedComponent;
+        });
     }
 
     @BeforeMethod
@@ -170,7 +179,12 @@ public class CarServiceTest extends AbstractTransactionalTestNGSpringContextTest
     @Test
     public void createCarTest(){
         Car new_car = new Car(ricciardo, engineV10, aero, suspension, transmission, brake);
-        carService.createCar(new_car);
+        new_car = carService.createCar(new_car);
+
+        for (Component component : getListOfCarComponents(new_car)) {
+            assertThat(component.isAvailability()).isFalse();
+        }
+
         assertThat(cars.values()).hasSize(1).contains(new_car);
     }
 
@@ -230,6 +244,11 @@ public class CarServiceTest extends AbstractTransactionalTestNGSpringContextTest
         carService.createCar(ferrari);
         assertThat(cars.values()).hasSize(1).contains(ferrari);
         carService.deleteCar(ferrari);
+
+        for (Component component : getListOfCarComponents(ferrari)) {
+            assertThat(component.isAvailability()).isTrue();
+        }
+
         assertThat(cars.values()).hasSize(0);
         assertThat(carService.findCarById(ferrari.getId())).isNull();
     }
@@ -237,6 +256,19 @@ public class CarServiceTest extends AbstractTransactionalTestNGSpringContextTest
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void deleteNullCar(){
         carService.deleteCar(marussia);
+    }
+
+    @Test
+    public void updateCarTest() {
+        carService.createCar(redbullF1);
+        redbullF1.setBrakes(new Component("udpatedBrakes", true, ComponentType.BRAKES));
+        carService.updateCar(redbullF1);
+
+        for (Component component : getListOfCarComponents(redbullF1)) {
+            assertThat(component.isAvailability()).isFalse();
+        }
+
+        assertThat(carDao.findCarById(redbullF1.getId())).isEqualTo(redbullF1);
     }
 
     @Test(expectedExceptions = DataAccessException.class)
@@ -289,5 +321,15 @@ public class CarServiceTest extends AbstractTransactionalTestNGSpringContextTest
 
         assertThat(carService.listCarsByComponentName("V12")).containsExactly(ferrari);
         assertThat(carService.listCarsByComponentName("suspension")).containsExactlyInAnyOrder(redbullF1, ferrari, jordan);
+    }
+
+    private List<Component> getListOfCarComponents(Car car) {
+        return Arrays.asList(
+                car.getEngine(),
+                car.getBrakes(),
+                car.getAerodynamics(),
+                car.getSuspension(),
+                car.getTransmission()
+        );
     }
 }
