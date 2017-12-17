@@ -1,13 +1,16 @@
 package cz.muni.fi.service;
 
 import cz.muni.fi.dao.CarDao;
+import cz.muni.fi.dao.ComponentDao;
 import cz.muni.fi.entities.Car;
+import cz.muni.fi.entities.Component;
 import cz.muni.fi.entities.Driver;
 import cz.muni.fi.service.exception.ServiceDataAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +24,9 @@ public class CarServiceImpl implements CarService {
 
     @Autowired
     private CarDao carDao;
+
+    @Autowired
+    private ComponentDao componentDao;
 
     @Override
     public Car findCarById(Long id) {
@@ -55,7 +61,14 @@ public class CarServiceImpl implements CarService {
     public Car createCar(Car car) {
         if (car == null) throw new IllegalArgumentException("car create argument is null");
         try {
-            return carDao.addCar(car);
+            Car newCar = carDao.addCar(car);
+
+            for (Component component : getListOfCarComponents(car)) {
+                component.setAvailability(false);
+                componentDao.updateComponent(component);
+            }
+
+            return newCar;
         } catch (Throwable throwable) {
             throw new ServiceDataAccessException("could not create car", throwable);
         }
@@ -65,6 +78,18 @@ public class CarServiceImpl implements CarService {
     public Car updateCar(Car car) {
         if (car == null) throw new IllegalArgumentException("car update argument is null");
         try {
+            Car oldCar = carDao.findCarById(car.getId());
+
+            for (Component component : getListOfCarComponents(oldCar)) {
+                component.setAvailability(true);
+                componentDao.updateComponent(component);
+            }
+
+            for (Component component : getListOfCarComponents(car)) {
+                component.setAvailability(false);
+                componentDao.updateComponent(component);
+            }
+
             return carDao.updateCar(car);
         } catch (Throwable throwable) {
             throw new ServiceDataAccessException("could not update car", throwable);
@@ -75,7 +100,15 @@ public class CarServiceImpl implements CarService {
     public boolean deleteCar(Car car) {
         if (car == null) throw new IllegalArgumentException("car delete argument is null");
         try {
-            return carDao.deleteCar(car);
+            boolean deleted = carDao.deleteCar(car);
+
+            for (Component component : getListOfCarComponents(car)) {
+                component.setAvailability(true);
+                componentDao.updateComponent(component);
+            }
+
+            return deleted;
+
         } catch (Throwable throwable) {
             throw new ServiceDataAccessException("could not delete car", throwable);
         }
@@ -91,5 +124,15 @@ public class CarServiceImpl implements CarService {
         result.addAll(cars.stream().filter(p -> p.getTransmission().getName().equals(componentName)).collect(Collectors.toList()));
         result.addAll(cars.stream().filter(p -> p.getSuspension().getName().equals(componentName)).collect(Collectors.toList()));
         return result;
+    }
+
+    private List<Component> getListOfCarComponents(Car car) {
+        return Arrays.asList(
+                car.getEngine(),
+                car.getBrakes(),
+                car.getAerodynamics(),
+                car.getSuspension(),
+                car.getTransmission()
+        );
     }
 }
