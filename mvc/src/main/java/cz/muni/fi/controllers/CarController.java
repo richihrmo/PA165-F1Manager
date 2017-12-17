@@ -92,7 +92,11 @@ public class CarController {
                 carDTO.getTransmission().getId(),
                 carDTO.getBrakes().getId());
         model.addAttribute("car", carCreateDTO);
-        model.addAttribute("components", componentFacade.listAllComponents());
+        model.addAttribute("engines", componentFacade.listAllAvailableComponentsWithType(ComponentType.ENGINE));
+        model.addAttribute("brakes", componentFacade.listAllAvailableComponentsWithType(ComponentType.BRAKES));
+        model.addAttribute("aerodynamics", componentFacade.listAllAvailableComponentsWithType(ComponentType.AERODYNAMICS));
+        model.addAttribute("suspension", componentFacade.listAllAvailableComponentsWithType(ComponentType.SUSPENSION));
+        model.addAttribute("transmission", componentFacade.listAllAvailableComponentsWithType(ComponentType.TRANSMISSION));
         model.addAttribute("drivers", driverFacade.getAllDrivers());
         return "cars/edit";
     }

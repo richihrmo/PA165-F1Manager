@@ -17,84 +17,84 @@
                 <div class="form-group col-md-12 text-left">
                     <form:label path="driver" cssClass="col-md-12">Driver</form:label>
                     <div class="col-md-8">
-                        <form:select path="driver" cssClass="form-control">
+                        <form:select path="driverId" cssClass="form-control">
                             <c:forEach items="${drivers}" var="d">
                                 <form:option value="${d.id}">
                                     Driver: ${d.name} ${d.surname}.
                                 </form:option>
                             </c:forEach>
                         </form:select>
-                        <form:errors path="driver" cssClass="help-block"/>
+                        <form:errors path="driverId" cssClass="help-block"/>
                     </div>
                 </div>
 
                 <div class="form-group col-md-12 text-left">
                     <form:label path="engine" cssClass="col-md-12">Engine</form:label>
                     <div class="col-md-8">
-                        <form:select path="engine" cssClass="form-control">
-                            <c:forEach items="${components}" var="c">
+                        <form:select path="engineId" cssClass="form-control">
+                            <c:forEach items="${engines}" var="c">
                                 <form:option value="${c.id}">
                                     Component: ${c.name}.
                                 </form:option>
                             </c:forEach>
                         </form:select>
-                        <form:errors path="engine" cssClass="help-block"/>
+                        <form:errors path="engineId" cssClass="help-block"/>
                     </div>
                 </div>
 
                 <div class="form-group col-md-12 text-left">
                     <form:label path="brakes" cssClass="col-md-12">Brakes</form:label>
                     <div class="col-md-8">
-                        <form:select path="brakes" cssClass="form-control">
-                            <c:forEach items="${components}" var="c">
+                        <form:select path="brakesId" cssClass="form-control">
+                            <c:forEach items="${brakes}" var="c">
                                 <form:option value="${c.id}">
                                     Component: ${c.name}.
                                 </form:option>
                             </c:forEach>
                         </form:select>
-                        <form:errors path="brakes" cssClass="help-block"/>
+                        <form:errors path="brakesId" cssClass="help-block"/>
                     </div>
                 </div>
 
                 <div class="form-group col-md-12 text-left">
                     <form:label path="suspension" cssClass="col-md-12">Suspension</form:label>
                     <div class="col-md-8">
-                        <form:select path="suspension" cssClass="form-control">
-                            <c:forEach items="${components}" var="c">
+                        <form:select path="suspensionId" cssClass="form-control">
+                            <c:forEach items="${suspension}" var="c">
                                 <form:option value="${c.id}">
                                     Component: ${c.name}.
                                 </form:option>
                             </c:forEach>
                         </form:select>
-                        <form:errors path="suspension" cssClass="help-block"/>
+                        <form:errors path="suspensionId" cssClass="help-block"/>
                     </div>
                 </div>
 
                 <div class="form-group col-md-12 text-left">
                     <form:label path="aerodynamics" cssClass="col-md-12">Aerodynamics</form:label>
                     <div class="col-md-8">
-                        <form:select path="aerodynamics" cssClass="form-control">
-                            <c:forEach items="${components}" var="c">
+                        <form:select path="aerodynamicsId" cssClass="form-control">
+                            <c:forEach items="${aerodynamics}" var="c">
                                 <form:option value="${c.id}">
                                     Component: ${c.name}.
                                 </form:option>
                             </c:forEach>
                         </form:select>
-                        <form:errors path="aerodynamics" cssClass="help-block"/>
+                        <form:errors path="aerodynamicsId" cssClass="help-block"/>
                     </div>
                 </div>
 
                 <div class="form-group col-md-12 text-left">
                     <form:label path="transmission" cssClass="col-md-12">Transmission</form:label>
                     <div class="col-md-8">
-                        <form:select path="transmission" cssClass="form-control">
-                            <c:forEach items="${components}" var="c">
+                        <form:select path="transmissionId" cssClass="form-control">
+                            <c:forEach items="${transmission}" var="c">
                                 <form:option value="${c.id}">
                                     Component: ${c.name}.
                                 </form:option>
                             </c:forEach>
                         </form:select>
-                        <form:errors path="transmission" cssClass="help-block"/>
+                        <form:errors path="transmissionId" cssClass="help-block"/>
                     </div>
                 </div>
             </div>
