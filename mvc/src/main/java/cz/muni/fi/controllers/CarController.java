@@ -41,10 +41,10 @@ public class CarController {
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.POST)
-    public String newCarCreate(@ModelAttribute("car") CarDTO form,
+    public String newCarCreate(@Valid @ModelAttribute("car") CarDTO form,
+                               RedirectAttributes redirectAttributes,
                                Model model,
-                               UriComponentsBuilder uriBuilder,
-                               RedirectAttributes redirectAttributes){
+                               UriComponentsBuilder uriBuilder){
         if (form.getDriver() == null){
             model.addAttribute("alert_danger", "Driver is null");
             model.addAttribute("components", componentFacade.listAllComponents());
@@ -78,8 +78,7 @@ public class CarController {
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
     public String updateCarCreate(@Valid @ModelAttribute("car") CarDTO form,
                                RedirectAttributes redirectAttributes,
-                               Model model,
-                               UriComponentsBuilder uriBuilder){
+                               UriComponentsBuilder uriBuilder, Model model){
         if (form.getDriver() == null){
             model.addAttribute("alert_danger", "Driver is null");
             model.addAttribute("components", componentFacade.listAllComponents());

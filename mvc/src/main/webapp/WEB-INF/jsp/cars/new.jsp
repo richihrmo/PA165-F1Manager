@@ -18,6 +18,8 @@
 
         <hr>
 
+        <input name="action" />
+
         <form:form method="post"
                    action="${pageContext.request.contextPath}/cars/new"
                    modelAttribute="car"

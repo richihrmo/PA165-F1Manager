@@ -63,6 +63,8 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public Team createTeam(Team team) {
         if (team == null) throw new IllegalArgumentException("Team argument cannot be null!");
+        if (team.getCarOne() == null || team.getCarTwo() == null)
+            throw new IllegalArgumentException("Team car cannot be null!");
 
         team.getCarOne().getDriver().setAsMainDriver();
         team.getCarTwo().getDriver().setAsMainDriver();
@@ -77,6 +79,8 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public Team updateTeam(Team team) {
         if (team == null) throw new IllegalArgumentException("Team argument cannot be null!");
+        if (team.getCarOne() == null || team.getCarTwo() == null)
+            throw new IllegalArgumentException("Team car cannot be null!");
 
         Team old_team = teamDao.findTeamById(team.getId());
         old_team.getCarOne().getDriver().setAsTestDriver();

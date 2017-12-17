@@ -133,7 +133,7 @@ public class TeamServiceTest extends AbstractTransactionalTestNGSpringContextTes
         teamService.createTeam(blueTeam);
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void createTeamWithNullAttributesTest() {
         redTeam.setName(null);
         redTeam.setCarOne(null);
@@ -159,7 +159,7 @@ public class TeamServiceTest extends AbstractTransactionalTestNGSpringContextTes
         teamService.updateTeam(null);
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void updateTeamWithNullAttributeTest() {
         blueTeam.setId(null);
         teamService.updateTeam(blueTeam);
