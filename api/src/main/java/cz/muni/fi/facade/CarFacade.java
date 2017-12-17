@@ -36,9 +36,9 @@ public interface CarFacade {
     /**
      * CRUD operation create
      *
-     * @param carCreateDTO
+     * @param carDTO
      */
-    void createCar(CarDTO carCreateDTO);
+    void createCar(CarDTO carDTO);
 
     /**
      * CRUD operation update
