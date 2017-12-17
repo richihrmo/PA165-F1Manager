@@ -20,7 +20,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackageClasses={CarDao.class})
+@EnableJpaRepositories
 @ComponentScan(basePackageClasses={CarDao.class}, basePackages = "cz.muni.fi")
 public class PersistenceApplicationContext {
 
