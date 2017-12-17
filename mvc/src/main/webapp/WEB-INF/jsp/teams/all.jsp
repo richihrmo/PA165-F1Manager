@@ -8,20 +8,11 @@
 
 <my:page_template title="Teams" icon_class="fa fa-users">
     <jsp:attribute name="body">
-
-        <button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/'">
-            Home
-        </button>
-
-        <button class="btn btn-warning" onclick="location.href='${pageContext.request.contextPath}/teams/create'">
-            Create new team
-        </button>
-
-        <button class="btn btn-success" onclick="location.href='${pageContext.request.contextPath}/teams/drivers'">
+        <div align="right">
+        <button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/teams/drivers'">
             Show all team drivers
         </button>
-
-        <hr>
+        </div>
 
         <c:set var="endpoint" value="teams"/>
 
@@ -45,16 +36,11 @@
                                 </td>
 
                                 <td class="text-center">
-                                    <my:a href="/${endpoint}/edit/${team.id}">
-                                        <i class="fa fa-pencil-square-o fa-2x"
-                                           aria-hidden="true"
-                                           style="cursor: pointer; color: black;">
-                                        </i>
-                                    </my:a>
+                                    <span class="glyphicon glyphicon-pencil" onclick="location.href='${pageContext.request.contextPath}/${endpoint}/edit/${team.id}'"></span>
                                 </td>
 
                                 <td class="text-center">
-                                    <i class="fa fa-trash fa-2x" aria-hidden="true" onclick="openModal(${team.id})" style="cursor: pointer;"></i>
+                                    <span class="glyphicon glyphicon-trash" onclick=" openModal(${team.id}) "></span>
                                     <my:modal_template suffix="${team.id}" title="Delete team">
                                         <jsp:attribute name="body">
                                             <strong>
@@ -86,6 +72,10 @@
                 </c:if>
             </div>
         </div>
+        
+        <button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/teams/create'">
+            Create new team
+        </button>
     </jsp:attribute>
 </my:page_template>
 

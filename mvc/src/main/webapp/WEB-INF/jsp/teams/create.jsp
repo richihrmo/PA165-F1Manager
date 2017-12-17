@@ -8,15 +8,10 @@
 <my:page_template title="Create new team" icon_class="fa fa-users">
 
     <jsp:attribute name="body">
-        <button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/'">
-            Home
-        </button>
 
-        <button class="btn btn-warning" onclick="location.href='${pageContext.request.contextPath}/teams/'">
-            All teams
+        <button class="btn btn" onclick="location.href='${pageContext.request.contextPath}/teams/'">
+            Return
         </button>
-
-        <hr>
 
         <form:form method="post"
                    action="${pageContext.request.contextPath}/teams/create"

@@ -97,7 +97,7 @@
     <hr>
     <!-- footer -->
     <footer class="footer text-center">
-        <p>&copy;&nbsp;<%=java.time.Year.now().toString()%>&nbsp;Masaryk University</p>
+        <p>All Rights Reserved. &copy;&nbsp;<%=java.time.Year.now().toString()%>&nbsp;Masaryk University</p>
     </footer>
 </div>
 

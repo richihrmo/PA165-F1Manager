@@ -60,8 +60,8 @@
                     <th class="text-center">Type</th>
                     <th class="text-center">Availability</th>
                     <%--<my:protected>--%>
-                        <th class="text-center">Delete</th>
                         <th class="text-center">Update</th>
+                        <th class="text-center">Delete</th>
                     <%--</my:protected>--%>
                 </tr>
             </thead>
@@ -91,6 +91,10 @@
 
                     <%--<my:protected>--%>
                     <td>
+                        <span class="glyphicon glyphicon-pencil" onclick="location.href='${pageContext.request.contextPath}/${end}/edit/${component.id}'"></span>
+                    </td>
+                    
+                    <td>
                         <span class="glyphicon glyphicon-trash" onclick=" openModal(${component.id}) "></span>
 
                         <my:modal_template suffix="${component.id}" title="Delete component">
@@ -109,9 +113,6 @@
                           </my:modal_template>
 
                     </td>
-                    <td>
-                        <span class="glyphicon glyphicon-pencil" onclick="location.href='${pageContext.request.contextPath}/${end}/edit/${component.id}'"></span>
-                    </td>
                   <%--</my:protected>--%>
 
 
@@ -122,8 +123,6 @@
 
       <%--<my:protected>--%>
               <button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/${end}/create'"> Add Component </button>
-      <%--</my:protected>--%>
-      <button class="btn btn-secondary" onclick="location.href='${pageContext.request.contextPath}/'"> Return </button>
 
     </jsp:attribute>
 </my:page_template>
