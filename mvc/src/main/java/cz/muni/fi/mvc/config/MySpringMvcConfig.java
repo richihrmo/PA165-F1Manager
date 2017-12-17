@@ -1,4 +1,4 @@
-package cz.muni.fi.config;
+package cz.muni.fi.mvc.config;
 
 import cz.muni.fi.TeamFormula1SampleDataConfiguration;
 import org.springframework.context.MessageSource;
@@ -21,7 +21,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @EnableWebMvc
 @Configuration
 @Import({TeamFormula1SampleDataConfiguration.class})
-@ComponentScan(basePackages = "cz.muni.fi.controllers")
+@ComponentScan(basePackages = "cz.muni.fi.mvc.controllers")
 public class MySpringMvcConfig extends WebMvcConfigurerAdapter {
 
     //private final static Logger log = LoggerFactory.getLogger(MySpringMvcConfig.class);

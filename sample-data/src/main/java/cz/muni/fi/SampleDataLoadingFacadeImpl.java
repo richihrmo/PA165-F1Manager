@@ -3,12 +3,14 @@ package cz.muni.fi;
 import cz.muni.fi.entities.Car;
 import cz.muni.fi.entities.Driver;
 import cz.muni.fi.entities.Team;
-import cz.muni.fi.persistanceEnums.DrivingSkill;
+import cz.muni.fi.entities.User;
 import cz.muni.fi.persistanceEnums.ComponentType;
+import cz.muni.fi.persistanceEnums.DrivingSkill;
 import cz.muni.fi.service.CarService;
 import cz.muni.fi.service.ComponentService;
 import cz.muni.fi.service.DriverService;
 import cz.muni.fi.service.TeamService;
+import cz.muni.fi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,9 +34,13 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
     @Autowired
     private TeamService teamService;
 
+    @Autowired
+    private UserService userService;
+
     private Map<String, cz.muni.fi.entities.Component> components = new HashMap<>();
     private Map<String, Car> cars = new HashMap<>();
     private Map<String, Driver> drivers = new HashMap<>();
+    private Map<String, User> users = new HashMap<>();
     
     @Override
     public void loadData(){
@@ -42,6 +48,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         loadDrivers();
         loadCars();
         loadTeams();
+        loadUsers();
     }
 
     private void component(String name, ComponentType type){
@@ -69,6 +76,15 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         newDriver.setSpecialSkill(skill);
         driverService.addDriver(newDriver);
         drivers.put(surname, newDriver);
+    }
+
+    private void user(String password, String name, String email, boolean admin) {
+        User user = new User();
+        user.setName(name);
+        user.setEmail(email);
+        user.setAdmin(admin);
+        userService.addUser(user, password);
+        users.put(name.toLowerCase(), user);
     }
 
     private void loadCars() {
@@ -119,5 +135,11 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         component("8-speed", ComponentType.TRANSMISSION);
         component("Electro-Magnetic", ComponentType.SUSPENSION);
         component("GroundEffect", ComponentType.AERODYNAMICS);
+    }
+
+    private void loadUsers() throws IOException
+    {
+        user("ultr4S1ln34dm1nsk3He5l0", "Jon Snow", "iKnow@nothing.com", true);
+        user("heslo", "Cersei Lanister",  "cersei@lanister.com",  false);
     }
 }
