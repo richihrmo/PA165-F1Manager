@@ -5,6 +5,10 @@ import cz.muni.fi.persistanceEnums.ComponentType;
 
 import java.util.List;
 
+/**
+ * @author Robert Tamas
+ */
+
 public interface ComponentService {
 
     /**
@@ -70,7 +74,7 @@ public interface ComponentService {
      * @throws IllegalArgumentException when component argument is null
      * @throws cz.muni.fi.service.exception.ServiceDataAccessException if there is problem with dao
      */
-    void createComponent(Component component);
+    Component createComponent(Component component);
 
     /**
      * Takes an object of type Component and updates an entry in a database
@@ -79,7 +83,7 @@ public interface ComponentService {
      * @throws IllegalArgumentException when component argument is null
      * @throws cz.muni.fi.service.exception.ServiceDataAccessException if there is problem with dao
      */
-    void updateComponent(Component component);
+    Component updateComponent(Component component);
 
     /**
      * Takes an object of type Component and deletes an entry from the database

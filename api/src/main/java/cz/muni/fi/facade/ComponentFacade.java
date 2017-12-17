@@ -59,14 +59,14 @@ public interface ComponentFacade {
      *
      * @param component non-null object to be created in a database
      */
-    void createComponent(ComponentDTO component);
+    ComponentDTO createComponent(ComponentDTO component);
 
     /**
      * Takes an object of type Component and updates an entry in a database
      *
      * @param component non-null object to be updated in a database
      */
-    void updateComponent(ComponentDTO component);
+    ComponentDTO updateComponent(ComponentDTO component);
 
     /**
      * Takes an object of type Component and deletes an entry from the database

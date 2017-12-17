@@ -52,19 +52,27 @@ public class ComponentFacadeImpl implements ComponentFacade {
 
     @Override
     public ComponentDTO findComponentByName(String name) {
-        return beanMappingService.mapTo(componentService.findComponentByName(name), ComponentDTO.class);
+        Component component = componentService.findComponentByName(name);
+        if (component == null) {
+            return null;
+        }
+        return beanMappingService.mapTo(component, ComponentDTO.class);
     }
 
     @Override
-    public void createComponent(ComponentDTO componentDTO) {
+    public ComponentDTO createComponent(ComponentDTO componentDTO) {
         Component component = beanMappingService.mapTo(componentDTO, Component.class);
         componentService.createComponent(component);
         componentDTO.setId(component.getId());
+        return componentDTO;
     }
 
     @Override
-    public void updateComponent(ComponentDTO component) {
-        componentService.updateComponent(beanMappingService.mapTo(component, Component.class));
+    public ComponentDTO updateComponent(ComponentDTO component) {
+        Component result;
+        result = componentService.updateComponent(beanMappingService.mapTo(component, Component.class));
+        result.setId(component.getId());
+        return beanMappingService.mapTo(result, ComponentDTO.class);
     }
 
     @Override
