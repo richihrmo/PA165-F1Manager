@@ -12,10 +12,10 @@ mvn tomcat7:run
 culr commands for testing:
 * list all drivers: `curl -i -X GET http://localhost:8080/pa165/rest/drivers`
 * get specific driver by id: `curl -i -X GET http://localhost:8080/pa165/rest/drivers/{id}`
-⋅⋅⋅ for example: `curl -i -X GET http://localhost:8080/pa165/rest/drivers/1`
+  * for example: `curl -i -X GET http://localhost:8080/pa165/rest/drivers/1`
 * create driver: `curl -X POST -i -H "Content-Type: application/json" --data '{"name":"test","surname":"test","nationality":"uk","specialSkill":"POWER_SLIDING"}' http://localhost:8080/pa165/rest/drivers/create`
 * delete driver: `curl -i -X DELETE http://localhost:8080/pa165/rest/drivers/delete/{id}`
-⋅⋅⋅ for example: `curl -i -X DELETE http://localhost:8080/pa165/rest/drivers/delete/3`
+  * for example: `curl -i -X DELETE http://localhost:8080/pa165/rest/drivers/delete/3`
 * list all test drivers: `curl -i -X GET http://localhost:8080/pa165/rest/drivers/show-testDrivers`
 
 
