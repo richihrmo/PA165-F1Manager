@@ -3,6 +3,7 @@ package cz.muni.fi;
 import cz.muni.fi.entities.Car;
 import cz.muni.fi.entities.Driver;
 import cz.muni.fi.entities.Team;
+import cz.muni.fi.persistanceEnums.DrivingSkill;
 import cz.muni.fi.persistanceEnums.ComponentType;
 import cz.muni.fi.service.CarService;
 import cz.muni.fi.service.ComponentService;
@@ -63,8 +64,9 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         cars.put(name, newCar);
     }
 
-    private void driver(String name, String surname, String nationality) {
+    private void driver(String name, String surname, String nationality, DrivingSkill skill) {
         Driver newDriver = new Driver(name, surname, nationality);
+        newDriver.setSpecialSkill(skill);
         driverService.addDriver(newDriver);
         drivers.put(surname, newDriver);
     }
@@ -96,8 +98,9 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
     }
 
     private void loadDrivers() {
-        driver("John", "Doe", "us");
-        driver("James", "Bond", "uk");
+        driver("John", "Doe", "us", DrivingSkill.DRIVING_ON_WET);
+        driver("James", "Bond", "uk", DrivingSkill.POWER_SLIDING);
+        driver("Michael", "Schumacher", "Germany", DrivingSkill.EXTREME_REFLEXES);
     }
 
     private void loadComponents() {

@@ -1,9 +1,12 @@
 package cz.muni.fi.controllers;
 
+import cz.muni.fi.dto.CarDTO;
 import cz.muni.fi.dto.DriverCreateDTO;
 import cz.muni.fi.dto.DriverDTO;
 import cz.muni.fi.enums.DrivingSkill;
+import cz.muni.fi.facade.CarFacade;
 import cz.muni.fi.facade.DriverFacade;
+import cz.muni.fi.facade.TeamFacade;
 import cz.muni.fi.filter.DrivingSkillFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +25,7 @@ import org.springframework.web.util.UriComponentsBuilder;
  * @author Lucie Kureckova, 445264
  */
 @Controller
-@RequestMapping("/driver")
+@RequestMapping("/drivers")
 public class DriverController {
     
     final static Logger log = LoggerFactory.getLogger(DriverController.class);
@@ -30,7 +33,13 @@ public class DriverController {
     @Autowired
     private DriverFacade driverFacade;
     
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @Autowired
+    private CarFacade carFacade;
+    
+    @Autowired
+    private TeamFacade teamFacade;
+    
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public String getAllDrivers(@Valid @ModelAttribute("filter")DrivingSkillFilter filterType, Model model){
         
         if(filterType.getSkill() == DrivingSkillFilter.MainDrivingSkillFilter.NONE || filterType.getSkill() == null){
@@ -48,15 +57,7 @@ public class DriverController {
         }
         model.addAttribute("drivingType", Arrays.asList(DrivingSkillFilter.MainDrivingSkillFilter.values()));
         model.addAttribute("filter", filterType);
-        return "driver/list";
-    }
-    
-    @RequestMapping(value = "/filter/{filtered}", method = RequestMethod.GET)
-    public String filterDrivers(@Valid @ModelAttribute("selected")String skill, Model model){
-        
-        model.addAttribute("Skills", Arrays.asList(DrivingSkill.values()));
-        model.addAttribute("selected", skill);
-        return "driver/list";
+        return "drivers/list";
     }
     
     @RequestMapping(value = "/new", method = RequestMethod.GET)
@@ -65,7 +66,7 @@ public class DriverController {
         DriverDTO driver = new DriverDTO();
         model.addAttribute("driver", driver);
         model.addAttribute("Skills", Arrays.asList(DrivingSkill.values()));
-        return "driver/edit";
+        return "drivers/edit";
     }
     
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
@@ -73,7 +74,16 @@ public class DriverController {
         log.debug("[DRIVER] edit ({})", id);
         model.addAttribute("driver", driverFacade.getDriverByID(id));
         model.addAttribute("Skills", Arrays.asList(DrivingSkill.values()));
-        return "driver/edit";
+        return "drivers/edit";
+    }
+    
+    @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
+    public String detailDriver(@PathVariable Long id, Model model) {
+        log.debug("[DRIVER] details about ({})", id);
+        DriverDTO d = driverFacade.getDriverByID(id);
+        model.addAttribute("driver", d);
+        model.addAttribute("car", carFacade.findCarByDriver(d));
+        return "drivers/show";
     }
     
     @RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -83,7 +93,7 @@ public class DriverController {
                              UriComponentsBuilder uriBuilder) {
         if(driverDTO.getName().isEmpty() || driverDTO.getSurname().isEmpty() || driverDTO.getNationality().isEmpty()){
             model.addAttribute("alert_danger", "Please fill all values!");
-            return "driver/edit";
+            return "drivers/edit";
         }
         if(driverDTO.getId() == null){
             DriverCreateDTO driver = new DriverCreateDTO(driverDTO.getName(), driverDTO.getSurname(), driverDTO.getNationality(), driverDTO.getSpecialSkill());
@@ -93,7 +103,7 @@ public class DriverController {
             driverFacade.updateDriver(driverDTO);
             redirectAttributes.addFlashAttribute("alert_success", "Driver details were saved.");
         }
-        return "redirect:" + "/driver/";
+        return "redirect:" + "/drivers";
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
@@ -106,10 +116,15 @@ public class DriverController {
         try {
             driverFacade.deleteDriver(driverDTO);
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("alert_danger", "Driver " + driverDTO.getName() + " " + driverDTO.getSurname() + " cannot be deleted.");
-            return "redirect:" + "/driver/";
+            String alert = "Driver " + driverDTO.getName() + " " + driverDTO.getSurname() + " cannot be deleted";
+            CarDTO c = carFacade.findCarByDriver(driverDTO);
+            if(c != null){
+                alert += ", because he is main driver in a car";
+            }
+            redirectAttributes.addFlashAttribute("alert_danger", alert);
+            return "redirect:" + "/drivers";
         }
         redirectAttributes.addFlashAttribute("alert_success", "Driver " + driverDTO.getName() + " " + driverDTO.getSurname() + " deleted.");
-        return "redirect:" + "/driver/";
+        return "redirect:" + "/drivers";
     }
 }

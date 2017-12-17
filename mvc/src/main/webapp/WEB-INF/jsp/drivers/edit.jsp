@@ -6,17 +6,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 
-<my:pagetemplate title="${driver.name == '' ? 'Add new driver' : 'Edit driver'}">
+<my:page_template title="${driver.name == '' ? 'Add new driver' : 'Edit driver'}">
 <jsp:attribute name="body">
   
-<form method="get" action="${pageContext.request.contextPath}/driver/">
+<form method="get" action="${pageContext.request.contextPath}/drivers">
     <button type="submit" class="btn">Return</button>
 </form>
     
 <div>   
     
     <form:form id="${driver.id}" method="post" modelAttribute="driver"
-               action="${pageContext.request.contextPath}/driver/save">
+               action="${pageContext.request.contextPath}/drivers/save">
     <form:hidden path="id"  style="display:none"/>
     
     <div class="form-group">
@@ -45,4 +45,4 @@
 </div>
     
 </jsp:attribute>
-</my:pagetemplate>
+</my:page_template>

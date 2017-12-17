@@ -40,11 +40,11 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="${pageContext.request.contextPath}/driver/">Driver</a></li>
-                <li><a href="${pageContext.request.contextPath}/component">Component</a></li>
+                <li><a href="${pageContext.request.contextPath}/drivers">Driver</a></li>
+                <li><a href="${pageContext.request.contextPath}/components">Component</a></li>
               
-                <li><a href="${pageContext.request.contextPath}/car">Car</a></li>
-                <li><a href="${pageContext.request.contextPath}/team">Team</a></li>
+                <li><a href="${pageContext.request.contextPath}/cars">Car</a></li>
+                <li><a href="${pageContext.request.contextPath}/teams">Team</a></li>
               
             </ul>
         </div>
