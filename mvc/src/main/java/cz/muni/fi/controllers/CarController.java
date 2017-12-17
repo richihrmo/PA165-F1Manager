@@ -63,7 +63,7 @@ public class CarController {
         }
         carFacade.createCar(form);
         redirectAttributes.addFlashAttribute("alert_success", "Car " + form.toString() + " was created.");
-        return "redirect:" + uriBuilder.path("/car").build().toUriString();
+        return "redirect:" + uriBuilder.path("/cars").build().toUriString();
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -98,7 +98,7 @@ public class CarController {
         }
         carFacade.createCar(form);
         redirectAttributes.addFlashAttribute("alert_success", "Car " + form.toString() + " was updated.");
-        return "redirect:" + uriBuilder.path("/car/list").build().toUriString();
+        return "redirect:" + uriBuilder.path("/cars/list").build().toUriString();
 
     }
 
