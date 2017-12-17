@@ -34,17 +34,17 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="${pageContext.request.contextPath}/"><f:message key="navigation.project"/> </a>
+            <a class="navbar-brand" href="${pageContext.request.contextPath}/">PA165 SpringMVC</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="${pageContext.request.contextPath}/driver/"><f:message key="navigation.driver"/></a></li>
-                <li><a href="${pageContext.request.contextPath}/component"><f:message key="navigation.component"/></a></li>
+                <li><a href="${pageContext.request.contextPath}/driver/">Driver</a></li>
+                <li><a href="${pageContext.request.contextPath}/component">Component</a></li>
               
-                <li><a href="${pageContext.request.contextPath}/car"><f:message key="navigation.car"/></a></li>
-                <li><a href="${pageContext.request.contextPath}/team"><f:message key="navigation.team"/></a></li>
+                <li><a href="${pageContext.request.contextPath}/car">Car</a></li>
+                <li><a href="${pageContext.request.contextPath}/team">Team</a></li>
               
             </ul>
         </div>

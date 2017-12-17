@@ -2,7 +2,12 @@ package cz.muni.fi.controllers;
 
 import cz.muni.fi.dto.DriverCreateDTO;
 import cz.muni.fi.dto.DriverDTO;
+import cz.muni.fi.enums.DrivingSkill;
 import cz.muni.fi.facade.DriverFacade;
+import cz.muni.fi.filter.DrivingSkillFilter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,75 +30,63 @@ public class DriverController {
     @Autowired
     private DriverFacade driverFacade;
     
-    /**
-     * Shows a list of drivers with the ability to add, delete or edit.
-     * 
-     * @param model data to display
-     * @return JSP page name
-     */
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String getAllDrivers(Model model){
-        log.info("Showing all drivers.");
-        model.addAttribute("drivers", driverFacade.getAllDrivers());
+    public String getAllDrivers(@Valid @ModelAttribute("filter")DrivingSkillFilter filterType, Model model){
+        
+        if(filterType.getSkill() == DrivingSkillFilter.MainDrivingSkillFilter.NONE || filterType.getSkill() == null){
+            log.debug("[DRIVER] show all");
+            model.addAttribute("drivers", driverFacade.getAllDrivers());
+        }else{
+            log.debug("[DRIVER] all filtered");
+            List<DriverDTO> filtered = new ArrayList<>();
+            for(DriverDTO d : driverFacade.getAllDrivers()){
+                if(d.getSpecialSkill() == DrivingSkill.parse(filterType.getSkill().getUrlAnnotation())){
+                    filtered.add(d);
+                }
+            }
+            model.addAttribute("drivers", filtered);
+        }
+        model.addAttribute("drivingType", Arrays.asList(DrivingSkillFilter.MainDrivingSkillFilter.values()));
+        model.addAttribute("filter", filterType);
         return "driver/list";
     }
     
-    /**
-     * Prepares an empty form for creating.
-     * 
-     * @param model data to display
-     * @return JSP page
-     */
+    @RequestMapping(value = "/filter/{filtered}", method = RequestMethod.GET)
+    public String filterDrivers(@Valid @ModelAttribute("selected")String skill, Model model){
+        
+        model.addAttribute("Skills", Arrays.asList(DrivingSkill.values()));
+        model.addAttribute("selected", skill);
+        return "driver/list";
+    }
+    
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String createNewDriver(Model model) {
-        log.info("Create new driver.");
+        log.debug("[DRIVER] create");
         DriverDTO driver = new DriverDTO();
         model.addAttribute("driver", driver);
+        model.addAttribute("Skills", Arrays.asList(DrivingSkill.values()));
         return "driver/edit";
     }
     
-    /**
-     * Prepares form for editing.
-     * 
-     * @param id of driver to edit
-     * @param model data to display
-     * @return JSP page
-     */
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editDriver(@PathVariable Long id, Model model) {
-        log.info("Edit driver.");
+        log.debug("[DRIVER] edit ({})", id);
         model.addAttribute("driver", driverFacade.getDriverByID(id));
+        model.addAttribute("Skills", Arrays.asList(DrivingSkill.values()));
         return "driver/edit";
     }
     
-    /**
-     * Create/update driver to database.
-     * 
-     * @param driverDTO to be created/edited
-     * @param model data to display
-     * @param redirectAttributes to show result of method
-     * @param uriBuilder uri
-     * @return JSP page
-     */
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String submitEdit(@Valid @ModelAttribute("driver") DriverDTO driverDTO,
                              Model model,
                              RedirectAttributes redirectAttributes,
                              UriComponentsBuilder uriBuilder) {
-
-        log.info("Saving DriverDTO: {}", driverDTO);
-        if(driverDTO.getName().equals("") || driverDTO.getSurname().equals("") || driverDTO.getNationality().equals("")){
-            StringBuilder builder = new StringBuilder("Please fill all values!");
-
-            model.addAttribute("alert_danger", builder.toString());
+        if(driverDTO.getName().isEmpty() || driverDTO.getSurname().isEmpty() || driverDTO.getNationality().isEmpty()){
+            model.addAttribute("alert_danger", "Please fill all values!");
             return "driver/edit";
         }
         if(driverDTO.getId() == null){
-            DriverCreateDTO driver = new DriverCreateDTO();
-            driver.setName(driverDTO.getName());
-            driver.setSurname(driverDTO.getSurname());
-            driver.setNationality(driverDTO.getNationality());
-            driver.setSpecialSkill(driverDTO.getSpecialSkill());
+            DriverCreateDTO driver = new DriverCreateDTO(driverDTO.getName(), driverDTO.getSurname(), driverDTO.getNationality(), driverDTO.getSpecialSkill());
             driverFacade.createDriver(driver);
             redirectAttributes.addFlashAttribute("alert_success", "Driver was created.");
         } else{
@@ -103,21 +96,12 @@ public class DriverController {
         return "redirect:" + uriBuilder.path("/driver/").build().toUriString();
     }
 
-    /**
-     * Delete driver.
-     * 
-     * @param id to delete
-     * @param model data to display
-     * @param redirectAttributes to show result of method
-     * @param uriBuilder uri
-     * @return JSP page
-     */
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     public String delete(@PathVariable long id,
                          Model model,
                          RedirectAttributes redirectAttributes,
                          UriComponentsBuilder uriBuilder) {
-        log.info("Deleting driver with id: {}", id);
+        log.debug("[DRIVER] delete ({})", id);
         DriverDTO driverDTO = driverFacade.getDriverByID(id);
         try {
             driverFacade.deleteDriver(driverDTO);

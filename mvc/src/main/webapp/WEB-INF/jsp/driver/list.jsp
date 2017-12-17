@@ -7,21 +7,23 @@
 
 <my:pagetemplate title="Drivers">
 <jsp:attribute name="body">
-
-    <form method="get" action="${pageContext.request.contextPath}/driver/new">
-        <button type="submit" class="btn btn-primary">
-            Add new driver
-        </button>
-    </form>
+    
+    <form:form method="get" action="${pageContext.request.contextPath}/driver/" modelAttribute="filter">
+           
+        <form:label path="skill">Filter by Main Skill of Driver:</form:label>
+        <form:select path="skill" items="${drivingType}" itemValue="name" itemLabel="urlAnnotation"/>
+         <button class="btn btn-primary" type="submit">Filter</button>
+         
+    </form:form>
 
     <table class="table">
         <thead>
         <tr>
-            <th><f:message key="driver.name"/></th>
-            <th><f:message key="driver.surname"/></th>
-            <th><f:message key="driver.nationality"/></th>
-            <th><f:message key="driver.mainDriver"/></th>
-            <th><f:message key="driver.mainSkill"/></th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Nationality</th>
+            <th> </th>
+            <th>Main Skill</th>
         </tr>
         </thead>
         <tbody>
@@ -46,6 +48,12 @@
         </c:forEach>
         </tbody>
     </table>
+        
+    <form method="get" action="${pageContext.request.contextPath}/driver/new">
+        <button type="submit" class="btn btn-primary">
+            Add new driver
+        </button>
+    </form>
         
 </jsp:attribute>
 </my:pagetemplate>

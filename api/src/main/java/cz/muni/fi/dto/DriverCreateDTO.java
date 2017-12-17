@@ -17,6 +17,15 @@ public class DriverCreateDTO {
     @Getter @Setter private String nationality;
     
     @Getter @Setter private DrivingSkill specialSkill;
+    
+    public DriverCreateDTO(String name, String surname, String nationality, DrivingSkill specialSkill){
+        this.name = name;
+        this.surname = surname;
+        this.nationality = nationality;
+        this.specialSkill = specialSkill;
+    }
+    
+    public DriverCreateDTO(){}
 
     @Override
     public int hashCode() {

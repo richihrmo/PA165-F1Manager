@@ -14,6 +14,7 @@
 </form>
     
 <div>   
+    
     <form:form id="${driver.id}" method="post" modelAttribute="driver"
                action="${pageContext.request.contextPath}/driver/save">
     <form:hidden path="id"  style="display:none"/>
@@ -35,14 +36,12 @@
     
     <div class="form-group">
         <label for="specialSkill">Main Skill</label>
-        <form:select path="specialSkill" cssClass="form-control" id="specialSkill">
-            <form:option value="DRIVING_ON_WET">Driving on wet</form:option>
-            <form:option value="POWER_SLIDING">Power Sliding</form:option>
-            <form:option value="EXTREME_REFLEXES">Extreme reflexes</form:option>
-        </form:select>
+        <form:select path="specialSkill" class="form-control" items="${Skills}" itemValue="name" itemLabel="urlAnnotation"/>
     </div>
+    
     <button type="submit" class="btn btn-primary">Submit</button>
     </form:form>
+    
 </div>
     
 </jsp:attribute>
