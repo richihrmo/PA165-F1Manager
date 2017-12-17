@@ -40,7 +40,7 @@ public class GlobalExceptionController {
     @ResponseBody
     ApiError handleException(ResourceCouldNotBeDeleted ex) {
         ApiError apiError = new ApiError();
-        apiError.setErrors(Arrays.asList("The resource could not be deleted."));
+        apiError.setErrors(Arrays.asList("The resource could not be deleted. Driver is a main driver in car."));
         return apiError;
     }
 }
