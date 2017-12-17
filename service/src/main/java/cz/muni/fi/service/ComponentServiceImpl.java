@@ -10,6 +10,10 @@ import javax.inject.Inject;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @author Robert Tamas
+ */
+
 @Service
 public class ComponentServiceImpl implements ComponentService {
 
@@ -75,20 +79,20 @@ public class ComponentServiceImpl implements ComponentService {
     }
 
     @Override
-    public void createComponent(Component component) {
+    public Component createComponent(Component component) {
         if (component == null) throw new IllegalArgumentException("Component cannot be null");
         try {
-            componentDao.addComponent(component);
+            return componentDao.addComponent(component);
         } catch (Throwable e) {
             throw new ServiceDataAccessException("Cannot create component :" + component.toString(), e);
         }
     }
 
     @Override
-    public void updateComponent(Component component) {
+    public Component updateComponent(Component component) {
         if (component == null) throw new IllegalArgumentException("Component cannot be null");
         try {
-            componentDao.updateComponent(component);
+            return componentDao.updateComponent(component);
         } catch (Throwable e) {
             throw new ServiceDataAccessException("Cannot update component :" + component.toString(), e);
         }
