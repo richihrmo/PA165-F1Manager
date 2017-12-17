@@ -19,7 +19,20 @@ public class CarCreateDTO {
     @Getter @Setter private Long transmissionId;
     @Getter @Setter private Long brakesId;
 
-//    @Override
+    public CarCreateDTO(){}
+
+    public CarCreateDTO(Long id, Long driverId, Long engineId, Long aerodynamicsId,
+                        Long suspensionId, Long transmissionId, Long brakesId) {
+        this.id = id;
+        this.driverId = driverId;
+        this.engineId = engineId;
+        this.aerodynamicsId = aerodynamicsId;
+        this.suspensionId = suspensionId;
+        this.transmissionId = transmissionId;
+        this.brakesId = brakesId;
+    }
+
+    //    @Override
 //    public boolean equals(Object o) {
 //        if (this == o) return true;
 //        if (o == null || !(o instanceof CarDTO)) return false;
