@@ -23,15 +23,6 @@ public class ComponentDTO {
     }
 
     @Override
-    public String toString() {
-        return "ComponentDTO{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", type=" + type +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || !(o instanceof ComponentDTO)) return false;

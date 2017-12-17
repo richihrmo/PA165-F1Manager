@@ -5,10 +5,10 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<my:pagetemplate>
+<my:page_template>
     <jsp:attribute name="body">
         <h1>
             Game on, bitch!
         </h1>
     </jsp:attribute>
-</my:pagetemplate>
+</my:page_template>

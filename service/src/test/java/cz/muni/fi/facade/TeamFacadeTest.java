@@ -7,6 +7,7 @@ import cz.muni.fi.dao.TeamDao;
 import cz.muni.fi.dto.CarDTO;
 import cz.muni.fi.dto.DriverDTO;
 import cz.muni.fi.dto.TeamDTO;
+import cz.muni.fi.dto.TeamEditDTO;
 import cz.muni.fi.entities.Car;
 import cz.muni.fi.entities.Component;
 import cz.muni.fi.entities.Driver;
@@ -100,9 +101,9 @@ public class TeamFacadeTest extends AbstractTransactionalTestNGSpringContextTest
 
     @Test
     public void createTeamTest() {
-        TeamDTO blueTeam = new TeamDTO("Blue team", beanMappingService.mapTo(carOne, CarDTO.class), beanMappingService.mapTo(carTwo, CarDTO.class));
-        blueTeam = teamFacade.createTeam(blueTeam);
-        assertThat(teamFacade.getTeamById(blueTeam.getId())).isEqualTo(blueTeam);
+        TeamEditDTO blueTeam = new TeamEditDTO("Blue team", carOne.getId(), carTwo.getId());
+        TeamDTO createdTeam = teamFacade.createTeam(blueTeam);
+        assertThat(teamFacade.getTeamById(createdTeam.getId())).isEqualTo(createdTeam);
     }
 
 
@@ -115,8 +116,16 @@ public class TeamFacadeTest extends AbstractTransactionalTestNGSpringContextTest
     @Test
     public void updateTeamTest() {
         redTeam.setName("Updated name");
-        teamFacade.updateTeam(redTeam);
-        assertThat(teamFacade.getTeamById(redTeam.getId())).isEqualTo(redTeam);
+
+        TeamEditDTO editRedTeam = new TeamEditDTO(
+                redTeam.getId(),
+                "Updated name",
+                redTeam.getCarOne().getId(),
+                redTeam.getCarTwo().getId()
+        );
+
+        teamFacade.updateTeam(editRedTeam);
+        assertThat(teamFacade.getTeamById(editRedTeam.getId())).isEqualTo(redTeam);
     }
 
     @Test
