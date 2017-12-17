@@ -58,6 +58,7 @@ public interface ComponentFacade {
      * Takes an object of type Component and creates an entry in a database
      *
      * @param component non-null object to be created in a database
+     * @return created component
      */
     ComponentDTO createComponent(ComponentDTO component);
 
@@ -65,6 +66,7 @@ public interface ComponentFacade {
      * Takes an object of type Component and updates an entry in a database
      *
      * @param component non-null object to be updated in a database
+     * @return created component
      */
     ComponentDTO updateComponent(ComponentDTO component);
 

@@ -1,9 +1,9 @@
 package cz.muni.fi.mvc.controllers;
 
 import cz.muni.fi.dto.ComponentDTO;
-import cz.muni.fi.filter.ComponentFilter;
 import cz.muni.fi.enums.ComponentType;
 import cz.muni.fi.facade.ComponentFacade;
+import cz.muni.fi.filter.ComponentFilter;
 import cz.muni.fi.mvc.Tools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +23,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Robert Tamas
@@ -54,7 +55,6 @@ public class ComponentController {
         //if (res != null) return res;
 
         if (componentFacade.findComponentByName(formBean.getName()) != null) {
-            componentFacade.findComponentByName(formBean.getName());
             redirectAttributes.addFlashAttribute("alert_warning", "Component with name '" + formBean.getName() + "' already exists");
             return "redirect:" + uriBuilder.path("/components/create").build().encode().toUriString();
         }
@@ -150,26 +150,25 @@ public class ComponentController {
     public String list(@Valid @ModelAttribute("filter")ComponentFilter filterBean, Model model, HttpServletRequest request, UriComponentsBuilder uriBuilder) {
 
         ComponentFilter.ComponentFilterType filterNone = ComponentFilter.ComponentFilterType.NONE;
+        List<ComponentDTO> components;
+
+        log.debug("Listing components with filter: Available: " + filterBean.getAvailable() + " and type: " + filterBean.getType());
 
         if (filterBean.getAvailable()) {
             if (filterBean.getType() == filterNone || filterBean.getType() == null) {
-                log.debug("List available");
-                model.addAttribute("components", componentFacade.listAllAvailableComponents());
+                components = componentFacade.listAllAvailableComponents();
             } else {
-                log.debug("List available with type");
-                model.addAttribute("components", componentFacade.listAllAvailableComponentsWithType(ComponentType.parse(filterBean.getType().getUrlAnnotation())));
+                components = componentFacade.listAllAvailableComponentsWithType(ComponentType.parse(filterBean.getType().getUrlAnnotation()));
             }
         } else {
             if (filterBean.getType() == filterNone || filterBean.getType() == null) {
-                log.debug("List available");
-                model.addAttribute("components", componentFacade.listAllComponents());
+                components = componentFacade.listAllComponents();
             } else {
-                log.debug("List all with type");
-                model.addAttribute("components", componentFacade.listAllComponentsWithType(ComponentType.parse(filterBean.getType().getUrlAnnotation())));
-
+                components = componentFacade.listAllComponentsWithType(ComponentType.parse(filterBean.getType().getUrlAnnotation()));
             }
         }
 
+        model.addAttribute("components", components);
         model.addAttribute("filter", filterBean);
         model.addAttribute("componentTypeSelect", Arrays.asList(ComponentFilter.ComponentFilterType .values()));
         return "components/list";
