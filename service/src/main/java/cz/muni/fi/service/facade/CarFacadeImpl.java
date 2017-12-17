@@ -7,6 +7,7 @@ import cz.muni.fi.entities.Car;
 import cz.muni.fi.facade.CarFacade;
 import cz.muni.fi.service.BeanMappingService;
 import cz.muni.fi.service.CarService;
+import cz.muni.fi.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,7 @@ public class CarFacadeImpl implements CarFacade {
     private CarService carService;
 
     @Autowired
-    private DriverDao driverDao;
+    private DriverService driverService;
 
     @Autowired
     private BeanMappingService beanMappingService;
@@ -40,7 +41,7 @@ public class CarFacadeImpl implements CarFacade {
 
     @Override
     public CarDTO findCarByDriver(DriverDTO driverDTO) {
-        Car car = carService.findCarByDriver(driverDao.findDriverById(driverDTO.getId()));
+        Car car = carService.findCarByDriver(driverService.findDriverById(driverDTO.getId()));
         if (car == null) return null;
         CarDTO carDTO = beanMappingService.mapTo(car, CarDTO.class);
         return carDTO;
