@@ -4,11 +4,13 @@ import cz.muni.fi.dto.CarDTO;
 import cz.muni.fi.dto.ComponentDTO;
 import cz.muni.fi.dto.DriverDTO;
 import cz.muni.fi.dto.TeamDTO;
+import cz.muni.fi.dto.UserCreateDTO;
+import cz.muni.fi.dto.UserDTO;
 import cz.muni.fi.entities.Car;
 import cz.muni.fi.entities.Component;
 import cz.muni.fi.entities.Driver;
 import cz.muni.fi.entities.Team;
-import cz.muni.fi.enums.ComponentType;
+import cz.muni.fi.entities.User;
 import org.dozer.loader.api.BeanMappingBuilder;
 import org.dozer.loader.api.TypeMappingOptions;
 
@@ -29,5 +31,7 @@ public class EntityMapping extends BeanMappingBuilder {
                 .fields(field("suspension").accessible(true), field("suspension").accessible(true))
                 .fields(field("transmission").accessible(true), field("transmission").accessible(true))
                 .fields(field("brakes").accessible(true), field("brakes").accessible(true));
+        mapping(User.class, UserDTO.class, TypeMappingOptions.mapNull(false));
+        mapping(User.class, UserCreateDTO.class, TypeMappingOptions.mapNull(false));
     }
 }

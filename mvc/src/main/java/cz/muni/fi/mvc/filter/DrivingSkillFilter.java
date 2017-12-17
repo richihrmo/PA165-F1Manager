@@ -1,4 +1,4 @@
-package cz.muni.fi.filter;
+package cz.muni.fi.mvc.filter;
 
 import lombok.Getter;
 import lombok.Setter;

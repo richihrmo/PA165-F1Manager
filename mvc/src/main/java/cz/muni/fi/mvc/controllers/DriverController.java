@@ -1,4 +1,4 @@
-package cz.muni.fi.controllers;
+package cz.muni.fi.mvc.controllers;
 
 import cz.muni.fi.dto.CarDTO;
 import cz.muni.fi.dto.DriverCreateDTO;
@@ -7,19 +7,25 @@ import cz.muni.fi.enums.DrivingSkill;
 import cz.muni.fi.facade.CarFacade;
 import cz.muni.fi.facade.DriverFacade;
 import cz.muni.fi.facade.TeamFacade;
-import cz.muni.fi.filter.DrivingSkillFilter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import javax.validation.Valid;
+import cz.muni.fi.mvc.Tools;
+import cz.muni.fi.mvc.filter.DrivingSkillFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Lucie Kureckova, 445264
@@ -61,7 +67,11 @@ public class DriverController {
     }
     
     @RequestMapping(value = "/new", method = RequestMethod.GET)
-    public String createNewDriver(Model model) {
+    public String createNewDriver(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
+
+        String res = Tools.redirectNonAdmin(request, uriBuilder, redirectAttributes);
+        if(res != null) return res;
+
         log.debug("[DRIVER] create");
         DriverDTO driver = new DriverDTO();
         model.addAttribute("driver", driver);
@@ -70,7 +80,11 @@ public class DriverController {
     }
     
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public String editDriver(@PathVariable Long id, Model model) {
+    public String editDriver(@PathVariable Long id, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
+
+        String res = Tools.redirectNonAdmin(request, uriBuilder, redirectAttributes);
+        if(res != null) return res;
+
         log.debug("[DRIVER] edit ({})", id);
         model.addAttribute("driver", driverFacade.getDriverByID(id));
         model.addAttribute("Skills", Arrays.asList(DrivingSkill.values()));
@@ -88,9 +102,13 @@ public class DriverController {
     
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String submitEdit(@Valid @ModelAttribute("driver") DriverDTO driverDTO,
-                             Model model,
+                             Model model, HttpServletRequest request,
                              RedirectAttributes redirectAttributes,
                              UriComponentsBuilder uriBuilder) {
+
+        String res = Tools.redirectNonAdmin(request, uriBuilder, redirectAttributes);
+        if(res != null) return res;
+
         if(driverDTO.getName().isEmpty() || driverDTO.getSurname().isEmpty() || driverDTO.getNationality().isEmpty()){
             model.addAttribute("alert_danger", "Please fill all values!");
             model.addAttribute("driver", driverDTO);
@@ -110,9 +128,13 @@ public class DriverController {
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     public String delete(@PathVariable long id,
-                         Model model,
+                         Model model, HttpServletRequest request,
                          RedirectAttributes redirectAttributes,
                          UriComponentsBuilder uriBuilder) {
+
+        String res = Tools.redirectNonAdmin(request, uriBuilder, redirectAttributes);
+        if(res != null) return res;
+
         log.debug("[DRIVER] delete ({})", id);
         DriverDTO driverDTO = driverFacade.getDriverByID(id);
         try {

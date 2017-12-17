@@ -4,6 +4,7 @@ import cz.muni.fi.dto.ComponentDTO;
 import cz.muni.fi.enums.ComponentType;
 import cz.muni.fi.facade.ComponentFacade;
 import cz.muni.fi.filter.ComponentFilter;
+import cz.muni.fi.mvc.Tools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,8 @@ public class ComponentController {
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String createComponent(Model model,  HttpServletRequest request, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
-        //String res = Tools.redirectNonTestDriver(request, uriBuilder, redirectAttributes);
-        //if(res != null) return res;
+        String res = Tools.redirectNonAdmin(request, uriBuilder, redirectAttributes);
+        if(res != null) return res;
         log.debug("[COMPONENT] Create");
         model.addAttribute("componentTypeSelect", Arrays.asList(ComponentType.values()));
         model.addAttribute("componentCreate", new ComponentDTO());
@@ -51,8 +52,8 @@ public class ComponentController {
     public String create(@Valid @ModelAttribute("componentCreate")ComponentDTO formBean, BindingResult bindingResult,
                          Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder, HttpServletRequest request) {
 
-        //String res = Tools.redirectNonTestDriver(request, uriBuilder, redirectAttributes);
-        //if (res != null) return res;
+        String res = Tools.redirectNonAdmin(request, uriBuilder, redirectAttributes);
+        if (res != null) return res;
 
         if (componentFacade.findComponentByName(formBean.getName()) != null) {
             redirectAttributes.addFlashAttribute("alert_warning", "Component with name '" + formBean.getName() + "' already exists");
@@ -80,8 +81,8 @@ public class ComponentController {
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editComponent(@PathVariable long id, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
-        //String res = Tools.redirectNonTestDriver(request, uriBuilder, redirectAttributes);
-        //if(res != null) return res;
+        String res = Tools.redirectNonAdmin(request, uriBuilder, redirectAttributes);
+        if(res != null) return res;
         log.debug("[COMPONENT] Edit {}", id);
         ComponentDTO componentDTO = componentFacade.findComponentByID(id);
         model.addAttribute("componentTypeSelect", Arrays.asList(ComponentType.values()));
@@ -93,8 +94,8 @@ public class ComponentController {
     public String update(@PathVariable long id, @Valid @ModelAttribute("componentEdit")ComponentDTO formBean, BindingResult bindingResult,
                          Model model, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes, HttpServletRequest request) {
 
-        //String res = Tools.redirectNonTestDriver(request, uriBuilder, redirectAttributes);
-        //if(res != null) return res;
+        String res = Tools.redirectNonAdmin(request, uriBuilder, redirectAttributes);
+        if(res != null) return res;
 
         formBean.setId(id);
         ComponentDTO foundComponent = componentFacade.findComponentByName(formBean.getName());
@@ -135,8 +136,8 @@ public class ComponentController {
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     public String delete(@PathVariable long id, Model model, HttpServletRequest request, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
 
-        //String res = Tools.redirectNonTestDriver(request, uriBuilder, redirectAttributes);
-        //if(res != null) return res;
+        String res = Tools.redirectNonAdmin(request, uriBuilder, redirectAttributes);
+        if(res != null) return res;
 
         log.debug("delete component({})", id);
         ComponentDTO componentDTO = componentFacade.findComponentByID(id);

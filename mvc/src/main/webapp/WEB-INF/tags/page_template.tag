@@ -34,18 +34,40 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="${pageContext.request.contextPath}/">PA165 SpringMVC</a>
+            <a class="navbar-brand" href="${pageContext.request.contextPath}/">Team formula 1</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
+                <c:if test="${sessionScope.user != null}">
                 <li><a href="${pageContext.request.contextPath}/drivers">Driver</a></li>
                 <li><a href="${pageContext.request.contextPath}/components">Component</a></li>
               
                 <li><a href="${pageContext.request.contextPath}/cars">Car</a></li>
                 <li><a href="${pageContext.request.contextPath}/teams">Team</a></li>
-              
+                </c:if>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <c:if test="${not empty sessionScope.user}">
+                <li class="dropdown" style="float: right">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><c:out value="${sessionScope.user.name}"/><b
+                            class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><my:a href="/auth/logout">Logout</my:a></li>
+                        <my:protected>
+                            <li><my:a href="/users">Users</my:a></li>
+                        </my:protected>
+                    </ul>
+                    </c:if>
+                </li>
+
+                <c:if test="${empty sessionScope.user}">
+                    <li><my:a href="/auth">Sign in</my:a></li>
+                    <li><my:a href="/auth/register">Sign up</my:a></li>
+                </c:if>
+
             </ul>
         </div>
     </div>
