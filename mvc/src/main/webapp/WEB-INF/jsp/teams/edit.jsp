@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="form-group col-md-12 text-left">
-                    <form:label path="carTwoId" cssClass="col-md-12">Car one</form:label>
+                    <form:label path="carTwoId" cssClass="col-md-12">Car two</form:label>
                     <div class="col-md-8">
                         <form:select path="carTwoId" cssClass="form-control">
                             <c:forEach items="${cars}" var="c">

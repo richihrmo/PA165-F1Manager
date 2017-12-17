@@ -18,15 +18,15 @@
         <h4>Engine</h4>
         <p>
             <strong>Name:</strong>&nbsp;
-            <my:a href="/component/read/${car.engine.id}"> ${car.engine.name}</my:a>
+            ${car.engine.name}
         </p>
     </div>
 
     <div class="col-sm-3">
         <h4>Aerodynamics</h4>
         <p>
-            <strong>Aerodynamic:</strong>&nbsp;
-            <my:a href="/component/read/${car.engine.id}"> ${car.aerodynamics.name}</my:a>
+            <strong>Name:</strong>&nbsp;
+            ${car.aerodynamics.name}
         </p>
     </div>
 
@@ -34,7 +34,7 @@
         <h4>Suspension</h4>
         <p>
             <strong>Name:</strong>&nbsp;
-            <my:a href="/component/read/${car.engine.id}"> ${car.suspension.name}</my:a>
+            ${car.suspension.name}
         </p>
     </div>
 
@@ -42,7 +42,7 @@
         <h4>Transmission</h4>
         <p>
             <strong>Name:</strong>&nbsp;
-            <my:a href="/component/read/${car.engine.id}"> ${car.transmission.name}</my:a>
+            ${car.transmission.name}
         </p>
     </div>
 
@@ -50,7 +50,7 @@
         <h4>Brakes</h4>
         <p>
             <strong>Name:</strong>&nbsp;
-            <my:a href="/component/read/${car.engine.id}"> ${car.brakes.name}</my:a>
+            ${car.brakes.name}
         </p>
     </div>
 </div>

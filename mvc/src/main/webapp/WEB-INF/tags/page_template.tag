@@ -27,7 +27,7 @@
     <!-- page title -->
     <c:if test="${not empty title}">
         <div class="page-header">
-            <h1><c:out value="${title}"/>&nbsp;<i class="${icon_class}" aria-hidden="true"></i></h1>
+            <h1><i class="${icon_class}" aria-hidden="true"></i>&nbsp;<c:out value="${title}"/></h1>
         </div>
     </c:if>
 
