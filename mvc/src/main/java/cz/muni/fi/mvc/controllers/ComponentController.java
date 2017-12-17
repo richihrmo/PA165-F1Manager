@@ -4,10 +4,10 @@ import cz.muni.fi.dto.ComponentDTO;
 import cz.muni.fi.enums.ComponentType;
 import cz.muni.fi.facade.ComponentFacade;
 import cz.muni.fi.filter.ComponentFilter;
-import cz.muni.fi.mvc.Tools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -128,13 +128,17 @@ public class ComponentController {
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     public String delete(@PathVariable long id, Model model, HttpServletRequest request, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
 
-        String res = Tools.redirectNonTestDriver(request, uriBuilder, redirectAttributes);
-        if(res != null) return res;
+        //String res = Tools.redirectNonTestDriver(request, uriBuilder, redirectAttributes);
+        //if(res != null) return res;
 
-        ComponentDTO componentDTO = componentFacade.findComponentByID(id);
-        componentFacade.deleteComponent(componentDTO);
         log.debug("delete component({})", id);
-        redirectAttributes.addFlashAttribute("alert_success", "Component '" + componentDTO.getName() + "' was deleted.");
+        ComponentDTO componentDTO = componentFacade.findComponentByID(id);
+        try {
+            componentFacade.deleteComponent(componentDTO);
+            redirectAttributes.addFlashAttribute("alert_success", "Component '" + componentDTO.getName() + "' was deleted.");
+        } catch (DataAccessException e) {
+            redirectAttributes.addFlashAttribute("alert_warning", "Component with name '" + componentDTO.getName() + "' cannot be deleted because it's associated with some car.");
+        }
         return "redirect:" + uriBuilder.path("/components").build().toUriString();
     }
 
