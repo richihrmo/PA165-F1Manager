@@ -5,7 +5,7 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<my:pagetemplate title="Component ${component.name}">
+<my:page_template title="Component ${component.name}">
     <jsp:attribute name="body">
          <c:set var="end" value="components"/>
 
@@ -93,4 +93,4 @@
          </button>
 
     </jsp:attribute>
-</my:pagetemplate>
+</my:page_template>

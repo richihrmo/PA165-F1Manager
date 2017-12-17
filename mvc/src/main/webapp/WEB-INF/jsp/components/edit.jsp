@@ -5,7 +5,7 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<my:pagetemplate title="Edit component">
+<my:page_template title="Edit component">
     <jsp:attribute name="body">
         <c:set var="end" value="components"/>
         <form:form method="post" action="${pageContext.request.contextPath}/${end}/edit/${componentEdit.id}"
@@ -43,4 +43,4 @@
         <button class="btn" onclick="location.href='${pageContext.request.contextPath}/${end}'">Return</button>
 
     </jsp:attribute>
-</my:pagetemplate>
+</my:page_template>

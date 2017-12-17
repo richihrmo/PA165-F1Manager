@@ -5,7 +5,7 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<my:pagetemplate title="Components">
+<my:page_template title="Components">
     <jsp:attribute name="body">
         <c:set var="end" value="components"/>
 
@@ -126,4 +126,4 @@
       <button class="btn btn-secondary" onclick="location.href='${pageContext.request.contextPath}/'"> Return </button>
 
     </jsp:attribute>
-</my:pagetemplate>
+</my:page_template>
