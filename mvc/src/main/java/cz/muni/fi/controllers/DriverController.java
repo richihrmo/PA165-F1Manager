@@ -93,6 +93,8 @@ public class DriverController {
                              UriComponentsBuilder uriBuilder) {
         if(driverDTO.getName().isEmpty() || driverDTO.getSurname().isEmpty() || driverDTO.getNationality().isEmpty()){
             model.addAttribute("alert_danger", "Please fill all values!");
+            model.addAttribute("driver", driverDTO);
+            model.addAttribute("Skills", Arrays.asList(DrivingSkill.values()));
             return "drivers/edit";
         }
         if(driverDTO.getId() == null){

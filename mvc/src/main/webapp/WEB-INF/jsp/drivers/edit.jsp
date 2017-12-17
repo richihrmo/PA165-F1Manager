@@ -6,7 +6,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 
-<my:page_template title="${driver.name == '' ? 'Add new driver' : 'Edit driver'}">
+<my:page_template title="${driver.id == null ? 'Add new driver' : 'Edit driver'}">
 <jsp:attribute name="body">
   
 <form method="get" action="${pageContext.request.contextPath}/drivers">
