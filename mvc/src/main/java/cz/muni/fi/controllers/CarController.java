@@ -4,7 +4,6 @@ import cz.muni.fi.dto.CarDTO;
 import cz.muni.fi.facade.CarFacade;
 import cz.muni.fi.facade.ComponentFacade;
 import cz.muni.fi.facade.DriverFacade;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;

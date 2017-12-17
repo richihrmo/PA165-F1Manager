@@ -9,7 +9,7 @@
 
     <jsp:attribute name="body">
         <form:form method="post"
-                   action="${pageContext.request.contextPath}/car/edit/${car.id}"
+                   action="${pageContext.request.contextPath}/cars/edit/${car.id}"
                    modelAttribute="car"
                    cssClass="form-horizontal">
 

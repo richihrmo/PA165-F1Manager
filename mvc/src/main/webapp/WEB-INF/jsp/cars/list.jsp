@@ -13,7 +13,7 @@
             Home
         </button>
 
-        <button class="btn btn-warning" onclick="location.href='${pageContext.request.contextPath}/car/new'">
+        <button class="btn btn-warning" onclick="location.href='${pageContext.request.contextPath}/cars/new'">
             Create new team
         </button>
 
