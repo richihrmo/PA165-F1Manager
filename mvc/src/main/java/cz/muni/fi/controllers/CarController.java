@@ -1,4 +1,4 @@
-package controllers;
+package cz.muni.fi.controllers;
 
 import cz.muni.fi.dto.CarDTO;
 import cz.muni.fi.facade.CarFacade;
@@ -21,7 +21,7 @@ import javax.validation.Valid;
  * @author Richard Hrmo
  */
 @Controller
-@RequestMapping("/car")
+@RequestMapping("/cars")
 public class CarController {
 
     @Inject
@@ -38,17 +38,19 @@ public class CarController {
         model.addAttribute("car", new CarDTO());
         model.addAttribute("components", componentFacade.listAllComponents());
         model.addAttribute("drivers", driverFacade.getAllDrivers());
-        return "car/new";
+        return "cars/new";
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.POST)
     public String newCarCreate(@Valid @ModelAttribute("car") CarDTO form,
-                               RedirectAttributes redirectAttributes,
                                Model model,
-                               UriComponentsBuilder uriBuilder){
+                               UriComponentsBuilder uriBuilder,
+                               RedirectAttributes redirectAttributes){
         if (form.getDriver() == null){
             model.addAttribute("alert_danger", "Driver is null");
-            return "car/new";
+            model.addAttribute("components", componentFacade.listAllComponents());
+            model.addAttribute("drivers", driverFacade.getAllDrivers());
+            return "cars/new";
         }
         if (form.getTransmission() == null
                 || form.getAerodynamics() == null
@@ -56,7 +58,9 @@ public class CarController {
                 || form.getEngine() == null
                 || form.getSuspension() == null){
             model.addAttribute("alert_danger", "One of components is null");
-            return "car/new";
+            model.addAttribute("components", componentFacade.listAllComponents());
+            model.addAttribute("drivers", driverFacade.getAllDrivers());
+            return "cars/new";
         }
         carFacade.createCar(form);
         redirectAttributes.addFlashAttribute("alert_success", "Car " + form.toString() + " was created.");
@@ -67,7 +71,9 @@ public class CarController {
     public String updateCar(@PathVariable long id, Model model){
         CarDTO carDTO = carFacade.findCarById(id);
         model.addAttribute("car", carDTO);
-        return "car/edit";
+        model.addAttribute("components", componentFacade.listAllComponents());
+        model.addAttribute("drivers", driverFacade.getAllDrivers());
+        return "cars/edit";
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
@@ -77,7 +83,9 @@ public class CarController {
                                UriComponentsBuilder uriBuilder){
         if (form.getDriver() == null){
             model.addAttribute("alert_danger", "Driver is null");
-            return "car/edit";
+            model.addAttribute("components", componentFacade.listAllComponents());
+            model.addAttribute("drivers", driverFacade.getAllDrivers());
+            return "cars/edit";
         }
         if (form.getTransmission() == null
                 || form.getAerodynamics() == null
@@ -85,11 +93,13 @@ public class CarController {
                 || form.getEngine() == null
                 || form.getSuspension() == null){
             model.addAttribute("alert_danger", "One of components is null");
-            return "car/edit";
+            model.addAttribute("components", componentFacade.listAllComponents());
+            model.addAttribute("drivers", driverFacade.getAllDrivers());
+            return "cars/edit";
         }
         carFacade.createCar(form);
         redirectAttributes.addFlashAttribute("alert_success", "Car " + form.toString() + " was updated.");
-        return "redirect:" + uriBuilder.path("/car").build().toUriString();
+        return "redirect:" + uriBuilder.path("/car/list").build().toUriString();
 
     }
 
@@ -99,18 +109,18 @@ public class CarController {
         CarDTO carDTO = carFacade.findCarById(id);
         carFacade.deleteCar(carDTO);
         redirectAttributes.addFlashAttribute("alert_success", "Car " + carDTO.toString() + " was deleted.");
-        return "redirect:" + builder.path("car/list").build().toUriString();
+        return "redirect:" + builder.path("cars/list").build().toUriString();
     }
 
-    @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
     public String view(@PathVariable long id, Model model) {
         model.addAttribute("car", carFacade.findCarById(id));
-        return "car/show";
+        return "cars/show";
     }
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public String list(Model model) {
         model.addAttribute("cars", carFacade.listAllCars());
-        return "car/list";
+        return "cars/list";
     }
 }

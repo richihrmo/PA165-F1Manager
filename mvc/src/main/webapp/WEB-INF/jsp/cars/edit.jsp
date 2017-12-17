@@ -5,21 +5,11 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<my:page_template title="Create new car" icon_class="fa fa-users">
+<my:page_template title="Edit car" icon_class="fa fa-users">
 
     <jsp:attribute name="body">
-        <button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/'">
-            Home
-        </button>
-
-        <button class="btn btn-warning" onclick="location.href='${pageContext.request.contextPath}/car/'">
-            All cars
-        </button>
-
-        <hr>
-
         <form:form method="post"
-                   action="${pageContext.request.contextPath}/car/new"
+                   action="${pageContext.request.contextPath}/car/edit/${car.id}"
                    modelAttribute="car"
                    cssClass="form-horizontal">
 
@@ -81,16 +71,16 @@
                 </div>
 
                 <div class="form-group col-md-12 text-left">
-                    <form:label path="aero" cssClass="col-md-12">Aerodynamics</form:label>
+                    <form:label path="aerodynamics" cssClass="col-md-12">Aerodynamics</form:label>
                     <div class="col-md-8">
-                        <form:select path="aero" cssClass="form-control">
+                        <form:select path="aerodynamics" cssClass="form-control">
                             <c:forEach items="${components}" var="c">
                                 <form:option value="${c.id}">
                                     Component: ${c.name}.
                                 </form:option>
                             </c:forEach>
                         </form:select>
-                        <form:errors path="aero" cssClass="help-block"/>
+                        <form:errors path="aerodynamics" cssClass="help-block"/>
                     </div>
                 </div>
 
