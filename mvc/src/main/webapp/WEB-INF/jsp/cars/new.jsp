@@ -19,7 +19,7 @@
         <hr>
 
         <form:form method="post"
-                   action="${pageContext.request.contextPath}/car/new"
+                   action="${pageContext.request.contextPath}/cars/new"
                    modelAttribute="car"
                    cssClass="form-horizontal">
 
