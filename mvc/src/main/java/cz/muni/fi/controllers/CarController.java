@@ -41,7 +41,7 @@ public class CarController {
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.POST)
-    public String newCarCreate(@Valid @ModelAttribute("car") CarDTO form,
+    public String newCarCreate(@ModelAttribute("car") CarDTO form,
                                Model model,
                                UriComponentsBuilder uriBuilder,
                                RedirectAttributes redirectAttributes){
@@ -66,7 +66,7 @@ public class CarController {
         return "redirect:" + uriBuilder.path("/cars").build().toUriString();
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String updateCar(@PathVariable long id, Model model){
         CarDTO carDTO = carFacade.findCarById(id);
         model.addAttribute("car", carDTO);
@@ -75,7 +75,7 @@ public class CarController {
         return "cars/edit";
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
     public String updateCarCreate(@Valid @ModelAttribute("car") CarDTO form,
                                RedirectAttributes redirectAttributes,
                                Model model,

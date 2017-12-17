@@ -14,7 +14,7 @@
         </button>
 
         <button class="btn btn-warning" onclick="location.href='${pageContext.request.contextPath}/cars/new'">
-            Create new team
+            Create new car
         </button>
 
         <hr>
