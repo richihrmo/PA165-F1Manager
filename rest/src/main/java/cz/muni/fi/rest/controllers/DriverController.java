@@ -7,7 +7,6 @@ import cz.muni.fi.rest.ApiUris;
 import cz.muni.fi.rest.exceptions.ResourceAlreadyExistingException;
 import cz.muni.fi.rest.exceptions.ResourceCouldNotBeDeleted;
 import cz.muni.fi.rest.exceptions.ResourceNotFoundException;
-import java.sql.SQLException;
 import java.util.List;
 import javax.inject.Inject;
 import org.slf4j.Logger;
