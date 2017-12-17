@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import cz.muni.fi.facade.DriverFacade;
 import cz.muni.fi.service.BeanMappingService;
 import cz.muni.fi.service.DriverService;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Lucie Kureckova, 445264
