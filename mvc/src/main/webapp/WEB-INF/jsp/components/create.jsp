@@ -27,7 +27,7 @@
             </div>
         </div>
 
-        <div class="form-group ${name_error?'has-error':''}">
+        <%--<div class="form-group ${name_error?'has-error':''}">
             <form:label path="availability" cssClass="col-sm-3 control-label">Available</form:label>
             <div class="col-sm-9">
                 <div class="control-label">
@@ -37,7 +37,7 @@
                 </div>
                 <form:errors path="availability" cssClass="help-block"/>
             </div>
-        </div>
+        </div>--%>
 
         <button class="btn btn-primary" type="submit">Create component</button>
     </form:form>
