@@ -27,18 +27,6 @@
             </div>
         </div>
 
-        <%--<div class="form-group ${name_error?'has-error':''}">
-            <form:label path="availability" cssClass="col-sm-3 control-label">Available</form:label>
-            <div class="col-sm-9">
-                <div class="control-label">
-                    <div class="text-left">
-                        <form:checkbox path="availability"/>
-                    </div>
-                </div>
-                <form:errors path="availability" cssClass="help-block"/>
-            </div>
-        </div>--%>
-
         <button class="btn btn-primary" type="submit">Create component</button>
     </form:form>
     <button class="btn" onclick="location.href='${pageContext.request.contextPath}/${end}'">Return</button>
