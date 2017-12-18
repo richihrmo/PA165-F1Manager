@@ -9,7 +9,6 @@
     <jsp:attribute name="body">
          <c:set var="end" value="components"/>
 
-
                <script>
                    function openModal(suffix) {
                        var modal = $("#modal_" + suffix);
@@ -30,10 +29,10 @@
                    <th>Name</th>
                    <th>Component type</th>
                    <th>Available</th>
-                   <!--<my:protected>-->
+                   <my:protected>
                        <th>Delete</th>
                        <th>Update</th>
-                   <!--</my:protected>-->
+                   </my:protected>
 
                   </tr>
                   </thead>
@@ -55,34 +54,29 @@
                         </c:if>
                    </td>
 
-                   <!--<my:protected>-->
-                             <td>
-                              <button class="glyphicon glyphicon-trash btn" onclick=" openModal(${component.id}) ">
-                              </button>
+                   <my:protected>
+                        <td>
+                            <span class="glyphicon glyphicon-trash" onclick=" openModal(${component.id}) "></span>
 
-
-                              <my:modal_template suffix="${component.id}" title="Delete component">
-                                     <jsp:attribute name="body">
-                                         <strong>Are you sure you want to delete the component: <c:out value="${component.name}"/></strong>
-                                     </jsp:attribute>
-                                     <jsp:attribute name="footer">
-                                         <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                                                 onclick="closeModal(${component.id})">Close
-                                         </button>
-                                       <form style="float: right; margin-left: 10px" method="post"
+                            <my:modal_template suffix="${component.id}" title="Delete component">
+                                <jsp:attribute name="body">
+                                    <strong>Are you sure you want to delete the component: <c:out value="${component.name}"/></strong>
+                                </jsp:attribute>
+                                <jsp:attribute name="footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                            onclick="closeModal(${component.id})">Close
+                                    </button>
+                                    <form style="float: right; margin-left: 10px" method="post"
                                              action="${pageContext.request.contextPath}/${end}/delete/${component.id}">
-                                        <input type="submit" class="btn btn-primary" value="Delete"/>
-                                       </form>
-                                     </jsp:attribute>
-                               </my:modal_template>
-
-                             </td>
-                             <td>
-                              <button class="glyphicon glyphicon-edit btn"
-                                      onclick="location.href='${pageContext.request.contextPath}/${end}/edit/${component.id}'">
-                              </button>
-                             </td>
-                     <!--</my:protected>-->
+                                           <input type="submit" class="btn btn-primary" value="Delete"/>
+                                    </form>
+                                </jsp:attribute>
+                            </my:modal_template>
+                       </td>
+                       <td>
+                           <span class="glyphicon glyphicon-pencil" onclick="location.href='${pageContext.request.contextPath}/${end}/edit/${component.id}'"></span>
+                       </td>
+                     </my:protected>
                   </tr>
                   </tbody>
               </table>

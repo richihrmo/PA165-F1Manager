@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="utf-8" trimDirectiveWhitespaces="false" session="false" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="utf-8" trimDirectiveWhitespaces="false" session="true" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="my" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -36,8 +36,10 @@
             <th>Nationality</th>
             <th>Driver Type</th>
             <th>Main Skill</th>
-            <th class="text-center">Edit</th>
-            <th class="text-center">Delete</th>
+            <my:protected>
+                <th class="text-center">Edit</th>
+                <th class="text-center">Delete</th>
+            </my:protected>
         </tr>
         </thead>
         <tbody>
@@ -47,28 +49,30 @@
                 <td><c:out value="${driver.nationality}"/></td>
                 <td><c:out value="${driver.mainDriver ? 'Main driver' : 'Test driver'}"/></td>
                 <td><c:out value="${driver.specialSkill.urlAnnotation}"/></td>
-                <td class="text-center">
-                    <span class="glyphicon glyphicon-pencil" onclick="location.href='${pageContext.request.contextPath}/drivers/edit/${driver.id}'"></span>
-                </td>
-                <td class="text-center">
-                    
-                   <span class="glyphicon glyphicon-trash" onclick=" openModal(${driver.id}) "></span>
+                <my:protected>
+                    <td class="text-center">
+                        <span class="glyphicon glyphicon-pencil" onclick="location.href='${pageContext.request.contextPath}/drivers/edit/${driver.id}'"></span>
+                    </td>
+                    <td class="text-center">
 
-                   <my:modal_template suffix="${driver.id}" title="Delete driver">
-                        <jsp:attribute name="body">
-                            <strong>Are you sure you want to delete the driver: <c:out value="${driver.name}"/> <c:out value="${driver.surname}"/></strong>
-                        </jsp:attribute>
-                        <jsp:attribute name="footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                                    onclick="closeModal(${drivert.id})">Close
-                            </button>
-                            <form style="float: right; margin-left: 10px" method="post"
-                                  action="${pageContext.request.contextPath}/drivers/delete/${driver.id}">
-                                <input type="submit" class="btn btn-primary" value="Delete"/>
-                            </form>
-                        </jsp:attribute>
-                    </my:modal_template>
-                </td>
+                       <span class="glyphicon glyphicon-trash" onclick=" openModal(${driver.id}) "></span>
+
+                       <my:modal_template suffix="${driver.id}" title="Delete driver">
+                            <jsp:attribute name="body">
+                                <strong>Are you sure you want to delete the driver: <c:out value="${driver.name}"/> <c:out value="${driver.surname}"/></strong>
+                            </jsp:attribute>
+                            <jsp:attribute name="footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                        onclick="closeModal(${drivert.id})">Close
+                                </button>
+                                <form style="float: right; margin-left: 10px" method="post"
+                                      action="${pageContext.request.contextPath}/drivers/delete/${driver.id}">
+                                    <input type="submit" class="btn btn-primary" value="Delete"/>
+                                </form>
+                            </jsp:attribute>
+                        </my:modal_template>
+                    </td>
+                </my:protected>
             </tr>
         </c:forEach>
         </tbody>
@@ -78,12 +82,13 @@
             <h4>No drivers are available right now.</h4>
         </div>
     </c:if>
-        
-    <form method="get" action="${pageContext.request.contextPath}/drivers/new">
-        <button type="submit" class="btn btn-primary">
-            Add new driver
-        </button>
-    </form>
+    <my:protected>
+        <form method="get" action="${pageContext.request.contextPath}/drivers/new">
+            <button type="submit" class="btn btn-primary">
+                Add new driver
+            </button>
+        </form>
+    </my:protected>
         
 </jsp:attribute>
 </my:page_template>

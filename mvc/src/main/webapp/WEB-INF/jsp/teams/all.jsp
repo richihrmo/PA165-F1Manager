@@ -22,8 +22,10 @@
                     <thead>
                     <tr>
                         <th class="col-md-6">Name</th>
-                        <th class="col-md-2 text-center">Edit</th>
-                        <th class="col-md-2 text-center">Delete</th>
+                        <my:protected>
+                            <th class="col-md-2 text-center">Edit</th>
+                            <th class="col-md-2 text-center">Delete</th>
+                        </my:protected>
                     </tr>
                     </thead>
                     <tbody>
@@ -35,32 +37,34 @@
                                     </my:a>
                                 </td>
 
-                                <td class="text-center">
-                                    <span class="glyphicon glyphicon-pencil" onclick="location.href='${pageContext.request.contextPath}/${endpoint}/edit/${team.id}'"></span>
-                                </td>
+                                <my:protected>
+                                    <td class="text-center">
+                                        <span class="glyphicon glyphicon-pencil" onclick="location.href='${pageContext.request.contextPath}/${endpoint}/edit/${team.id}'"></span>
+                                    </td>
 
-                                <td class="text-center">
-                                    <span class="glyphicon glyphicon-trash" onclick=" openModal(${team.id}) "></span>
-                                    <my:modal_template suffix="${team.id}" title="Delete team">
-                                        <jsp:attribute name="body">
-                                            <strong>
-                                                Are you sure you want to delete this team: <c:out value="${team.name}"/>
-                                            </strong>
-                                        </jsp:attribute>
-                                        <jsp:attribute name="footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                    data-dismiss="modal"
-                                                    onclick="closeModal(${team.id})">
-                                                Close
-                                            </button>
-                                          <form style="float: right; margin-left: 10px"
-                                                method="post"
-                                                action="${pageContext.request.contextPath}/${endpoint}/delete/${team.id}">
-                                              <input type="submit" class="btn btn-primary" value="Delete"/>
-                                          </form>
-                                        </jsp:attribute>
-                                    </my:modal_template>
-                                </td>
+                                    <td class="text-center">
+                                        <span class="glyphicon glyphicon-trash" onclick=" openModal(${team.id}) "></span>
+                                        <my:modal_template suffix="${team.id}" title="Delete team">
+                                            <jsp:attribute name="body">
+                                                <strong>
+                                                    Are you sure you want to delete this team: <c:out value="${team.name}"/>
+                                                </strong>
+                                            </jsp:attribute>
+                                            <jsp:attribute name="footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal"
+                                                        onclick="closeModal(${team.id})">
+                                                    Close
+                                                </button>
+                                              <form style="float: right; margin-left: 10px"
+                                                    method="post"
+                                                    action="${pageContext.request.contextPath}/${endpoint}/delete/${team.id}">
+                                                  <input type="submit" class="btn btn-primary" value="Delete"/>
+                                              </form>
+                                            </jsp:attribute>
+                                        </my:modal_template>
+                                    </td>
+                                </my:protected>
                             </tr>
                         </c:forEach>
                     </tbody>
@@ -72,10 +76,12 @@
                 </c:if>
             </div>
         </div>
-        
-        <button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/teams/create'">
-            Create new team
-        </button>
+
+        <my:protected>
+            <button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/teams/create'">
+                Create new team
+            </button>
+        </my:protected>
     </jsp:attribute>
 </my:page_template>
 

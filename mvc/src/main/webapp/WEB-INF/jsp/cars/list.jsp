@@ -16,9 +16,12 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th class="col-md-6">Car ID</th>
-                        <th class="col-md-2 text-center">Edit</th>
-                        <th class="col-md-2 text-center">Delete</th>
+                        <th class="col">Car number <i class="fa fa-smile-o" aria-hidden="true"></i></th>
+                        <th>Drivers name</th>
+                        <my:protected>
+                            <th class="col-md-2 text-center">Edit</th>
+                            <th class="col-md-2 text-center">Delete</th>
+                        </my:protected>
                     </tr>
                     </thead>
                     <tbody>
@@ -26,36 +29,41 @@
                             <tr>
                                 <td>
                                     <my:a href="/${endpoint}/show/${car.id}">
-                                        <c:out value="${car.id}"/>
+                                        <c:out value="${car.driver.id}"/>
                                     </my:a>
                                 </td>
-
-                                <td class="text-center">
-                                    <span class="glyphicon glyphicon-pencil" onclick="location.href='${pageContext.request.contextPath}/${endpoint}/edit/${car.id}'"></span>
+                                <td>
+                                    <c:out value="${car.driver.name}"/>&nbsp;<c:out value="${car.driver.surname}"/>
                                 </td>
 
-                                <td class="text-center">
-                                    <span class="glyphicon glyphicon-trash" onclick="openModal(${car.id})"></span>
-                                    <my:modal_template suffix="${car.id}" title="Delete team">
-                                        <jsp:attribute name="body">
-                                            <strong>
-                                                Are you sure you want to delete this car: <c:out value="${car.id}"/>
-                                            </strong>
-                                        </jsp:attribute>
-                                        <jsp:attribute name="footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                    data-dismiss="modal"
-                                                    onclick="closeModal(${car.id})">
-                                                Close
-                                            </button>
-                                          <form style="float: right; margin-left: 10px"
-                                                method="post"
-                                                action="${pageContext.request.contextPath}/${endpoint}/delete/${car.id}">
-                                              <input type="submit" class="btn btn-primary" value="Delete"/>
-                                          </form>
-                                        </jsp:attribute>
-                                    </my:modal_template>
-                                </td>
+                                <my:protected>
+                                    <td class="text-center">
+                                        <span class="glyphicon glyphicon-pencil" onclick="location.href='${pageContext.request.contextPath}/${endpoint}/edit/${car.id}'"></span>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <span class="glyphicon glyphicon-trash" onclick="openModal(${car.id})"></span>
+                                        <my:modal_template suffix="${car.id}" title="Delete team">
+                                            <jsp:attribute name="body">
+                                                <strong>
+                                                    Are you sure you want to delete this car: <c:out value="${car.id}"/>
+                                                </strong>
+                                            </jsp:attribute>
+                                            <jsp:attribute name="footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal"
+                                                        onclick="closeModal(${car.id})">
+                                                    Close
+                                                </button>
+                                              <form style="float: right; margin-left: 10px"
+                                                    method="post"
+                                                    action="${pageContext.request.contextPath}/${endpoint}/delete/${car.id}">
+                                                  <input type="submit" class="btn btn-primary" value="Delete"/>
+                                              </form>
+                                            </jsp:attribute>
+                                        </my:modal_template>
+                                    </td>
+                                </my:protected>
                             </tr>
                         </c:forEach>
                     </tbody>
@@ -67,10 +75,12 @@
                 </c:if>
             </div>
         </div>
-        
-        <button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/cars/new'">
-            Create new car
-        </button>
+
+        <my:protected>
+            <button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/cars/new'">
+                Create new car
+            </button>
+        </my:protected>
     </jsp:attribute>
 </my:page_template>
 
