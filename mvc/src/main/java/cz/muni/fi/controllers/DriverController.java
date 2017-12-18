@@ -82,7 +82,12 @@ public class DriverController {
         log.debug("[DRIVER] details about ({})", id);
         DriverDTO d = driverFacade.getDriverByID(id);
         model.addAttribute("driver", d);
-        model.addAttribute("car", carFacade.findCarByDriver(d));
+        for(CarDTO c : carFacade.listAllCars()){
+            if(c.getDriver().equals(d)){
+                model.addAttribute("car", c);
+                break;
+            }
+        }
         return "drivers/show";
     }
     
