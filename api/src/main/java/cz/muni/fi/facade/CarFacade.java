@@ -1,8 +1,6 @@
 package cz.muni.fi.facade;
 
-import cz.muni.fi.dto.ComponentDTO;
 import cz.muni.fi.dto.DriverDTO;
-import cz.muni.fi.dto.CarCreateDTO;
 import cz.muni.fi.dto.CarDTO;
 
 import java.util.List;
@@ -38,9 +36,9 @@ public interface CarFacade {
     /**
      * CRUD operation create
      *
-     * @param carCreateDTO
+     * @param carDTO
      */
-    void createCar(CarDTO carCreateDTO);
+    void createCar(CarDTO carDTO);
 
     /**
      * CRUD operation update

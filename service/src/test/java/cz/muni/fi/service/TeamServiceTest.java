@@ -1,6 +1,7 @@
 package cz.muni.fi.service;
 
 import cz.muni.fi.UtilityClass;
+import cz.muni.fi.dao.DriverDao;
 import cz.muni.fi.dao.TeamDao;
 import cz.muni.fi.entities.Driver;
 import cz.muni.fi.entities.Team;
@@ -38,6 +39,9 @@ public class TeamServiceTest extends AbstractTransactionalTestNGSpringContextTes
     @Mock
     private TeamDao teamDao;
 
+    @Mock
+    private DriverDao driverDao;
+
     @Autowired
     @InjectMocks
     private TeamService teamService;
@@ -49,6 +53,10 @@ public class TeamServiceTest extends AbstractTransactionalTestNGSpringContextTes
     @BeforeClass
     public void setup() {
         MockitoAnnotations.initMocks(this);
+
+        when(driverDao.updateDriver(any(Driver.class))).then(invoke -> {
+           return new Driver();
+        });
 
         when(teamDao.addTeam(any(Team.class))).then(invoke -> {
             Team mockedTeam = invoke.getArgumentAt(0, Team.class);
@@ -133,7 +141,7 @@ public class TeamServiceTest extends AbstractTransactionalTestNGSpringContextTes
         teamService.createTeam(blueTeam);
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void createTeamWithNullAttributesTest() {
         redTeam.setName(null);
         redTeam.setCarOne(null);
@@ -154,12 +162,22 @@ public class TeamServiceTest extends AbstractTransactionalTestNGSpringContextTes
         assertThat(updatedTeam).isEqualToComparingFieldByField(blueTeam);
     }
 
+    @Test
+    public void updateTeamDriverTest(){
+        Driver lopez = new Driver();
+        lopez.setAsTestDriver();
+        blueTeam.getCarTwo().setDriver(lopez);
+        teamService.updateTeam(blueTeam);
+        Team updatedBlueTeam = teams.get(blueTeam.getId());
+        assertThat(updatedBlueTeam.getCarTwo().getDriver().isMainDriver()).isEqualTo(true);
+    }
+
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void updateNullTeamTest() {
         teamService.updateTeam(null);
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void updateTeamWithNullAttributeTest() {
         blueTeam.setId(null);
         teamService.updateTeam(blueTeam);
@@ -206,5 +224,10 @@ public class TeamServiceTest extends AbstractTransactionalTestNGSpringContextTes
     public void findAllTeamCarDriversEmptyTest() {
         teams.clear();
         assertThat(teamService.findAllTeamCarDrivers()).hasSize(0);
+    }
+
+    @Test
+    public void findAllTeamCarsTest(){
+        assertThat(teamService.findAllTeamCars()).hasSize(teams.size() * 2);
     }
 }

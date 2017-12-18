@@ -1,5 +1,6 @@
 package cz.muni.fi.facade;
 
+import cz.muni.fi.dto.CarDTO;
 import cz.muni.fi.dto.DriverDTO;
 import cz.muni.fi.dto.TeamEditDTO;
 import cz.muni.fi.dto.TeamDTO;
@@ -54,4 +55,12 @@ public interface TeamFacade {
      * @return list of car drivers
      */
     List<DriverDTO> getAllTeamCarDrivers();
+
+
+    /**
+     * Get all cars used by teams
+     *
+     * @return list of cars
+     */
+    List<CarDTO> getAllTeamCars();
 }

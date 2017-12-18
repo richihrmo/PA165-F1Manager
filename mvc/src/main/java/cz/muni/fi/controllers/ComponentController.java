@@ -1,4 +1,4 @@
-package cz.muni.fi.mvc.controllers;
+package cz.muni.fi.controllers;
 
 import cz.muni.fi.dto.ComponentDTO;
 import cz.muni.fi.enums.ComponentType;

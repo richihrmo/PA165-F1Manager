@@ -58,7 +58,6 @@ public class TeamFacadeTest extends AbstractTransactionalTestNGSpringContextTest
     private List<DriverDTO> drivers = new ArrayList<>();
     private List<Component> carOneComponents = new ArrayList<>();
 
-
     @BeforeClass
     public void setUp() {
         Driver carOneDriver = new Driver("John", "Does", "US");
@@ -125,12 +124,21 @@ public class TeamFacadeTest extends AbstractTransactionalTestNGSpringContextTest
         );
 
         teamFacade.updateTeam(editRedTeam);
+        redTeam.getCarOne().getDriver().setMainDriver(true);
+        redTeam.getCarTwo().getDriver().setMainDriver(true);
         assertThat(teamFacade.getTeamById(editRedTeam.getId())).isEqualTo(redTeam);
     }
 
     @Test
     public void getAllTeamCarDriversTest() {
         assertThat(teamFacade.getAllTeamCarDrivers()).containsAll(drivers);
+    }
+
+    @Test
+    public void getAllTeamCarsTest(){
+        assertThat(teamFacade.getAllTeamCars())
+                .hasSize(2)
+                .contains(beanMappingService.mapTo(carOne, CarDTO.class), beanMappingService.mapTo(carTwo, CarDTO.class));
     }
 
     @AfterClass
