@@ -139,7 +139,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
 
     private void loadUsers() throws IOException
     {
-        user("ultr4S1ln34dm1nsk3He5l0", "Jon Snow", "iKnow@nothing.com", true);
-        user("heslo", "Cersei Lanister",  "cersei@lanister.com",  false);
+        user("admin-password", "Admin", "admin@admin.com", true);
+        user("user-password", "Basic user",  "user@user.com",  false);
     }
 }

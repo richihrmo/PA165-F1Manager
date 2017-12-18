@@ -22,7 +22,8 @@ import org.testng.annotations.AfterMethod;
  */
 @DirtiesContext
 @ContextConfiguration(classes = ServiceConfiguration.class)
-public class DriverFacadeTest extends AbstractTransactionalTestNGSpringContextTests {
+public class
+DriverFacadeTest extends AbstractTransactionalTestNGSpringContextTests {
     
     @Autowired
     private DriverFacade driverFacade;

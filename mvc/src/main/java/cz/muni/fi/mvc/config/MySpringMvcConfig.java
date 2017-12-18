@@ -10,11 +10,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 
@@ -24,8 +20,6 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @ComponentScan(basePackages = "cz.muni.fi.mvc.controllers")
 public class MySpringMvcConfig extends WebMvcConfigurerAdapter {
 
-    //private final static Logger log = LoggerFactory.getLogger(MySpringMvcConfig.class);
-
     private static final String TEXTS = "Texts";
 
     /**
@@ -33,7 +27,6 @@ public class MySpringMvcConfig extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        //log.debug("mapping URL / to home view");
         registry.addViewController("/").setViewName("home");
     }
 
@@ -48,7 +41,6 @@ public class MySpringMvcConfig extends WebMvcConfigurerAdapter {
      */
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-        //log.debug("enabling default servlet for static files");
         configurer.enable();
     }
 
@@ -57,7 +49,6 @@ public class MySpringMvcConfig extends WebMvcConfigurerAdapter {
      */
     @Bean
     public ViewResolver viewResolver() {
-        //log.debug("registering JSP in /WEB-INF/jsp/ as views");
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
         viewResolver.setPrefix("/WEB-INF/jsp/");
         viewResolver.setSuffix(".jsp");
@@ -69,7 +60,6 @@ public class MySpringMvcConfig extends WebMvcConfigurerAdapter {
      */
     @Bean
     public MessageSource messageSource() {
-        //log.debug("registering ResourceBundle 'Texts' for messages");
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setBasename(TEXTS);
         return messageSource;
@@ -80,7 +70,6 @@ public class MySpringMvcConfig extends WebMvcConfigurerAdapter {
      */
     @Bean
     public Validator validator() {
-        //log.debug("registering JSR-303 validator");
         return new LocalValidatorFactoryBean();
     }
 }
