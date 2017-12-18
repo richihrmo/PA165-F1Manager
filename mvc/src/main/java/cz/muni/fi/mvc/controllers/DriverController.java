@@ -42,8 +42,11 @@ public class DriverController {
     private CarFacade carFacade;
     
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public String getAllDrivers(@Valid @ModelAttribute("filter")DrivingSkillFilter filterType, Model model){
-        
+    public String getAllDrivers(@Valid @ModelAttribute("filter")DrivingSkillFilter filterType, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder){
+
+        String res = Tools.redirectNonUser(request, uriBuilder, redirectAttributes);
+        if(res != null) return res;
+
         if(filterType.getSkill() == DrivingSkillFilter.MainDrivingSkillFilter.NONE || filterType.getSkill() == null){
             log.debug("[DRIVER] show all");
             model.addAttribute("drivers", driverFacade.getAllDrivers());
@@ -88,7 +91,11 @@ public class DriverController {
     }
     
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
-    public String detailDriver(@PathVariable Long id, Model model) {
+    public String detailDriver(@PathVariable Long id, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
+
+        String res = Tools.redirectNonUser(request, uriBuilder, redirectAttributes);
+        if(res != null) return res;
+
         log.debug("[DRIVER] details about ({})", id);
         DriverDTO d = driverFacade.getDriverByID(id);
         model.addAttribute("driver", d);

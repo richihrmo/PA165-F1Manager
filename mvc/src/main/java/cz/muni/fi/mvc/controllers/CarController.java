@@ -1,15 +1,14 @@
-package cz.muni.fi.controllers;
+package cz.muni.fi.mvc.controllers;
 
 import cz.muni.fi.dto.CarCreateDTO;
 import cz.muni.fi.dto.CarDTO;
 import cz.muni.fi.dto.ComponentDTO;
 import cz.muni.fi.dto.DriverDTO;
-import cz.muni.fi.entities.Driver;
 import cz.muni.fi.enums.ComponentType;
 import cz.muni.fi.facade.CarFacade;
 import cz.muni.fi.facade.ComponentFacade;
 import cz.muni.fi.facade.DriverFacade;
-import java.util.ArrayList;
+import cz.muni.fi.mvc.Tools;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,9 +19,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Richard Hrmo
@@ -41,7 +41,11 @@ public class CarController {
     private DriverFacade driverFacade;
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
-    public String newCar(Model model){
+    public String newCar(Model model, HttpServletRequest request, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes){
+
+        String res = Tools.redirectNonAdmin(request, uriBuilder, redirectAttributes);
+        if(res != null) return res;
+
         model.addAttribute("car", new CarCreateDTO());
         model.addAttribute("drivers", getAvailableDrivers(null));
         modelAddComponents(model, null);
@@ -51,8 +55,13 @@ public class CarController {
     @RequestMapping(value = "/new", method = RequestMethod.POST)
     public String newCarCreate(@Valid @ModelAttribute("car") CarCreateDTO form,
                                RedirectAttributes redirectAttributes,
-                               Model model,
+                               Model model, HttpServletRequest request,
                                UriComponentsBuilder uriBuilder){
+
+
+        String res = Tools.redirectNonAdmin(request, uriBuilder, redirectAttributes);
+        if(res != null) return res;
+
         if (form.getDriverId() == null){
             model.addAttribute("alert_danger", "Driver is null");
             modelAddComponents(model, null);
@@ -84,7 +93,11 @@ public class CarController {
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public String updateCar(@PathVariable long id, Model model){
+    public String updateCar(@PathVariable long id, Model model, HttpServletRequest request, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes){
+
+        String res = Tools.redirectNonAdmin(request, uriBuilder, redirectAttributes);
+        if(res != null) return res;
+
         CarDTO carDTO = carFacade.findCarById(id);
         CarCreateDTO carCreateDTO =
                 new CarCreateDTO(carDTO.getId(),
@@ -102,8 +115,13 @@ public class CarController {
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
     public String updateCarCreate(@Valid @ModelAttribute("car") CarCreateDTO form,
-                               RedirectAttributes redirectAttributes,
+                               RedirectAttributes redirectAttributes, HttpServletRequest request,
                                UriComponentsBuilder uriBuilder, Model model){
+
+
+        String res = Tools.redirectNonAdmin(request, uriBuilder, redirectAttributes);
+        if(res != null) return res;
+
         if (form.getDriverId() == null){
             model.addAttribute("alert_danger", "Driver is null");
             modelAddComponents(model, form);
@@ -138,27 +156,39 @@ public class CarController {
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     public String deleteCar(
-            @PathVariable long id, Model model, UriComponentsBuilder builder, RedirectAttributes redirectAttributes){
+            @PathVariable long id, Model model, HttpServletRequest request, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes){
+
+        String res = Tools.redirectNonAdmin(request, uriBuilder, redirectAttributes);
+        if(res != null) return res;
+
         CarDTO carDTO = carFacade.findCarById(id);
         try {
             carFacade.deleteCar(carDTO);
         } catch (Exception e){
             redirectAttributes.addFlashAttribute("alert_danger", "Car No." + carDTO.getId()
                     + " cannot be deleted, because it part of team");
-            return "redirect:" + builder.path("/cars").build().toUriString();
+            return "redirect:" + uriBuilder.path("/cars").build().toUriString();
         }
         redirectAttributes.addFlashAttribute("alert_success", "Car No." + carDTO.getId() + " was deleted.");
-        return "redirect:" + builder.path("/cars").build().toUriString();
+        return "redirect:" + uriBuilder.path("/cars").build().toUriString();
     }
 
     @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
-    public String view(@PathVariable long id, Model model) {
+    public String view(@PathVariable long id, Model model, HttpServletRequest request, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
+
+        String res = Tools.redirectNonUser(request, uriBuilder, redirectAttributes);
+        if(res != null) return res;
+
         model.addAttribute("car", carFacade.findCarById(id));
         return "cars/show";
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public String list(Model model) {
+    public String list(Model model, HttpServletRequest request, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
+
+        String res = Tools.redirectNonUser(request, uriBuilder, redirectAttributes);
+        if(res != null) return res;
+
         model.addAttribute("cars", carFacade.listAllCars());
         return "cars/list";
     }

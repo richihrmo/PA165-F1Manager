@@ -1,4 +1,4 @@
-package cz.muni.fi.controllers;
+package cz.muni.fi.mvc.controllers;
 
 import cz.muni.fi.dto.ComponentDTO;
 import cz.muni.fi.enums.ComponentType;
@@ -40,8 +40,10 @@ public class ComponentController {
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String createComponent(Model model,  HttpServletRequest request, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
+
         String res = Tools.redirectNonAdmin(request, uriBuilder, redirectAttributes);
         if(res != null) return res;
+
         log.debug("[COMPONENT] Create");
         model.addAttribute("componentTypeSelect", Arrays.asList(ComponentType.values()));
         model.addAttribute("componentCreate", new ComponentDTO());
@@ -87,8 +89,10 @@ public class ComponentController {
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editComponent(@PathVariable long id, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
+
         String res = Tools.redirectNonAdmin(request, uriBuilder, redirectAttributes);
         if(res != null) return res;
+
         log.debug("[COMPONENT] Edit {}", id);
         ComponentDTO componentDTO = componentFacade.findComponentByID(id);
         model.addAttribute("componentTypeSelect", Arrays.asList(ComponentType.values()));
@@ -157,15 +161,21 @@ public class ComponentController {
     }
 
     @RequestMapping(value = "/read/{id}", method = RequestMethod.GET)
-    public String read(@PathVariable long id, Model model, UriComponentsBuilder uriBuilder, HttpServletRequest request) {
+    public String read(@PathVariable long id, Model model, UriComponentsBuilder uriBuilder, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         log.debug(" Read ({})", id);
+
+        String res = Tools.redirectNonUser(request, uriBuilder, redirectAttributes);
+        if(res != null) return res;
 
         model.addAttribute("component", componentFacade.findComponentByID(id));
         return "components/read";
     }
 
     @RequestMapping(value="", method = RequestMethod.GET)
-    public String list(@Valid @ModelAttribute("filter")ComponentFilter filterBean, Model model, HttpServletRequest request, UriComponentsBuilder uriBuilder) {
+    public String list(@Valid @ModelAttribute("filter")ComponentFilter filterBean, Model model, HttpServletRequest request, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
+
+        String res = Tools.redirectNonUser(request, uriBuilder, redirectAttributes);
+        if(res != null) return res;
 
         ComponentFilter.ComponentFilterType filterNone = ComponentFilter.ComponentFilterType.NONE;
         List<ComponentDTO> components;
