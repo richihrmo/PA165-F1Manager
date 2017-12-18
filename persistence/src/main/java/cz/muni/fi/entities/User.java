@@ -31,13 +31,8 @@ public class User {
     @Getter @Setter private String email;
 
     @Getter @Setter private Boolean admin = false;
-    @NotNull
-    @Getter @Setter private String name;
+
+    @NotNull @Getter @Setter private String name;
 
     public User() {}
-
-    public User(@NotNull String email, @NotNull String name) {
-        this.email = email;
-        this.name = name;
-    }
 }

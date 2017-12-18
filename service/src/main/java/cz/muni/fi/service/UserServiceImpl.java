@@ -51,28 +51,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(User user) {
-        if (user == null) throw new IllegalArgumentException("User cannot be null");
-        try {
-            userDao.deleteUser(user);
-        } catch (Throwable e) {
-            throw new ServiceDataAccessException("Cannot delete user", e);
-        }
-    }
-
-    @Override
-    public User updateUser(User user) {
-        if (user == null) throw new IllegalArgumentException("User cannot be null");
-        try {
-            return userDao.updateUser(user);
-        } catch (Throwable e) {
-            throw new ServiceDataAccessException("Cannot update user", e);
-        }
-    }
-
-    @Override
     public User addUser(User user, String password) {
         if (user == null) throw new IllegalArgumentException("User cannot be null");
+        if (password == null) throw new IllegalArgumentException("Password cannot be null");
         try {
             user.setPasswordHash(createHash(password));
             return userDao.addUser(user);
@@ -86,7 +67,10 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new IllegalArgumentException("User is null!");
         }
-        // Fresh data
+
+        if (password == null) {
+            throw new IllegalArgumentException("Password is null!");
+        }
 
         User userResult = findUserById(user.getId());
 
@@ -124,7 +108,7 @@ public class UserServiceImpl implements UserService {
         return paddingLength > 0 ? String.format("%0" + paddingLength + "d", 0) + hex : hex;
     }
 
-    public static boolean validatePassword(String password, String correctHash) {
+    private static boolean validatePassword(String password, String correctHash) {
         if (password == null) return false;
         if (correctHash == null) throw new IllegalArgumentException("password hash is null");
         String[] params = correctHash.split(":");
