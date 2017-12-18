@@ -1,4 +1,4 @@
-package cz.muni.fi;
+package cz.muni.fi.mvc;
 
 import cz.muni.fi.dto.UserDTO;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
