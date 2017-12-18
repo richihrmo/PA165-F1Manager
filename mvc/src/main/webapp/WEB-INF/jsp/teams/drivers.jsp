@@ -9,15 +9,9 @@
 <my:page_template title="All team drivers" icon_class="fa fa-users">
     <jsp:attribute name="body">
 
-        <button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/'">
-            Home
+        <button class="btn btn" onclick="location.href='${pageContext.request.contextPath}/teams'">
+            Return
         </button>
-
-        <button class="btn btn-warning" onclick="location.href='${pageContext.request.contextPath}/teams'">
-            All teams
-        </button>
-
-        <hr>
 
         <div class="row">
             <div class="col-md-12">
@@ -26,5 +20,6 @@
                     <p><strong>Name: </strong>${d.name} &nbsp;<strong>Surname: </strong>${d.surname} &nbsp;<strong>Nationality: </strong> ${d.nationality}
                 </c:forEach>
             </div>
+        </div>
     </jsp:attribute>
 </my:page_template>

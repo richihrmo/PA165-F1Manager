@@ -5,9 +5,12 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<my:page_template title="Edit component">
+<my:page_template title="Edit component" icon_class="fa fa-wrench">
     <jsp:attribute name="body">
         <c:set var="end" value="components"/>
+        
+        <button class="btn" onclick="location.href='${pageContext.request.contextPath}/${end}'">Return</button>
+        
         <form:form method="post" action="${pageContext.request.contextPath}/${end}/edit/${componentEdit.id}"
                    modelAttribute="componentEdit" cssClass="form-horizontal">
 
@@ -37,9 +40,8 @@
                 </div>
                 </div>
             </c:if>    
-            <button class="btn btn-primary" type="submit">Update component</button>
+            <button class="btn btn-primary" type="submit">Edit component</button>
         </form:form>
-        <button class="btn" onclick="location.href='${pageContext.request.contextPath}/${end}'">Return</button>
 
     </jsp:attribute>
 </my:page_template>

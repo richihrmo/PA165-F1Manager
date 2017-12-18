@@ -8,62 +8,56 @@
 <my:page_template title="Create new team" icon_class="fa fa-users">
 
     <jsp:attribute name="body">
-        <button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/'">
-            Home
-        </button>
 
-        <button class="btn btn-warning" onclick="location.href='${pageContext.request.contextPath}/teams/'">
-            All teams
+        <button class="btn btn" onclick="location.href='${pageContext.request.contextPath}/teams/'">
+            Return
         </button>
-
-        <hr>
 
         <form:form method="post"
                    action="${pageContext.request.contextPath}/teams/create"
                    modelAttribute="teamCreate"
                    cssClass="form-horizontal">
 
-            <div class="row">
-                <div class="form-group col-md-12 text-left">
-                    <form:label path="name" cssClass="col-md-12">Name</form:label>
-                    <div class="col-md-8">
-                        <form:input path="name" cssClass="form-control"/>
-                        <form:errors path="name" cssClass="help-block"/>
-                    </div>
-                </div>
-
-                <div class="form-group col-md-12 text-left">
-                    <form:label path="carOneId" cssClass="col-md-12">Car one</form:label>
-                    <div class="col-md-8">
-                        <form:select path="carOneId" cssClass="form-control">
-                            <c:forEach items="${cars}" var="c">
-                                <form:option value="${c.id}">
-                                    Driver: ${c.driver.name} ${c.driver.surname}.
-                                    Components: ${c.engine.name}, ${c.brakes.name}, ${c.suspension.name}, ${c.aerodynamics.name}, ${c.transmission.name}
-                                </form:option>
-                            </c:forEach>
-                        </form:select>
-                        <form:errors path="carOneId" cssClass="help-block"/>
-                    </div>
-                </div>
-
-                <div class="form-group col-md-12 text-left">
-                    <form:label path="carTwoId" cssClass="col-md-12">Car two</form:label>
-                    <div class="col-md-8">
-                        <form:select path="carTwoId" cssClass="form-control">
-                            <c:forEach items="${cars}" var="c">
-                                <form:option value="${c.id}">
-                                    Driver: ${c.driver.name} ${c.driver.surname}.
-                                    Components: ${c.engine.name}, ${c.brakes.name}, ${c.suspension.name}, ${c.aerodynamics.name}, ${c.transmission.name}
-                                </form:option>
-                            </c:forEach>
-                        </form:select>
-                        <form:errors path="carOneId" cssClass="help-block"/>
-                    </div>
+            <div class="form-group">
+                <form:label path="name" cssClass="col-sm-3 control-label">Name</form:label>
+                <div class="col-sm-8">
+                    <form:input path="name" cssClass="form-control"/>
+                    <form:errors path="name" cssClass="help-block"/>
                 </div>
             </div>
 
-          <button class="btn btn-success" type="submit">Create new team</button>
+            <div class="form-group">
+                <form:label path="carOneId" cssClass="col-sm-3 control-label">Car one</form:label>
+                <div class="col-md-8">
+                    <form:select path="carOneId" cssClass="form-control">
+                        <c:forEach items="${cars}" var="c">
+                            <form:option value="${c.id}">
+                                Driver: ${c.driver.name} ${c.driver.surname}.
+                                Components: ${c.engine.name}, ${c.brakes.name}, ${c.suspension.name}, ${c.aerodynamics.name}, ${c.transmission.name}
+                            </form:option>
+                        </c:forEach>
+                    </form:select>
+                    <form:errors path="carOneId" cssClass="help-block"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <form:label path="carTwoId" cssClass="col-sm-3 control-label">Car two</form:label>
+                <div class="col-md-8">
+                    <form:select path="carTwoId" cssClass="form-control">
+                        <c:forEach items="${cars}" var="c">
+                            <form:option value="${c.id}">
+                                Driver: ${c.driver.name} ${c.driver.surname}.
+                                Components: ${c.engine.name}, ${c.brakes.name}, ${c.suspension.name}, ${c.aerodynamics.name}, ${c.transmission.name}
+                            </form:option>
+                        </c:forEach>
+                    </form:select>
+                    <form:errors path="carOneId" cssClass="help-block"/>
+                </div>
+            </div>
+            
+            <button class="btn btn-primary" type="submit">Create team</button>
+            
         </form:form>
     </jsp:attribute>
 </my:page_template>

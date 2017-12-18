@@ -5,7 +5,7 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<my:page_template title="Components">
+<my:page_template title="Components" icon_class="fa fa-wrench">
     <jsp:attribute name="body">
         <c:set var="end" value="components"/>
 
@@ -52,22 +52,22 @@
         </form:form>
 
 
-        <table class="table table-striped">
+        <table class="table">
             <thead>
                 <tr>
-                    <th class="text-center">#</th>
-                    <th class="text-center">Name</th>
-                    <th class="text-center">Type</th>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Type</th>
                     <th class="text-center">Availability</th>
                     <%--<my:protected>--%>
+                        <th class="text-center">Edit</th>
                         <th class="text-center">Delete</th>
-                        <th class="text-center">Update</th>
                     <%--</my:protected>--%>
                 </tr>
             </thead>
             <tbody>
             <c:forEach items="${components}" var="component">
-                <tr class="text-center">
+                <tr>
                     <td>
                         <c:out value="${component.id}"/>
                     </td>
@@ -80,7 +80,7 @@
                         <c:out value="${component.type.urlAnnotation}"/>
                     </td>
 
-                    <td>
+                    <td class="text-center">
                         <c:if test = "${component.availability}">
                             <span class="glyphicon glyphicon-ok"></span>
                         </c:if>
@@ -90,7 +90,11 @@
                     </td>
 
                     <%--<my:protected>--%>
-                    <td>
+                    <td class="text-center">
+                        <span class="glyphicon glyphicon-pencil" onclick="location.href='${pageContext.request.contextPath}/${end}/edit/${component.id}'"></span>
+                    </td>
+                    
+                    <td class="text-center">
                         <span class="glyphicon glyphicon-trash" onclick=" openModal(${component.id}) "></span>
 
                         <my:modal_template suffix="${component.id}" title="Delete component">
@@ -109,9 +113,6 @@
                           </my:modal_template>
 
                     </td>
-                    <td>
-                        <span class="glyphicon glyphicon-pencil" onclick="location.href='${pageContext.request.contextPath}/${end}/edit/${component.id}'"></span>
-                    </td>
                   <%--</my:protected>--%>
 
 
@@ -119,11 +120,14 @@
             </c:forEach>
             </tbody>
         </table>
+        <c:if test="${empty components}">
+            <div class="col-md-12">
+                <h4>No components are available right now.</h4>
+            </div>
+        </c:if>
 
       <%--<my:protected>--%>
               <button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/${end}/create'"> Add Component </button>
-      <%--</my:protected>--%>
-      <button class="btn btn-secondary" onclick="location.href='${pageContext.request.contextPath}/'"> Return </button>
 
     </jsp:attribute>
 </my:page_template>

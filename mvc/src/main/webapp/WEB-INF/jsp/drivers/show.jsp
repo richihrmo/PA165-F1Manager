@@ -6,18 +6,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 
-<my:page_template title="Driver details">
+<my:page_template title="Driver details" icon_class="fa fa-user">
 <jsp:attribute name="body">
-  
-    <form method="get" action="${pageContext.request.contextPath}/drivers">
-        <button type="submit" class="btn">Return</button>
-    </form>
+    
     <div>
-        <div>Name: <c:out value="${driver.name}"/></div>
-        <div>Surname: <c:out value="${driver.surname}"/></div>
-        <div>Nationality: <c:out value="${driver.nationality}"/></div>
-        <div>Driver type: <c:out value="${driver.mainDriver ? 'Main driver' : 'Test driver'}"/></div>
-        <div>Special skill: <c:out value="${driver.specialSkill.urlAnnotation}"/></div>
+        <div><strong>Name: </strong><c:out value="${driver.name}"/></div>
+        <div><strong>Surname: </strong><c:out value="${driver.surname}"/></div>
+        <div><strong>Nationality: </strong><c:out value="${driver.nationality}"/></div>
+        <div><strong>Driver type: </strong><c:out value="${driver.mainDriver ? 'Main driver' : 'Test driver'}"/></div>
+        <div><strong>Special skill: </strong><c:out value="${driver.specialSkill.urlAnnotation}"/></div>
     </div>
     
     <c:if test="${driver.mainDriver}">
@@ -63,5 +60,10 @@
             </p>
         </div>
     </c:if>
+        
+    <form method="get" action="${pageContext.request.contextPath}/drivers">
+        <button type="submit" class="btn">Return</button>
+    </form>
+    
 </jsp:attribute>
 </my:page_template>

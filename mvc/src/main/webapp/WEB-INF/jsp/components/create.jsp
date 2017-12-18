@@ -5,8 +5,10 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<my:page_template title="Create Component">
+<my:page_template title="Create Component" icon_class="fa fa-wrench">
 <jsp:attribute name="body">
+    
+    <button class="btn" onclick="location.href='${pageContext.request.contextPath}/${end}/components'">Return</button>
 
     <form:form method="post" action="${pageContext.request.contextPath}/components/create"
                modelAttribute="componentCreate" cssClass="form-horizontal">
@@ -29,7 +31,6 @@
 
         <button class="btn btn-primary" type="submit">Create component</button>
     </form:form>
-    <button class="btn" onclick="location.href='${pageContext.request.contextPath}/${end}'">Return</button>
 
 </jsp:attribute>
 </my:page_template>

@@ -5,7 +5,7 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<my:page_template title="Component ${component.name}">
+<my:page_template title="Component ${component.name}" icon_class="fa fa-wrench">
     <jsp:attribute name="body">
          <c:set var="end" value="components"/>
 
@@ -25,7 +25,6 @@
                </script>
 
               <table class="table">
-                  <caption>Component <c:out value="${component.name}"/></caption>
                   <thead>
                   <tr>
                    <th>Name</th>
@@ -41,7 +40,7 @@
                   <tbody>
                   <tr>
                    <td>
-                    <my:a href="/${end}/read/${component.id}"><c:out value="${component.name}"/> </my:a>
+                    <c:out value="${component.name}"/>
                    </td>
                    <td>
                     <c:out value="${component.type.urlAnnotation}"/>
