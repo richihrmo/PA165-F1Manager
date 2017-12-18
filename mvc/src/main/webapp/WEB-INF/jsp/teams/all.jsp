@@ -22,7 +22,7 @@
                     <thead>
                     <tr>
                         <th class="col-md-6">Name</th>
-                        <th class="col-md-2 text-center">Update</th>
+                        <th class="col-md-2 text-center">Edit</th>
                         <th class="col-md-2 text-center">Delete</th>
                     </tr>
                     </thead>

@@ -1,9 +1,8 @@
 <%@ attribute name="car" required="true" type="cz.muni.fi.dto.CarDTO"%>
-<%@ attribute name="name" required="true"%>
+<%@ attribute name="name" required="false"%>
 
 <div>
     <div class="col-sm-12" style="padding-left: 0px;">
-        <h2>${name} <i class="fa fa-car" aria-hidden="true"></i></h2>
         <h4>Driver</h4>
         <p>
             <strong>Name:</strong>&nbsp;${car.driver.name}

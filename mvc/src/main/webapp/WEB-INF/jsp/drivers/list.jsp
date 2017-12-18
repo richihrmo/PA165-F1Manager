@@ -5,7 +5,7 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<my:page_template title="Drivers">
+<my:page_template title="Drivers" icon_class="fa fa-user">
 <jsp:attribute name="body">
     <script>
         function openModal(suffix) {
@@ -33,19 +33,17 @@
         <thead>
         <tr>
             <th>Name</th>
-            <th>Surname</th>
             <th>Nationality</th>
             <th>Driver Type</th>
             <th>Main Skill</th>
-            <th>Update</th>
-            <th>Delete</th>
+            <th class="text-center">Edit</th>
+            <th class="text-center">Delete</th>
         </tr>
         </thead>
         <tbody>
         <c:forEach items="${drivers}" var="driver">
             <tr>
-                <td><my:a href="/drivers/detail/${driver.id}"><c:out value="${driver.name}"/> </my:a></td>
-                <td><my:a href="/drivers/detail/${driver.id}"><c:out value="${driver.surname}"/> </my:a></td>
+                <td><my:a href="/drivers/detail/${driver.id}"><c:out value="${driver.name}"/>&nbsp;<c:out value="${driver.surname}"/></my:a></td>
                 <td><c:out value="${driver.nationality}"/></td>
                 <td><c:out value="${driver.mainDriver ? 'Main driver' : 'Test driver'}"/></td>
                 <td><c:out value="${driver.specialSkill.urlAnnotation}"/></td>
@@ -75,6 +73,11 @@
         </c:forEach>
         </tbody>
     </table>
+    <c:if test="${empty drivers}">
+        <div class="col-md-12">
+            <h4>No drivers are available right now.</h4>
+        </div>
+    </c:if>
         
     <form method="get" action="${pageContext.request.contextPath}/drivers/new">
         <button type="submit" class="btn btn-primary">

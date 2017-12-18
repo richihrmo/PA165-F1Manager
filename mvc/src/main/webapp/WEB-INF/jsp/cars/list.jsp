@@ -6,18 +6,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 
-<my:page_template title="Cars" icon_class="fa fa-users">
+<my:page_template title="Cars" icon_class="fa fa-car">
     <jsp:attribute name="body">
-
-        <button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/'">
-            Home
-        </button>
-
-        <button class="btn btn-warning" onclick="location.href='${pageContext.request.contextPath}/cars/new'">
-            Create new car
-        </button>
-
-        <hr>
 
         <c:set var="endpoint" value="cars"/>
 
@@ -27,7 +17,7 @@
                     <thead>
                     <tr>
                         <th class="col-md-6">Car ID</th>
-                        <th class="col-md-2 text-center">Update</th>
+                        <th class="col-md-2 text-center">Edit</th>
                         <th class="col-md-2 text-center">Delete</th>
                     </tr>
                     </thead>
@@ -41,16 +31,11 @@
                                 </td>
 
                                 <td class="text-center">
-                                    <my:a href="/${endpoint}/edit/${car.id}">
-                                        <i class="fa fa-pencil-square-o fa-2x"
-                                           aria-hidden="true"
-                                           style="cursor: pointer; color: black;">
-                                        </i>
-                                    </my:a>
+                                    <span class="glyphicon glyphicon-pencil" onclick="location.href='${pageContext.request.contextPath}/${endpoint}/edit/${car.id}'"></span>
                                 </td>
 
                                 <td class="text-center">
-                                    <i class="fa fa-trash fa-2x" aria-hidden="true" onclick="openModal(${car.id})" style="cursor: pointer;"></i>
+                                    <span class="glyphicon glyphicon-trash" onclick="openModal(${car.id})"></span>
                                     <my:modal_template suffix="${car.id}" title="Delete team">
                                         <jsp:attribute name="body">
                                             <strong>
@@ -82,6 +67,10 @@
                 </c:if>
             </div>
         </div>
+        
+        <button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/cars/new'">
+            Create new car
+        </button>
     </jsp:attribute>
 </my:page_template>
 

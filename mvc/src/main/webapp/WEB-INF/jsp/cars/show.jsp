@@ -6,22 +6,18 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 
-<my:page_template title="${car.id}" icon_class="fa fa-users">
+<my:page_template title="${car.id}" icon_class="fa fa-car">
     <jsp:attribute name="body">
-
-        <button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/'">
-            Home
-        </button>
-
-        <button class="btn btn-warning" onclick="location.href='${pageContext.request.contextPath}/cars'">
-            All teams
-        </button>
-
-        <hr>
 
         <div class="row">
             <div class="col-md-12">
-                <my:car_template car="${car}" name="carOne"/>
+                <my:car_template car="${car}"/>
             </div>
+        </div>
+            
+        <button class="btn btn-secondary" onclick="location.href='${pageContext.request.contextPath}/cars'">
+            Return
+        </button>
+            
     </jsp:attribute>
 </my:page_template>

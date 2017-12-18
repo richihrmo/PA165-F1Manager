@@ -5,7 +5,7 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<my:page_template title="Create Component">
+<my:page_template title="Create Component" icon_class="fa fa-wrench">
 <jsp:attribute name="body">
     
     <button class="btn" onclick="location.href='${pageContext.request.contextPath}/${end}/components'">Return</button>
