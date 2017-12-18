@@ -125,6 +125,8 @@ public class TeamFacadeTest extends AbstractTransactionalTestNGSpringContextTest
         );
 
         teamFacade.updateTeam(editRedTeam);
+        redTeam.getCarOne().getDriver().setMainDriver(true);
+        redTeam.getCarTwo().getDriver().setMainDriver(true);
         assertThat(teamFacade.getTeamById(editRedTeam.getId())).isEqualTo(redTeam);
     }
 

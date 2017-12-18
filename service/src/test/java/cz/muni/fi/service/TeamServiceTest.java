@@ -39,6 +39,9 @@ public class TeamServiceTest extends AbstractTransactionalTestNGSpringContextTes
     @Mock
     private TeamDao teamDao;
 
+    @Mock
+    private DriverDao driverDao;
+
     @Autowired
     @InjectMocks
     private TeamService teamService;
@@ -50,6 +53,10 @@ public class TeamServiceTest extends AbstractTransactionalTestNGSpringContextTes
     @BeforeClass
     public void setup() {
         MockitoAnnotations.initMocks(this);
+
+        when(driverDao.updateDriver(any(Driver.class))).then(invoke -> {
+           return new Driver();
+        });
 
         when(teamDao.addTeam(any(Team.class))).then(invoke -> {
             Team mockedTeam = invoke.getArgumentAt(0, Team.class);
@@ -153,6 +160,16 @@ public class TeamServiceTest extends AbstractTransactionalTestNGSpringContextTes
         teamService.updateTeam(blueTeam);
         Team updatedTeam = teams.get(blueTeam.getId());
         assertThat(updatedTeam).isEqualToComparingFieldByField(blueTeam);
+    }
+
+    @Test
+    public void updateTeamDriverTest(){
+        Driver lopez = new Driver();
+        lopez.setAsTestDriver();
+        blueTeam.getCarTwo().setDriver(lopez);
+        teamService.updateTeam(blueTeam);
+        Team updatedBlueTeam = teams.get(blueTeam.getId());
+        assertThat(updatedBlueTeam.getCarTwo().getDriver().isMainDriver()).isEqualTo(true);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)

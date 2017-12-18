@@ -2,6 +2,8 @@ package cz.muni.fi.controllers;
 
 import cz.muni.fi.dto.CarCreateDTO;
 import cz.muni.fi.dto.CarDTO;
+import cz.muni.fi.dto.DriverDTO;
+import cz.muni.fi.entities.Driver;
 import cz.muni.fi.enums.ComponentType;
 import cz.muni.fi.facade.CarFacade;
 import cz.muni.fi.facade.ComponentFacade;
@@ -17,6 +19,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Richard Hrmo
@@ -37,7 +41,8 @@ public class CarController {
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newCar(Model model){
         model.addAttribute("car", new CarCreateDTO());
-        model.addAttribute("drivers", driverFacade.getAllDrivers());
+        List<DriverDTO> driverList = driverFacade.getAllDrivers().stream().filter(p -> !p.isMainDriver()).collect(Collectors.toList());
+        model.addAttribute("drivers", driverList);
         model.addAttribute("engines", componentFacade.listAllAvailableComponentsWithType(ComponentType.ENGINE));
         model.addAttribute("brakes", componentFacade.listAllAvailableComponentsWithType(ComponentType.BRAKES));
         model.addAttribute("aerodynamics", componentFacade.listAllAvailableComponentsWithType(ComponentType.AERODYNAMICS));
