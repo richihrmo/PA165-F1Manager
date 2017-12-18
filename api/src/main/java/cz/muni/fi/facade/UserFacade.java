@@ -3,7 +3,7 @@ package cz.muni.fi.facade;
 import cz.muni.fi.dto.UserCreateDTO;
 import cz.muni.fi.dto.UserDTO;
 
-import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Robert Tamas
@@ -15,7 +15,7 @@ public interface UserFacade {
      *
      * @return collection of all users
      */
-    Collection<UserDTO> findAllUsers();
+    List<UserDTO> findAllUsers();
 
     /**
      * Find user by email
