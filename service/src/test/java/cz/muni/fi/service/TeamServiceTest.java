@@ -225,4 +225,9 @@ public class TeamServiceTest extends AbstractTransactionalTestNGSpringContextTes
         teams.clear();
         assertThat(teamService.findAllTeamCarDrivers()).hasSize(0);
     }
+
+    @Test
+    public void findAllTeamCarsTest(){
+        assertThat(teamService.findAllTeamCars()).hasSize(teams.size() * 2);
+    }
 }

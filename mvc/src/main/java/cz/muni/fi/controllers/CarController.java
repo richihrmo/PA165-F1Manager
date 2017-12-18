@@ -81,22 +81,6 @@ public class CarController {
                 componentFacade.findComponentByID(form.getTransmissionId()),
                 componentFacade.findComponentByID(form.getBrakesId()));
 
-        if (carDTO.getDriver() == null){
-            model.addAttribute("alert_danger", "Driver is null");
-            model.addAttribute("components", componentFacade.listAllComponents());
-            model.addAttribute("drivers", driverFacade.getAllDrivers());
-            return "cars/new";
-        }
-        if (carDTO.getTransmission() == null
-                || carDTO.getAerodynamics() == null
-                || carDTO.getBrakes() == null
-                || carDTO.getEngine() == null
-                || carDTO.getSuspension() == null){
-            model.addAttribute("alert_danger", "One of components is null");
-            model.addAttribute("components", componentFacade.listAllComponents());
-            model.addAttribute("drivers", driverFacade.getAllDrivers());
-            return "cars/new";
-        }
         carFacade.createCar(carDTO);
         redirectAttributes.addFlashAttribute("alert_success", "Car No." + carDTO.getId() + " was created.");
         return "redirect:" + uriBuilder.path("/cars").build().toUriString();
@@ -127,6 +111,23 @@ public class CarController {
     public String updateCarCreate(@Valid @ModelAttribute("car") CarCreateDTO form,
                                RedirectAttributes redirectAttributes,
                                UriComponentsBuilder uriBuilder, Model model){
+        if (form.getDriverId() == null){
+            model.addAttribute("alert_danger", "Driver is null");
+            model.addAttribute("components", componentFacade.listAllComponents());
+            model.addAttribute("drivers", driverFacade.getAllDrivers());
+            return "cars/edit";
+        }
+        if (form.getEngineId() == null
+                || form.getAerodynamicsId() == null
+                || form.getSuspensionId() == null
+                || form.getTransmissionId() == null
+                || form.getBrakesId() == null){
+            model.addAttribute("alert_danger", "One of components is null");
+            model.addAttribute("components", componentFacade.listAllComponents());
+            model.addAttribute("drivers", driverFacade.getAllDrivers());
+            return "cars/edit";
+        }
+
         CarDTO carDTO = new CarDTO(
                 driverFacade.getDriverByID(form.getDriverId()),
                 componentFacade.findComponentByID(form.getEngineId()),
@@ -135,22 +136,7 @@ public class CarController {
                 componentFacade.findComponentByID(form.getTransmissionId()),
                 componentFacade.findComponentByID(form.getBrakesId()));
         carDTO.setId(form.getId());
-        if (carDTO.getDriver() == null){
-            model.addAttribute("alert_danger", "Driver is null");
-            model.addAttribute("components", componentFacade.listAllComponents());
-            model.addAttribute("drivers", driverFacade.getAllDrivers());
-            return "cars/edit";
-        }
-        if (carDTO.getTransmission() == null
-                || carDTO.getAerodynamics() == null
-                || carDTO.getBrakes() == null
-                || carDTO.getEngine() == null
-                || carDTO.getSuspension() == null){
-            model.addAttribute("alert_danger", "One of components is null");
-            model.addAttribute("components", componentFacade.listAllComponents());
-            model.addAttribute("drivers", driverFacade.getAllDrivers());
-            return "cars/edit";
-        }
+
         carFacade.updateCar(carDTO);
         redirectAttributes.addFlashAttribute("alert_success", "Car No." + carDTO.getId() + " was updated.");
         return "redirect:" + uriBuilder.path("/cars").build().toUriString();

@@ -118,6 +118,12 @@ public class TeamController {
             return "teams/edit";
         }
 
+        if (formBean.getCarOneId() == null || formBean.getCarTwoId() == null){
+            model.addAttribute("alert_danger", "carOne or carTwo cannot be empty!");
+            modelCarsListAdd(model);
+            return "teams/create";
+        }
+
         if (formBean.getCarOneId().equals(formBean.getCarTwoId())) {
             model.addAttribute("alert_danger", "carOne and carTwo cannot be the same!");
             modelCarsListAdd(model);

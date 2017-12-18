@@ -8,6 +8,11 @@
 <my:page_template title="Edit car" icon_class="fa fa-users">
 
     <jsp:attribute name="body">
+
+        <button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/cars'">
+            Back
+        </button>
+
         <form:form method="post"
                    action="${pageContext.request.contextPath}/cars/edit/${car.id}"
                    modelAttribute="car"
