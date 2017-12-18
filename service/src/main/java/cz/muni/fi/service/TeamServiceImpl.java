@@ -1,5 +1,6 @@
 package cz.muni.fi.service;
 
+import cz.muni.fi.dao.DriverDao;
 import cz.muni.fi.dao.TeamDao;
 import cz.muni.fi.dto.DriverDTO;
 import cz.muni.fi.entities.Driver;
@@ -17,8 +18,12 @@ import java.util.List;
  */
 @Service
 public class TeamServiceImpl implements TeamService {
+
     @Autowired
     private TeamDao teamDao;
+
+    @Autowired
+    private DriverDao driverDao;
 
     @Override
     public Team findTeamById(Long id) {
@@ -66,8 +71,7 @@ public class TeamServiceImpl implements TeamService {
         if (team.getCarOne() == null || team.getCarTwo() == null)
             throw new IllegalArgumentException("Team car cannot be null!");
 
-        team.getCarOne().getDriver().setAsMainDriver();
-        team.getCarTwo().getDriver().setAsMainDriver();
+        driverUpdateUtil(team, true);
 
         try {
             return teamDao.addTeam(team);
@@ -83,11 +87,8 @@ public class TeamServiceImpl implements TeamService {
             throw new IllegalArgumentException("Team car cannot be null!");
 
         Team old_team = teamDao.findTeamById(team.getId());
-        old_team.getCarOne().getDriver().setAsTestDriver();
-        old_team.getCarTwo().getDriver().setAsTestDriver();
-
-        team.getCarOne().getDriver().setAsMainDriver();
-        team.getCarTwo().getDriver().setAsMainDriver();
+        driverUpdateUtil(old_team, false);
+        driverUpdateUtil(team, true);
 
         try {
             return teamDao.updateTeam(team);
@@ -99,11 +100,29 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public void deleteTeam(Team team) {
         if (team == null) throw new IllegalArgumentException("Team argument cannot be null!");
+        if (team.getCarOne() == null || team.getCarTwo() == null)
+            throw new IllegalArgumentException("Team car cannot be null!");
+
+        driverUpdateUtil(team, false);
 
         try {
             teamDao.deleteTeam(team);
         } catch (Throwable e) {
             throw new ServiceDataAccessException("Cannot delete team :" + team.toString(), e);
         }
+    }
+
+    private void driverUpdateUtil(Team team, boolean main){
+        Driver one = team.getCarOne().getDriver();
+        Driver two = team.getCarTwo().getDriver();
+        if (main){
+            one.setAsMainDriver();
+            two.setAsMainDriver();
+        } else {
+            one.setAsTestDriver();
+            two.setAsTestDriver();
+        }
+        driverDao.updateDriver(one);
+        driverDao.updateDriver(two);
     }
 }

@@ -142,7 +142,8 @@ public class CarController {
         try {
             carFacade.deleteCar(carDTO);
         } catch (Exception e){
-            redirectAttributes.addFlashAttribute("alert_danger", "Car No." + carDTO.getId() + " cannot be deleted");
+            redirectAttributes.addFlashAttribute("alert_danger", "Car No." + carDTO.getId()
+                    + " cannot be deleted, because it part of team");
             return "redirect:" + builder.path("/cars").build().toUriString();
         }
         redirectAttributes.addFlashAttribute("alert_success", "Car No." + carDTO.getId() + " was deleted.");

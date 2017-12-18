@@ -1,6 +1,7 @@
 package cz.muni.fi.service;
 
 import cz.muni.fi.UtilityClass;
+import cz.muni.fi.dao.DriverDao;
 import cz.muni.fi.dao.TeamDao;
 import cz.muni.fi.entities.Driver;
 import cz.muni.fi.entities.Team;
