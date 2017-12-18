@@ -1,7 +1,9 @@
 package cz.muni.fi.controllers;
 
+import cz.muni.fi.dto.CarDTO;
 import cz.muni.fi.dto.TeamDTO;
 import cz.muni.fi.dto.TeamEditDTO;
+import cz.muni.fi.entities.Car;
 import cz.muni.fi.facade.CarFacade;
 import cz.muni.fi.facade.TeamFacade;
 import cz.muni.fi.service.BeanMappingService;
@@ -19,6 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @author Matus Macko
@@ -42,7 +45,7 @@ public class TeamController {
     public String createTeam(Model model) {
         log.debug("[TEAM] create");
         model.addAttribute("teamCreate", new TeamEditDTO());
-        model.addAttribute("cars", carFacade.listAllCars().removeAll(teamFacade.getAllTeamCars()));
+        modelCarsListAdd(model);
         return "/teams/create";
     }
 
@@ -53,19 +56,19 @@ public class TeamController {
                          UriComponentsBuilder uriBuilder) {
         if(formBean.getName().isEmpty()){
             model.addAttribute("alert_danger", "Name cannot be empty!");
-            model.addAttribute("cars", carFacade.listAllCars());
+            modelCarsListAdd(model);
             return "teams/create";
         }
 
         if (formBean.getCarOneId() == null || formBean.getCarTwoId() == null){
             model.addAttribute("alert_danger", "carOne or carTwo cannot be empty!");
-            model.addAttribute("cars", carFacade.listAllCars());
+            modelCarsListAdd(model);
             return "teams/create";
         }
 
         if (formBean.getCarOneId().equals(formBean.getCarTwoId())) {
             model.addAttribute("alert_danger", "carOne and carTwo cannot be the same!");
-            model.addAttribute("cars", carFacade.listAllCars());
+            modelCarsListAdd(model);
             return "teams/create";
         }
 
@@ -100,7 +103,7 @@ public class TeamController {
         log.debug("[TEAM] edit ({})", id);
         TeamDTO team = teamFacade.getTeamById(id);
         TeamEditDTO editTeam = new TeamEditDTO(team.getId(), team.getName(), team.getCarOne().getId(), team.getCarTwo().getId());
-        model.addAttribute("cars", carFacade.listAllCars());
+        modelCarsListAdd(model);
         model.addAttribute("teamEdit", editTeam);
         return "teams/edit";
     }
@@ -111,13 +114,13 @@ public class TeamController {
                        RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
         if (formBean.getName().isEmpty()){
             model.addAttribute("alert_danger", "Name cannot be empty!");
-            model.addAttribute("cars", carFacade.listAllCars());
+            modelCarsListAdd(model);
             return "teams/edit";
         }
 
         if (formBean.getCarOneId().equals(formBean.getCarTwoId())) {
             model.addAttribute("alert_danger", "carOne and carTwo cannot be the same!");
-            model.addAttribute("cars", carFacade.listAllCars());
+            modelCarsListAdd(model);
             return "teams/edit";
         }
 
@@ -134,4 +137,11 @@ public class TeamController {
         redirectAttributes.addFlashAttribute("alert_success", "Team '" + teamDTO.getName() + "' was deleted.");
         return "redirect:" + uriBuilder.path("/teams").build().toUriString();
     }
+
+    private void modelCarsListAdd(Model model){
+        List<CarDTO> cars = carFacade.listAllCars();
+        cars.removeAll(teamFacade.getAllTeamCars());
+        model.addAttribute("cars", cars);
+    }
+
 }
