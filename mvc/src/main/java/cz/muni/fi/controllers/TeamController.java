@@ -42,7 +42,7 @@ public class TeamController {
     public String createTeam(Model model) {
         log.debug("[TEAM] create");
         model.addAttribute("teamCreate", new TeamEditDTO());
-        modelCarsListAdd(model);
+        modelCarsListAdd(model, null);
         return "/teams/create";
     }
 
@@ -53,19 +53,19 @@ public class TeamController {
                          UriComponentsBuilder uriBuilder) {
         if(formBean.getName().isEmpty()){
             model.addAttribute("alert_danger", "Name cannot be empty!");
-            modelCarsListAdd(model);
+            modelCarsListAdd(model, null);
             return "teams/create";
         }
 
         if (formBean.getCarOneId() == null || formBean.getCarTwoId() == null){
             model.addAttribute("alert_danger", "carOne or carTwo cannot be empty!");
-            modelCarsListAdd(model);
+            modelCarsListAdd(model, null);
             return "teams/create";
         }
 
         if (formBean.getCarOneId().equals(formBean.getCarTwoId())) {
             model.addAttribute("alert_danger", "carOne and carTwo cannot be the same!");
-            modelCarsListAdd(model);
+            modelCarsListAdd(model, null);
             return "teams/create";
         }
 
@@ -100,7 +100,7 @@ public class TeamController {
         log.debug("[TEAM] edit ({})", id);
         TeamDTO team = teamFacade.getTeamById(id);
         TeamEditDTO editTeam = new TeamEditDTO(team.getId(), team.getName(), team.getCarOne().getId(), team.getCarTwo().getId());
-        modelCarsListAdd(model);
+        modelCarsListAdd(model, team);
         model.addAttribute("teamEdit", editTeam);
         return "teams/edit";
     }
@@ -111,19 +111,19 @@ public class TeamController {
                        RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
         if (formBean.getName().isEmpty()){
             model.addAttribute("alert_danger", "Name cannot be empty!");
-            modelCarsListAdd(model);
+            modelCarsListAdd(model, teamFacade.getTeamById(formBean.getId()));
             return "teams/edit";
         }
 
         if (formBean.getCarOneId() == null || formBean.getCarTwoId() == null){
             model.addAttribute("alert_danger", "carOne or carTwo cannot be empty!");
-            modelCarsListAdd(model);
+            modelCarsListAdd(model, teamFacade.getTeamById(formBean.getId()));
             return "teams/create";
         }
 
         if (formBean.getCarOneId().equals(formBean.getCarTwoId())) {
             model.addAttribute("alert_danger", "carOne and carTwo cannot be the same!");
-            modelCarsListAdd(model);
+            modelCarsListAdd(model, teamFacade.getTeamById(formBean.getId()));
             return "teams/edit";
         }
 
@@ -141,9 +141,13 @@ public class TeamController {
         return "redirect:" + uriBuilder.path("/teams").build().toUriString();
     }
 
-    private void modelCarsListAdd(Model model){
+    private void modelCarsListAdd(Model model, TeamDTO team){
         List<CarDTO> cars = carFacade.listAllCars();
         cars.removeAll(teamFacade.getAllTeamCars());
+        if(team != null){
+            cars.add(team.getCarOne());
+            cars.add(team.getCarTwo());
+        }
         model.addAttribute("cars", cars);
     }
 
