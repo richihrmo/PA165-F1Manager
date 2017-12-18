@@ -52,32 +52,16 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User addUser(User user) {
-        if (user.getId() != null) throw new IllegalArgumentException("id must be null");
         validate(user);
         em.persist(user);
         return user;
     }
 
-    @Override
-    public User updateUser(User user) {
-        if (user.getId() == null) throw new IllegalArgumentException("id is null");
-        validate(user);
-        em.merge(user);
-        return user;
-    }
 
-    @Override
-    public User deleteUser(User user) {
-        if (user.getId() == null) throw new IllegalArgumentException("id is null");
-        validate(user);
-        em.remove(em.merge(user));
-        return user;
-    }
-
-    public void validate(User user) {
+    private void validate(User user) {
         if (user == null) throw new IllegalArgumentException("user is null");
+        if (user.getId() != null) throw new IllegalArgumentException("id must be null");
         if (user.getName() == null) throw new IllegalArgumentException("name is null");
         if (user.getPasswordHash() == null) throw new IllegalArgumentException("password hash is null");
-
     }
 }
