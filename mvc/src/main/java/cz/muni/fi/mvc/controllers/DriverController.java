@@ -6,7 +6,6 @@ import cz.muni.fi.dto.DriverDTO;
 import cz.muni.fi.enums.DrivingSkill;
 import cz.muni.fi.facade.CarFacade;
 import cz.muni.fi.facade.DriverFacade;
-import cz.muni.fi.facade.TeamFacade;
 import cz.muni.fi.mvc.Tools;
 import cz.muni.fi.mvc.filter.DrivingSkillFilter;
 import org.slf4j.Logger;
@@ -34,16 +33,13 @@ import java.util.List;
 @RequestMapping("/drivers")
 public class DriverController {
     
-    final static Logger log = LoggerFactory.getLogger(DriverController.class);
+    private final static Logger log = LoggerFactory.getLogger(DriverController.class);
 
     @Autowired
     private DriverFacade driverFacade;
     
     @Autowired
     private CarFacade carFacade;
-    
-    @Autowired
-    private TeamFacade teamFacade;
     
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String getAllDrivers(@Valid @ModelAttribute("filter")DrivingSkillFilter filterType, Model model){

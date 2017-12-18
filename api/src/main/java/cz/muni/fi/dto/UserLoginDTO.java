@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
- * Created by Robert on 17/12/2017.
+ * @author Rober Tamas
  */
 public class UserLoginDTO {
     @NotNull
