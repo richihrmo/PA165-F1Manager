@@ -38,9 +38,6 @@ public class TeamController {
     @Inject
     private CarFacade carFacade;
 
-    @Autowired
-    private BeanMappingService beanMappingService;
-
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String createTeam(Model model) {
         log.debug("[TEAM] create");

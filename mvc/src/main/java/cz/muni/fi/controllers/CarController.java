@@ -43,11 +43,7 @@ public class CarController {
         model.addAttribute("car", new CarCreateDTO());
         model.addAttribute("drivers", driverFacade.getAllDrivers()
                 .stream().filter(p -> !p.isMainDriver()).collect(Collectors.toList()));
-        model.addAttribute("engines", componentFacade.listAllAvailableComponentsWithType(ComponentType.ENGINE));
-        model.addAttribute("brakes", componentFacade.listAllAvailableComponentsWithType(ComponentType.BRAKES));
-        model.addAttribute("aerodynamics", componentFacade.listAllAvailableComponentsWithType(ComponentType.AERODYNAMICS));
-        model.addAttribute("suspension", componentFacade.listAllAvailableComponentsWithType(ComponentType.SUSPENSION));
-        model.addAttribute("transmission", componentFacade.listAllAvailableComponentsWithType(ComponentType.TRANSMISSION));
+        modelAddComponents(model);
         return "cars/new";
     }
 
@@ -58,8 +54,9 @@ public class CarController {
                                UriComponentsBuilder uriBuilder){
         if (form.getDriverId() == null){
             model.addAttribute("alert_danger", "Driver is null");
-            model.addAttribute("components", componentFacade.listAllComponents());
-            model.addAttribute("drivers", driverFacade.getAllDrivers());
+            modelAddComponents(model);
+            model.addAttribute("drivers", driverFacade.getAllDrivers()
+                    .stream().filter(p -> !p.isMainDriver()).collect(Collectors.toList()));
             return "cars/new";
         }
         if (form.getEngineId() == null
@@ -68,8 +65,9 @@ public class CarController {
                 || form.getTransmissionId() == null
                 || form.getBrakesId() == null){
             model.addAttribute("alert_danger", "One of components is null");
-            model.addAttribute("components", componentFacade.listAllComponents());
-            model.addAttribute("drivers", driverFacade.getAllDrivers());
+            modelAddComponents(model);
+            model.addAttribute("drivers", driverFacade.getAllDrivers()
+                    .stream().filter(p -> !p.isMainDriver()).collect(Collectors.toList()));
             return "cars/new";
         }
 
@@ -98,12 +96,9 @@ public class CarController {
                 carDTO.getTransmission().getId(),
                 carDTO.getBrakes().getId());
         model.addAttribute("car", carCreateDTO);
-        model.addAttribute("engines", componentFacade.listAllAvailableComponentsWithType(ComponentType.ENGINE));
-        model.addAttribute("brakes", componentFacade.listAllAvailableComponentsWithType(ComponentType.BRAKES));
-        model.addAttribute("aerodynamics", componentFacade.listAllAvailableComponentsWithType(ComponentType.AERODYNAMICS));
-        model.addAttribute("suspension", componentFacade.listAllAvailableComponentsWithType(ComponentType.SUSPENSION));
-        model.addAttribute("transmission", componentFacade.listAllAvailableComponentsWithType(ComponentType.TRANSMISSION));
-        model.addAttribute("drivers", driverFacade.getAllDrivers());
+        modelAddComponents(model);
+        model.addAttribute("drivers", driverFacade.getAllDrivers()
+                .stream().filter(p -> !p.isMainDriver()).collect(Collectors.toList()));
         return "cars/edit";
     }
 
@@ -113,8 +108,9 @@ public class CarController {
                                UriComponentsBuilder uriBuilder, Model model){
         if (form.getDriverId() == null){
             model.addAttribute("alert_danger", "Driver is null");
-            model.addAttribute("components", componentFacade.listAllComponents());
-            model.addAttribute("drivers", driverFacade.getAllDrivers());
+            modelAddComponents(model);
+            model.addAttribute("drivers", driverFacade.getAllDrivers()
+                    .stream().filter(p -> !p.isMainDriver()).collect(Collectors.toList()));
             return "cars/edit";
         }
         if (form.getEngineId() == null
@@ -123,7 +119,7 @@ public class CarController {
                 || form.getTransmissionId() == null
                 || form.getBrakesId() == null){
             model.addAttribute("alert_danger", "One of components is null");
-            model.addAttribute("components", componentFacade.listAllComponents());
+            modelAddComponents(model);
             model.addAttribute("drivers", driverFacade.getAllDrivers());
             return "cars/edit";
         }
@@ -168,5 +164,13 @@ public class CarController {
     public String list(Model model) {
         model.addAttribute("cars", carFacade.listAllCars());
         return "cars/list";
+    }
+
+    private void modelAddComponents(Model model){
+        model.addAttribute("engines", componentFacade.listAllAvailableComponentsWithType(ComponentType.ENGINE));
+        model.addAttribute("brakes", componentFacade.listAllAvailableComponentsWithType(ComponentType.BRAKES));
+        model.addAttribute("aerodynamics", componentFacade.listAllAvailableComponentsWithType(ComponentType.AERODYNAMICS));
+        model.addAttribute("suspension", componentFacade.listAllAvailableComponentsWithType(ComponentType.SUSPENSION));
+        model.addAttribute("transmission", componentFacade.listAllAvailableComponentsWithType(ComponentType.TRANSMISSION));
     }
 }
