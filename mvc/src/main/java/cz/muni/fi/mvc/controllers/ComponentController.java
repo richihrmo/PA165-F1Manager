@@ -119,6 +119,13 @@ public class ComponentController {
 
         log.debug("[COMPONENT] Update: {}", formBean);
         model.addAttribute("componentTypeSelect", Arrays.asList(ComponentType.values()));
+        
+        if(formBean.getType() == null){
+            ComponentDTO c = componentFacade.findComponentByID(id);
+            formBean.setType(c.getType());
+            formBean.setAvailability(false);
+        }
+        
         ComponentDTO result = componentFacade.updateComponent(formBean);
 
         redirectAttributes.addFlashAttribute("alert_success", "Component '" + result.getName() + "' was updated");
