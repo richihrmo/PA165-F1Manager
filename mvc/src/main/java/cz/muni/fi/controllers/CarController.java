@@ -2,12 +2,14 @@ package cz.muni.fi.controllers;
 
 import cz.muni.fi.dto.CarCreateDTO;
 import cz.muni.fi.dto.CarDTO;
+import cz.muni.fi.dto.ComponentDTO;
 import cz.muni.fi.dto.DriverDTO;
 import cz.muni.fi.entities.Driver;
 import cz.muni.fi.enums.ComponentType;
 import cz.muni.fi.facade.CarFacade;
 import cz.muni.fi.facade.ComponentFacade;
 import cz.muni.fi.facade.DriverFacade;
+import java.util.ArrayList;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -41,9 +43,8 @@ public class CarController {
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newCar(Model model){
         model.addAttribute("car", new CarCreateDTO());
-        model.addAttribute("drivers", driverFacade.getAllDrivers()
-                .stream().filter(p -> !p.isMainDriver()).collect(Collectors.toList()));
-        modelAddComponents(model);
+        model.addAttribute("drivers", getAvailableDrivers(null));
+        modelAddComponents(model, null);
         return "cars/new";
     }
 
@@ -54,9 +55,8 @@ public class CarController {
                                UriComponentsBuilder uriBuilder){
         if (form.getDriverId() == null){
             model.addAttribute("alert_danger", "Driver is null");
-            modelAddComponents(model);
-            model.addAttribute("drivers", driverFacade.getAllDrivers()
-                    .stream().filter(p -> !p.isMainDriver()).collect(Collectors.toList()));
+            modelAddComponents(model, null);
+            model.addAttribute("drivers", getAvailableDrivers(null));
             return "cars/new";
         }
         if (form.getEngineId() == null
@@ -65,9 +65,8 @@ public class CarController {
                 || form.getTransmissionId() == null
                 || form.getBrakesId() == null){
             model.addAttribute("alert_danger", "One of components is null");
-            modelAddComponents(model);
-            model.addAttribute("drivers", driverFacade.getAllDrivers()
-                    .stream().filter(p -> !p.isMainDriver()).collect(Collectors.toList()));
+            modelAddComponents(model, null);
+            model.addAttribute("drivers", getAvailableDrivers(null));
             return "cars/new";
         }
 
@@ -96,9 +95,8 @@ public class CarController {
                 carDTO.getTransmission().getId(),
                 carDTO.getBrakes().getId());
         model.addAttribute("car", carCreateDTO);
-        modelAddComponents(model);
-        model.addAttribute("drivers", driverFacade.getAllDrivers()
-                .stream().filter(p -> !p.isMainDriver()).collect(Collectors.toList()));
+        modelAddComponents(model, carCreateDTO);
+        model.addAttribute("drivers", getAvailableDrivers(carDTO.getDriver()));
         return "cars/edit";
     }
 
@@ -108,9 +106,8 @@ public class CarController {
                                UriComponentsBuilder uriBuilder, Model model){
         if (form.getDriverId() == null){
             model.addAttribute("alert_danger", "Driver is null");
-            modelAddComponents(model);
-            model.addAttribute("drivers", driverFacade.getAllDrivers()
-                    .stream().filter(p -> !p.isMainDriver()).collect(Collectors.toList()));
+            modelAddComponents(model, form);
+            model.addAttribute("drivers", getAvailableDrivers(null));
             return "cars/edit";
         }
         if (form.getEngineId() == null
@@ -119,8 +116,8 @@ public class CarController {
                 || form.getTransmissionId() == null
                 || form.getBrakesId() == null){
             model.addAttribute("alert_danger", "One of components is null");
-            modelAddComponents(model);
-            model.addAttribute("drivers", driverFacade.getAllDrivers());
+            modelAddComponents(model, form);
+            model.addAttribute("drivers", getAvailableDrivers(driverFacade.getDriverByID(form.getDriverId())));
             return "cars/edit";
         }
 
@@ -166,11 +163,37 @@ public class CarController {
         return "cars/list";
     }
 
-    private void modelAddComponents(Model model){
-        model.addAttribute("engines", componentFacade.listAllAvailableComponentsWithType(ComponentType.ENGINE));
-        model.addAttribute("brakes", componentFacade.listAllAvailableComponentsWithType(ComponentType.BRAKES));
-        model.addAttribute("aerodynamics", componentFacade.listAllAvailableComponentsWithType(ComponentType.AERODYNAMICS));
-        model.addAttribute("suspension", componentFacade.listAllAvailableComponentsWithType(ComponentType.SUSPENSION));
-        model.addAttribute("transmission", componentFacade.listAllAvailableComponentsWithType(ComponentType.TRANSMISSION));
+    private void modelAddComponents(Model model, CarCreateDTO carCreateDTO){
+        List<ComponentDTO> engines = componentFacade.listAllAvailableComponentsWithType(ComponentType.ENGINE);
+        List<ComponentDTO> brakes = componentFacade.listAllAvailableComponentsWithType(ComponentType.BRAKES);
+        List<ComponentDTO> aerodynamics = componentFacade.listAllAvailableComponentsWithType(ComponentType.AERODYNAMICS);
+        List<ComponentDTO> suspension = componentFacade.listAllAvailableComponentsWithType(ComponentType.SUSPENSION);
+        List<ComponentDTO> transmission = componentFacade.listAllAvailableComponentsWithType(ComponentType.TRANSMISSION);
+        
+        if(carCreateDTO != null){
+            engines.add(componentFacade.findComponentByID(carCreateDTO.getEngineId()));
+            brakes.add(componentFacade.findComponentByID(carCreateDTO.getBrakesId()));
+            aerodynamics.add(componentFacade.findComponentByID(carCreateDTO.getAerodynamicsId()));
+            suspension.add(componentFacade.findComponentByID(carCreateDTO.getSuspensionId()));
+            transmission.add(componentFacade.findComponentByID(carCreateDTO.getTransmissionId()));
+        }
+        model.addAttribute("engines", engines);
+        model.addAttribute("brakes", brakes);
+        model.addAttribute("aerodynamics", aerodynamics);
+        model.addAttribute("suspension", suspension);
+        model.addAttribute("transmission", transmission);
+    }
+    
+    private List<DriverDTO> getAvailableDrivers(DriverDTO driver){
+        List<DriverDTO> drivers = new ArrayList<>();
+        for(DriverDTO d : driverFacade.getAllDrivers()){
+            if(carFacade.findCarByDriver(d) == null){
+                drivers.add(d);
+            }
+        }
+        if(driver != null){
+            drivers.add(driver);
+        }
+        return drivers;
     }
 }
