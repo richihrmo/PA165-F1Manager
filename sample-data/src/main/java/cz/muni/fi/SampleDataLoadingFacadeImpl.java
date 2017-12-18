@@ -37,7 +37,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
     private Map<String, Driver> drivers = new HashMap<>();
     
     @Override
-    public void loadData() throws IOException {
+    public void loadData(){
         loadComponents();
         loadDrivers();
         loadCars();
@@ -114,5 +114,10 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         component("blueTransmission", ComponentType.TRANSMISSION);
         component("blueAerodynamics", ComponentType.AERODYNAMICS);
         component("blueSuspension", ComponentType.SUSPENSION);
+        component("V8", ComponentType.ENGINE);
+        component("Carbon-Ceramic", ComponentType.BRAKES);
+        component("8-speed", ComponentType.TRANSMISSION);
+        component("Electro-Magnetic", ComponentType.SUSPENSION);
+        component("GroundEffect", ComponentType.AERODYNAMICS);
     }
 }

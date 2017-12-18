@@ -1,4 +1,4 @@
-package cz.muni.fi.mvc;
+package cz.muni.fi;
 
 import cz.muni.fi.dto.DriverDTO;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;

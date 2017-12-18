@@ -41,8 +41,8 @@ public class CarController {
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newCar(Model model){
         model.addAttribute("car", new CarCreateDTO());
-        List<DriverDTO> driverList = driverFacade.getAllDrivers().stream().filter(p -> !p.isMainDriver()).collect(Collectors.toList());
-        model.addAttribute("drivers", driverList);
+        model.addAttribute("drivers", driverFacade.getAllDrivers()
+                .stream().filter(p -> !p.isMainDriver()).collect(Collectors.toList()));
         model.addAttribute("engines", componentFacade.listAllAvailableComponentsWithType(ComponentType.ENGINE));
         model.addAttribute("brakes", componentFacade.listAllAvailableComponentsWithType(ComponentType.BRAKES));
         model.addAttribute("aerodynamics", componentFacade.listAllAvailableComponentsWithType(ComponentType.AERODYNAMICS));
@@ -56,6 +56,23 @@ public class CarController {
                                RedirectAttributes redirectAttributes,
                                Model model,
                                UriComponentsBuilder uriBuilder){
+        if (form.getDriverId() == null){
+            model.addAttribute("alert_danger", "Driver is null");
+            model.addAttribute("components", componentFacade.listAllComponents());
+            model.addAttribute("drivers", driverFacade.getAllDrivers());
+            return "cars/new";
+        }
+        if (form.getEngineId() == null
+                || form.getAerodynamicsId() == null
+                || form.getSuspensionId() == null
+                || form.getTransmissionId() == null
+                || form.getBrakesId() == null){
+            model.addAttribute("alert_danger", "One of components is null");
+            model.addAttribute("components", componentFacade.listAllComponents());
+            model.addAttribute("drivers", driverFacade.getAllDrivers());
+            return "cars/new";
+        }
+
         CarDTO carDTO = new CarDTO(
                 driverFacade.getDriverByID(form.getDriverId()),
                 componentFacade.findComponentByID(form.getEngineId()),

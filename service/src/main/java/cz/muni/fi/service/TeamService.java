@@ -2,6 +2,7 @@ package cz.muni.fi.service;
 
 import java.util.List;
 
+import cz.muni.fi.entities.Car;
 import cz.muni.fi.entities.Team;
 import cz.muni.fi.entities.Driver;
 
@@ -26,6 +27,15 @@ public interface TeamService {
      * @throws cz.muni.fi.service.exception.ServiceDataAccessException if there is problem with dao
      */
     List<Team> findAllTeams();
+
+
+    /**
+     * Find all cars used by teams
+     *
+     * @return list of found cars
+     * @throws cz.muni.fi.service.exception.ServiceDataAccessException if there is problem with dao
+     */
+    List<Car> findAllTeamCars();
 
     /**
      * Find all team drivers

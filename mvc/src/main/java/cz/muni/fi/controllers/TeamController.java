@@ -42,7 +42,7 @@ public class TeamController {
     public String createTeam(Model model) {
         log.debug("[TEAM] create");
         model.addAttribute("teamCreate", new TeamEditDTO());
-        model.addAttribute("cars", carFacade.listAllCars());
+        model.addAttribute("cars", carFacade.listAllCars().removeAll(teamFacade.getAllTeamCars()));
         return "/teams/create";
     }
 
@@ -51,9 +51,14 @@ public class TeamController {
                          RedirectAttributes redirectAttributes,
                          Model model,
                          UriComponentsBuilder uriBuilder) {
-
         if(formBean.getName().isEmpty()){
             model.addAttribute("alert_danger", "Name cannot be empty!");
+            model.addAttribute("cars", carFacade.listAllCars());
+            return "teams/create";
+        }
+
+        if (formBean.getCarOneId() == null || formBean.getCarTwoId() == null){
+            model.addAttribute("alert_danger", "carOne or carTwo cannot be empty!");
             model.addAttribute("cars", carFacade.listAllCars());
             return "teams/create";
         }

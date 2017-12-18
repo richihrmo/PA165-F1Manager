@@ -1,8 +1,10 @@
 package cz.muni.fi.service;
 
+import cz.muni.fi.dao.CarDao;
 import cz.muni.fi.dao.DriverDao;
 import cz.muni.fi.dao.TeamDao;
 import cz.muni.fi.dto.DriverDTO;
+import cz.muni.fi.entities.Car;
 import cz.muni.fi.entities.Driver;
 import cz.muni.fi.entities.Team;
 import cz.muni.fi.service.exception.ServiceDataAccessException;
@@ -25,6 +27,9 @@ public class TeamServiceImpl implements TeamService {
     @Autowired
     private DriverDao driverDao;
 
+    @Autowired
+    private CarDao carDao;
+
     @Override
     public Team findTeamById(Long id) {
         if (id == null) throw new IllegalArgumentException("Id argument cannot be null!");
@@ -39,6 +44,18 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public List<Team> findAllTeams() {
         return teamDao.listTeams();
+    }
+
+    @Override
+    public List<Car> findAllTeamCars(){
+        List<Car> cars = new ArrayList<>();
+
+        for (Team team: teamDao.listTeams()) {
+            cars.add(team.getCarOne());
+            cars.add(team.getCarTwo());
+        }
+
+        return cars;
     }
 
     @Override

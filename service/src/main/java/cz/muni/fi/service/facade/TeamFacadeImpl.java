@@ -1,5 +1,6 @@
 package cz.muni.fi.service.facade;
 
+import cz.muni.fi.dto.CarDTO;
 import cz.muni.fi.dto.DriverDTO;
 import cz.muni.fi.dto.TeamDTO;
 import cz.muni.fi.dto.TeamEditDTO;
@@ -69,5 +70,9 @@ public class TeamFacadeImpl implements TeamFacade{
     @Override
     public List<DriverDTO> getAllTeamCarDrivers() {
         return beanMappingService.mapTo(teamService.findAllTeamCarDrivers(), DriverDTO.class);
+    }
+
+    public List<CarDTO> getAllTeamCars() {
+        return beanMappingService.mapTo(teamService.findAllTeamCars(), CarDTO.class);
     }
 }
