@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Robert Tamas
@@ -26,7 +27,7 @@ public class UserFacadeImpl implements UserFacade {
     private BeanMappingService beanMappingService;
 
     @Override
-    public Collection<UserDTO> findAllUsers() {
+    public List<UserDTO> findAllUsers() {
         return beanMappingService.mapTo(userService.findAllUsers(), UserDTO.class);
     }
 

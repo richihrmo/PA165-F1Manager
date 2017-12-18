@@ -34,5 +34,11 @@ public class User {
 
     @NotNull @Getter @Setter private String name;
 
-    public User() {}
+    public User(){}
+
+    public User(@NotNull @Pattern(regexp = ".+@.+\\....?") String email, Boolean admin, @NotNull String name) {
+        this.email = email;
+        this.admin = admin;
+        this.name = name;
+    }
 }

@@ -64,13 +64,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean authenticate(User user, String password) {
-        if (user == null) {
-            throw new IllegalArgumentException("User is null!");
-        }
-
-        if (password == null) {
-            throw new IllegalArgumentException("Password is null!");
-        }
+        if (user == null) throw new IllegalArgumentException("User is null!");
+        if (password == null) throw new IllegalArgumentException("Password is null!");
 
         User userResult = findUserById(user.getId());
 
