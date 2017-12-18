@@ -137,8 +137,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         component("GroundEffect", ComponentType.AERODYNAMICS);
     }
 
-    private void loadUsers() throws IOException
-    {
+    private void loadUsers() {
         user("admin-password", "Admin", "admin@admin.com", true);
         user("user-password", "Basic user",  "user@user.com",  false);
     }

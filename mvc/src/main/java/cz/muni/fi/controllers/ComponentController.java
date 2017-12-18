@@ -55,6 +55,12 @@ public class ComponentController {
         String res = Tools.redirectNonAdmin(request, uriBuilder, redirectAttributes);
         if (res != null) return res;
 
+        if (formBean.getName().isEmpty()) {
+            redirectAttributes.addFlashAttribute("alert_warning", "Component cannot have empty name");
+            return "redirect:" + uriBuilder.path("/components/create").build().encode().toUriString();
+        }
+
+
         if (componentFacade.findComponentByName(formBean.getName()) != null) {
             redirectAttributes.addFlashAttribute("alert_warning", "Component with name '" + formBean.getName() + "' already exists");
             return "redirect:" + uriBuilder.path("/components/create").build().encode().toUriString();
