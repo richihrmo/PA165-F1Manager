@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,7 +40,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
     private Map<String, Car> cars = new HashMap<>();
     private Map<String, Driver> drivers = new HashMap<>();
     private Map<String, User> users = new HashMap<>();
-    
+
     @Override
     public void loadData(){
         loadComponents();
@@ -89,52 +88,70 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
 
     private void loadCars() {
         car(
-                "redCar",
-                drivers.get("Doe"),
-                components.get("redEngine"),
-                components.get("redAerodynamics"),
-                components.get("redSuspension"),
-                components.get("redTransmission"),
-                components.get("redBrakes")
+                "Ferrari #1",
+                drivers.get("Schumacher"),
+                components.get("carbonEngine"),
+                components.get("carbonAerodynamics"),
+                components.get("carbonSuspension"),
+                components.get("carbonTransmission"),
+                components.get("carbonBrakes")
         );
         car(
-                "blueCar",
-                drivers.get("Bond"),
-                components.get("blueEngine"),
-                components.get("blueAerodynamics"),
-                components.get("blueSuspension"),
-                components.get("blueTransmission"),
-                components.get("blueBrakes")
+                "Ferrari #2",
+                drivers.get("Vettel"),
+                components.get("titanEngine"),
+                components.get("titanAerodynamics"),
+                components.get("titanSuspension"),
+                components.get("titanTransmission"),
+                components.get("titanBrakes")
         );
     }
 
     private void loadTeams() {
-        Team newTeam = new Team("newTeam", cars.get("redCar"), cars.get("blueCar"));
+        Team newTeam = new Team("Ferrari", cars.get("Ferrari #1"), cars.get("Ferrari #2"));
         teamService.createTeam(newTeam);
     }
 
     private void loadDrivers() {
-        driver("John", "Doe", "us", DrivingSkill.DRIVING_ON_WET);
-        driver("James", "Bond", "uk", DrivingSkill.POWER_SLIDING);
-        driver("Michael", "Schumacher", "Germany", DrivingSkill.EXTREME_REFLEXES);
+        driver("Lewis", "Hamilton", "UK", DrivingSkill.DRIVING_ON_WET);
+        driver("James", "Hunt", "UK", DrivingSkill.POWER_SLIDING);
+        driver("Michael", "Schumacher", "DE", DrivingSkill.EXTREME_REFLEXES);
+        driver("Sebastian", "Vettel", "DE", DrivingSkill.DRIVING_ON_WET);
+        driver("Daniel", "Ricciardo", "AU", DrivingSkill.POWER_SLIDING);
+        driver("Niki", "Lauda", "AT", DrivingSkill.DRIVING_ON_WET);
     }
 
     private void loadComponents() {
-        component("redBrakes", ComponentType.BRAKES);
-        component("redEngine", ComponentType.ENGINE);
-        component("redTransmission", ComponentType.TRANSMISSION);
-        component("redAerodynamics", ComponentType.AERODYNAMICS);
-        component("redSuspension", ComponentType.SUSPENSION);
-        component("blueBrakes", ComponentType.BRAKES);
-        component("blueEngine", ComponentType.ENGINE);
-        component("blueTransmission", ComponentType.TRANSMISSION);
-        component("blueAerodynamics", ComponentType.AERODYNAMICS);
-        component("blueSuspension", ComponentType.SUSPENSION);
+        component("carbonBrakes", ComponentType.BRAKES);
+        component("carbonEngine", ComponentType.ENGINE);
+        component("carbonTransmission", ComponentType.TRANSMISSION);
+        component("carbonAerodynamics", ComponentType.AERODYNAMICS);
+        component("carbonSuspension", ComponentType.SUSPENSION);
+        component("titanBrakes", ComponentType.BRAKES);
+        component("titanEngine", ComponentType.ENGINE);
+        component("titanTransmission", ComponentType.TRANSMISSION);
+        component("titanAerodynamics", ComponentType.AERODYNAMICS);
+        component("titanSuspension", ComponentType.SUSPENSION);
         component("V8", ComponentType.ENGINE);
         component("Carbon-Ceramic", ComponentType.BRAKES);
         component("8-speed", ComponentType.TRANSMISSION);
         component("Electro-Magnetic", ComponentType.SUSPENSION);
         component("GroundEffect", ComponentType.AERODYNAMICS);
+        component("V8-Turbo", ComponentType.ENGINE);
+        component("Carbon-Ceramic gen. II", ComponentType.BRAKES);
+        component("8-speed dual-clutch", ComponentType.TRANSMISSION);
+        component("Hydraulic", ComponentType.SUSPENSION);
+        component("F-Duct", ComponentType.AERODYNAMICS);
+        component("V12", ComponentType.ENGINE);
+        component("Brake-by-wire", ComponentType.BRAKES);
+        component("7-speed single clutch", ComponentType.TRANSMISSION);
+        component("Push-rod", ComponentType.SUSPENSION);
+        component("Double Diffuser", ComponentType.AERODYNAMICS);
+        component("V10", ComponentType.ENGINE);
+        component("Carbon-Ceramic gen. III", ComponentType.BRAKES);
+        component("9-speed dual clutch", ComponentType.TRANSMISSION);
+        component("Pull-rod", ComponentType.SUSPENSION);
+        component("Shark fin", ComponentType.AERODYNAMICS);
     }
 
     private void loadUsers() {

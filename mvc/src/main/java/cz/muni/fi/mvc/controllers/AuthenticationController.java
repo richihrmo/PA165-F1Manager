@@ -30,6 +30,8 @@ public class AuthenticationController {
 
     private final static Logger log = LoggerFactory.getLogger(AuthenticationController.class);
 
+    private int badLoginCounter = 0;
+
     @Autowired
     private UserFacade userFacade;
 
@@ -119,10 +121,18 @@ public class AuthenticationController {
 
         if (!userFacade.authenticate(formBean.getEmail(), formBean.getPassword())) {
             log.warn("wrong credentials: user={} password={}", formBean.getEmail(), formBean.getPassword());
-            redirectAttributes.addFlashAttribute("alert_warning", "Login " + formBean.getEmail() + " failed ");
+            //easter egg after 10 bad password entry
+            if (badLoginCounter == 10 ) {
+                redirectAttributes.addFlashAttribute("alert_warning", "Yoda advice: You must correct password use!");
+            } else {
+                badLoginCounter++;
+                redirectAttributes.addFlashAttribute("alert_warning", "Login " + formBean.getEmail() + " failed ");
+            }
 
             return "redirect:" + uriBuilder.path("/auth").build().toUriString();
         }
+
+        badLoginCounter = 0;
         request.getSession().setAttribute("user", matchingUser);
         //report success
         redirectAttributes.addFlashAttribute("alert_success", "Login " + formBean.getEmail() + " succeeded ");

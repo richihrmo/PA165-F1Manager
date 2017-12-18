@@ -1,15 +1,13 @@
-package cz.muni.fi.controllers;
+package cz.muni.fi.mvc.controllers;
 
 import cz.muni.fi.dto.CarDTO;
 import cz.muni.fi.dto.TeamDTO;
 import cz.muni.fi.dto.TeamEditDTO;
-import cz.muni.fi.entities.Car;
 import cz.muni.fi.facade.CarFacade;
 import cz.muni.fi.facade.TeamFacade;
-import cz.muni.fi.service.BeanMappingService;
+import cz.muni.fi.mvc.Tools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -39,7 +38,11 @@ public class TeamController {
     private CarFacade carFacade;
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public String createTeam(Model model) {
+    public String createTeam(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
+
+        String res = Tools.redirectNonAdmin(request, uriBuilder, redirectAttributes);
+        if(res != null) return res;
+
         log.debug("[TEAM] create");
         model.addAttribute("teamCreate", new TeamEditDTO());
         modelCarsListAdd(model, null);
@@ -48,9 +51,11 @@ public class TeamController {
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String create(@Valid @ModelAttribute("teamCreate") TeamEditDTO formBean,
-                         RedirectAttributes redirectAttributes,
-                         Model model,
-                         UriComponentsBuilder uriBuilder) {
+                         Model model, HttpServletRequest request, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
+
+        String res = Tools.redirectNonAdmin(request, uriBuilder, redirectAttributes);
+        if(res != null) return res;
+
         if(formBean.getName().isEmpty()){
             model.addAttribute("alert_danger", "Name cannot be empty!");
             modelCarsListAdd(model, null);
@@ -75,28 +80,44 @@ public class TeamController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public String all(Model model) {
+    public String all(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
+
+        String res = Tools.redirectNonUser(request, uriBuilder, redirectAttributes);
+        if(res != null) return res;
+
         log.debug("[TEAM] all");
         model.addAttribute("teams", teamFacade.getAllTeams());
         return "teams/all";
     }
 
     @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
-    public String show(@PathVariable Long id, Model model) {
+    public String show(@PathVariable Long id, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
+
+        String res = Tools.redirectNonUser(request, uriBuilder, redirectAttributes);
+        if(res != null) return res;
+
         log.debug("[TEAM] show ({})", id);
         model.addAttribute("team", teamFacade.getTeamById(id));
         return "teams/show";
     }
 
     @RequestMapping(value = "/drivers", method = RequestMethod.GET)
-    public String drivers(Model model) {
+    public String drivers(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
+
+        String res = Tools.redirectNonUser(request, uriBuilder, redirectAttributes);
+        if(res != null) return res;
+
         log.debug("[TEAM] show all drivers");
         model.addAttribute("drivers", teamFacade.getAllTeamCarDrivers());
         return "teams/drivers";
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public String editTeam(@PathVariable Long id, Model model) {
+    public String editTeam(@PathVariable Long id, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
+
+        String res = Tools.redirectNonAdmin(request, uriBuilder, redirectAttributes);
+        if(res != null) return res;
+
         log.debug("[TEAM] edit ({})", id);
         TeamDTO team = teamFacade.getTeamById(id);
         TeamEditDTO editTeam = new TeamEditDTO(team.getId(), team.getName(), team.getCarOne().getId(), team.getCarTwo().getId());
@@ -107,8 +128,11 @@ public class TeamController {
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
     public String edit(@ModelAttribute("teamEdit") TeamEditDTO formBean,
-                       Model model,
-                       RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
+                       Model model, HttpServletRequest request, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
+
+        String res = Tools.redirectNonAdmin(request, uriBuilder, redirectAttributes);
+        if(res != null) return res;
+
         if (formBean.getName().isEmpty()){
             model.addAttribute("alert_danger", "Name cannot be empty!");
             modelCarsListAdd(model, teamFacade.getTeamById(formBean.getId()));
@@ -133,7 +157,11 @@ public class TeamController {
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
-    public String delete(@PathVariable Long id, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
+    public String delete(@PathVariable Long id, HttpServletRequest request, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
+
+        String res = Tools.redirectNonAdmin(request, uriBuilder, redirectAttributes);
+        if(res != null) return res;
+
         TeamDTO teamDTO = teamFacade.getTeamById(id);
         teamFacade.deleteTeam(teamDTO);
         log.debug("[TEAM] delete ({})", id);

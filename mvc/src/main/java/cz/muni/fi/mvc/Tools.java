@@ -19,4 +19,13 @@ public class Tools {
         }
         return null;
     }
+
+    public static String redirectNonUser(HttpServletRequest request, UriComponentsBuilder builder, RedirectAttributes redirectAttributes) {
+        UserDTO user = (UserDTO) request.getSession().getAttribute("user");
+        if(user == null || user.getName() == null){
+            redirectAttributes.addFlashAttribute("alert_warning", "You are not authorized!");
+            return "redirect:" + builder.path("/").build().toUriString();
+        }
+        return null;
+    }
 }

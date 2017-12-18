@@ -55,14 +55,14 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>#</th>
+                    <th>Serial number</th>
                     <th>Name</th>
                     <th>Type</th>
                     <th class="text-center">Availability</th>
-                    <%--<my:protected>--%>
+                    <my:protected>
                         <th class="text-center">Edit</th>
                         <th class="text-center">Delete</th>
-                    <%--</my:protected>--%>
+                    </my:protected>
                 </tr>
             </thead>
             <tbody>
@@ -89,7 +89,7 @@
                         </c:if>
                     </td>
 
-                    <%--<my:protected>--%>
+                    <my:protected>
                     <td class="text-center">
                         <span class="glyphicon glyphicon-pencil" onclick="location.href='${pageContext.request.contextPath}/${end}/edit/${component.id}'"></span>
                     </td>
@@ -113,7 +113,7 @@
                           </my:modal_template>
 
                     </td>
-                  <%--</my:protected>--%>
+                  </my:protected>
 
 
                 </tr>
@@ -126,8 +126,8 @@
             </div>
         </c:if>
 
-      <%--<my:protected>--%>
-              <button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/${end}/create'"> Add Component </button>
-
+        <my:protected>
+            <button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/${end}/create'"> Add Component </button>
+        </my:protected>
     </jsp:attribute>
 </my:page_template>
