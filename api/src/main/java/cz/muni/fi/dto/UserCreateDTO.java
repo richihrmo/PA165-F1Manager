@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
@@ -16,6 +17,7 @@ public class UserCreateDTO {
     @Getter @Setter private String password;
     @NotNull
     @Size(min = 3, max = 150)
+    @Pattern(regexp = ".+@.+\\....?")
     @Getter @Setter private String email;
     @NotNull
     @Size(min = 3, max = 50)

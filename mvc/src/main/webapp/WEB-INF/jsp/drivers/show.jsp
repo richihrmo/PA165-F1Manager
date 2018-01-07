@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="my" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 
@@ -12,7 +13,7 @@
     <div>
         <div><strong>Name: </strong><c:out value="${driver.name}"/></div>
         <div><strong>Surname: </strong><c:out value="${driver.surname}"/></div>
-        <div><strong>Nationality: </strong><c:out value="${driver.nationality}"/></div>
+        <div><strong>Nationality: </strong><span class="flag-icon flag-icon-${fn:toLowerCase(driver.nationality)}"></span> <c:out value="${driver.nationality}"/></div>
         <div><strong>Driver type: </strong><c:out value="${driver.mainDriver ? 'Main driver' : 'Test driver'}"/></div>
         <div><strong>Special skill: </strong><c:out value="${driver.specialSkill.urlAnnotation}"/></div>
     </div>

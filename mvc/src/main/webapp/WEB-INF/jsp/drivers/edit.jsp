@@ -36,7 +36,7 @@
             <div class="form-group">
                 <form:label path="nationality" cssClass="col-sm-3 control-label">Nationality</form:label>
                 <div class="col-sm-9">
-                    <form:input path="nationality" cssClass="form-control" id="nationality" placeholder="Nationality"/>
+                    <form:select path="nationality" class="form-control" items="${Countries}" itemValue="country" itemLabel="displayCountry"/>
                 </div>
             </div>
 

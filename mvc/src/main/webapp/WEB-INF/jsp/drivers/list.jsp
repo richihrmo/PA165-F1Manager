@@ -4,6 +4,7 @@
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <my:page_template title="Drivers" icon_class="fa fa-user">
 <jsp:attribute name="body">
@@ -46,7 +47,7 @@
         <c:forEach items="${drivers}" var="driver">
             <tr>
                 <td><my:a href="/drivers/detail/${driver.id}"><c:out value="${driver.name}"/>&nbsp;<c:out value="${driver.surname}"/></my:a></td>
-                <td><c:out value="${driver.nationality}"/></td>
+                <td><span class="flag-icon flag-icon-${fn:toLowerCase(driver.nationality)}"></span> <c:out value="${driver.nationality}"/></td>
                 <td><c:out value="${driver.mainDriver ? 'Main driver' : 'Test driver'}"/></td>
                 <td><c:out value="${driver.specialSkill.urlAnnotation}"/></td>
                 <my:protected>
