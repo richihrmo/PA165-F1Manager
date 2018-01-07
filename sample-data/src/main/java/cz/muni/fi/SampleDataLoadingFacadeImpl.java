@@ -113,12 +113,13 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
     }
 
     private void loadDrivers() {
-        driver("Lewis", "Hamilton", "UK", DrivingSkill.DRIVING_ON_WET);
-        driver("James", "Hunt", "UK", DrivingSkill.POWER_SLIDING);
+        driver("Lewis", "Hamilton", "GB", DrivingSkill.DRIVING_ON_WET);
+        driver("James", "Hunt", "GB", DrivingSkill.POWER_SLIDING);
         driver("Michael", "Schumacher", "DE", DrivingSkill.EXTREME_REFLEXES);
         driver("Sebastian", "Vettel", "DE", DrivingSkill.DRIVING_ON_WET);
         driver("Daniel", "Ricciardo", "AU", DrivingSkill.POWER_SLIDING);
         driver("Niki", "Lauda", "AT", DrivingSkill.DRIVING_ON_WET);
+        driver("Giuseppe", "Farina", "IT", DrivingSkill.EXTREME_REFLEXES);
     }
 
     private void loadComponents() {

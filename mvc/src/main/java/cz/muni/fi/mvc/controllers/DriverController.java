@@ -25,6 +25,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Lucie Kureckova, 445264
@@ -75,6 +76,7 @@ public class DriverController {
         DriverDTO driver = new DriverDTO();
         model.addAttribute("driver", driver);
         model.addAttribute("Skills", Arrays.asList(DrivingSkill.values()));
+        model.addAttribute("Countries", getAllCountries());
         return "drivers/edit";
     }
     
@@ -87,6 +89,7 @@ public class DriverController {
         log.debug("[DRIVER] edit ({})", id);
         model.addAttribute("driver", driverFacade.getDriverByID(id));
         model.addAttribute("Skills", Arrays.asList(DrivingSkill.values()));
+        model.addAttribute("Countries", getAllCountries());
         return "drivers/edit";
     }
     
@@ -153,5 +156,16 @@ public class DriverController {
         }
         redirectAttributes.addFlashAttribute("alert_success", "Driver " + driverDTO.getName() + " " + driverDTO.getSurname() + " deleted.");
         return "redirect:" + "/drivers";
+    }
+
+    private List<Locale> getAllCountries() {
+        String[] isoCodes = Locale.getISOCountries();
+        ArrayList<Locale> countries = new ArrayList<>();
+
+        for (String country : isoCodes) {
+            countries.add(new Locale("", country));
+        }
+
+        return countries;
     }
 }
