@@ -1,3 +1,4 @@
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ attribute name="car" required="true" type="cz.muni.fi.dto.CarDTO"%>
 <%@ attribute name="name" required="false"%>
 
@@ -7,7 +8,7 @@
         <p>
             <strong>Name:</strong>&nbsp;${car.driver.name}
             &nbsp;<strong>Surname:</strong>&nbsp;${car.driver.surname}
-            &nbsp;<strong>Nationality:</strong>&nbsp;${car.driver.nationality}
+            &nbsp;<strong>Nationality:</strong>&nbsp;<span class="flag-icon flag-icon-${fn:toLowerCase(car.driver.nationality)}"></span> ${car.driver.nationality}
         </p>
 
     </div>
